@@ -1,0 +1,108 @@
+SQL> conn
+Enter user-name: system/manager
+Connected.
+=====================================================================================================================================================================
+SQL> create table patient_tab(patient_id number(6) primary key,patient_title varchar2(5) not null,patient_name varchar2(40) not null,patient_age number(3) not null,patient_sex varchar2(7) not null,patient_mobileno number(14) not null,patient_emailid varchar2(30) not null,patient_image_path varchar2(30) not null,patient_identity_path varchar2(40) not null);
+
+Table created.
+
+SQL> desc patient_tab;
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PATIENT_ID                                NOT NULL NUMBER(6)
+ PATIENT_TITLE                             NOT NULL VARCHAR2(5)
+ PATIENT_NAME                              NOT NULL VARCHAR2(40)
+ PATIENT_AGE                               NOT NULL NUMBER(3)
+ PATIENT_SEX                               NOT NULL VARCHAR2(7)
+ PATIENT_MOBILENO                          NOT NULL NUMBER(14)
+ PATIENT_EMAILID                           NOT NULL VARCHAR2(30)
+ PATIENT_IMAGE_PATH                        NOT NULL VARCHAR2(30)
+ PATIENT_IDENTITY_PATH                     NOT NULL VARCHAR2(40)
+=====================================================================================================================================================================
+SQL> create table doctors_tab(doctor_id number(6) primary key,doctor_title varchar2(5) not null,doctor_name varchar2(40) not null,
+doctor_specialization varchar2(30) not null,doctor_mobileno varchar2(15) not null,doctor_emailid varchar2(30) not null,
+hospital  varchar2(30) not null,country  varchar2(30) not null,state  varchar2(30) not null,city  varchar2(30) not null,doctor_image_path  varchar2(30) not null);
+
+Table created.
+
+SQL> desc doctors_tab;
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DOCTOR_ID                                 NOT NULL NUMBER(6)
+ DOCTOR_TITLE                              NOT NULL VARCHAR2(5)
+ DOCTOR_NAME                               NOT NULL VARCHAR2(40)
+ DOCTOR_SPECIALIZATION                     NOT NULL VARCHAR2(30)
+ DOCTOR_MOBILENO                           NOT NULL VARCHAR2(15)
+ DOCTOR_EMAILID                            NOT NULL VARCHAR2(30)
+ HOSPITAL                                  NOT NULL VARCHAR2(30)
+ COUNTRY                                   NOT NULL VARCHAR2(30)
+ STATE                                     NOT NULL VARCHAR2(30)
+ CITY                                      NOT NULL VARCHAR2(30)
+ DOCTOR_IMAGE_PATH                         NOT NULL VARCHAR2(30)
+=====================================================================================================================================================================
+SQL> create table phr_tab(phr_id number(6) primary key,patient_id number(6) not null,doctor_id number(6) not null,
+phr_uploaded_date TIMESTAMP(3) not null,phr_type varchar2(20) not null,phr_uploaded_path_original varchar2(150) not null,phr_uploaded_path_pdf varchar2(150) not null,phr_description varchar2(155) not null,
+CONSTRAINT fk1  FOREIGN KEY(patient_id) REFERENCES patient_tab(patient_id),CONSTRAINT fk2  FOREIGN KEY(doctor_id) REFERENCES doctors_tab(doctor_id));
+
+Table created.
+
+SQL> desc phr_tab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PHR_ID                                    NOT NULL NUMBER(6)
+ PATIENT_ID                                NOT NULL NUMBER(6)
+ DOCTOR_ID                                 NOT NULL NUMBER(6)
+ PHR_UPLOADED_DATE                         NOT NULL DATE
+ PHR_TYPE                                  NOT NULL VARCHAR2(20)
+ PHR_UPLOADED_PATH                         NOT NULL VARCHAR2(40)
+=====================================================================================================================================================================
+SQL> create sequence PHR_ID_SEQ start with 99 increment by 1;
+
+Sequence created.
+
+SQL> select PHR_ID_SEQ.nextval from dual;
+
+   NEXTVAL
+----------
+        99
+
+SQL> select PHR_ID_SEQ.nextval from dual;
+
+   NEXTVAL
+----------
+       100
+=====================================================================================================================================================================
+SQL> insert into patient_tab values(1001,'mr.','pavan atluri',25,'male',7207307229,'pavan.atluri1991@gmail.com','temp','temp');
+
+1 row created.
+
+SQL> insert into patient_tab values(1002,'mr.','prudivi moola',25,'male',99999999999,'prudivi@gmail.com','temp','temp');
+
+1 row created.
+
+SQL> insert into patient_tab values(1003,'mr.','Mallikarjan Koraboina',27,'male',88888888888,'malli@gmail.com','temp','temp');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+=====================================================================================================================================================================
+SQL> insert into doctors_tab values(10001,'dr.','Y Nayudamma','cardiology',66666666666,'aaa@gmail.com','mod','india','ts','hyd','temp');
+
+1 row created.
+
+
+SQL> insert into doctors_tab values(10002,'dr.','A L Mudaliar','Dermatology',77777777777,'bbb@gmail.com','mod','india','ts','hyd','temp');
+
+1 row created.
+
+SQL> insert into doctors_tab values(10003,'dr.','A G Joshi','ent','55555555555','ccc@gmail.com','mod','india','ts','hyd','temp');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
