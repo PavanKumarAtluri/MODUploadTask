@@ -41,6 +41,8 @@
 
 <!doctype html>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <head>
 <meta charset="utf-8">
 <title>Patient Login Page</title>
@@ -72,7 +74,7 @@
 <div class="form-group">
 <div class="col-xs-12 margin-bottom-35 panel-top">
 <span class="register-form-label">Patient Log in</span></div>
-<div class="row"><div class="col-xs-12 text-center"><input type="text" class="register-form-input" name="uname" placeholder="Login" onfocus="myHide()" ><i class="fa fa-user input-icon" aria-hidden="true"></i></div><div class="col-xs-12 text-center"><input type="password" class="register-form-input" name="pwd" placeholder="Password" onfocus="myHide()"><i class="fa fa-lock input-icon" aria-hidden="true"></i></div></div>
+<div class="row"><div class="col-xs-12 text-center"><input type="text" class="register-form-input" name="uname" placeholder="Login Id" onfocus="myHide()" ><i class="fa fa-user input-icon" aria-hidden="true"></i></div><div class="col-xs-12 text-center"><input type="password" class="register-form-input" name="pwd" placeholder="Password" onfocus="myHide()"><i class="fa fa-lock input-icon" aria-hidden="true"></i></div></div>
 <div id="communique" class="communique"><span class=""></span></div>
 
 <div class="row"><div class="col-xs-12 text-center"><a href="patient-screen.html" ><input type="submit" id="signInBtn" value="LOG IN" class="btn-login" /></a></div></div>

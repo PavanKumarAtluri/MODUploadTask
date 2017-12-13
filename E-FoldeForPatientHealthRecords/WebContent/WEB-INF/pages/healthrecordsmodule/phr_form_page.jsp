@@ -145,8 +145,14 @@ table, th, td {
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Welcome</title>
+<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
+	
 <!-- <head>
 <style type="text/css">
 table, th, td {
@@ -380,6 +386,8 @@ select {
 	display: inline-block;
 	line-height: 25px;
 }
+   .logoutbtn{background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/logout.png); background-repeat:no-repeat; background-position:left; padding-left:30px; float:right; color:#fff; background-size:24px; height:60px; margin-right:30px; line-height:60px;text-decoration:none;
+
 </style>
 <style>
 #myDIV {
@@ -394,12 +402,18 @@ select {
 	<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/asserts/theme1/jquery/jquery-3.2.1.min.js"></script> --%>
 	<div class="header">
 	<img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
+		<a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
+	
 	</div>
-	<a style="text-align: right;" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
+	<p style="text-align: center">
+		<a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a>
+	</p>
 	<div id="myDIV">
 		<h1 style="color: red; text-align: center;">${message}</h1>
 		<h1 style="color: green; text-align: center;">${message1}</h1>
 	</div>
+	
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
 	<div class="main-box">
 	
 		<label class="title">Upload New Report</label>
@@ -486,9 +500,9 @@ select {
 		</table>
 		<p style="color: red; text-align: center" id="text_area_msg" class="rq"></p>
 	</div>
-	<p style="text-align: center">
-		<a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a>
-	</p>
+	</div>
+	
+	
 	<script type="text/javascript">
 		function ValidationEvent() {
 			var doctor_id1 = document.getElementById("doctor_id");

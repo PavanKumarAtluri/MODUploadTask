@@ -2,10 +2,15 @@
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
+
+
 <title>Result Page</title>
 <!-- <style>
 table, th, td {
@@ -67,13 +72,18 @@ body{
     margin-bottom: 35px;
 	display:inline-block;
     line-height: 25px;}
+       .logoutbtn{background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/logout.png); background-repeat:no-repeat; background-position:left; padding-left:30px; float:right; color:#fff; background-size:24px; height:60px; margin-right:30px; line-height:60px;text-decoration:none;
+    
 </style>
+
 </head>
 <body>
 <div class="header">
 	<img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
+	<a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
 </div>
-<a style="text-align: right;" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
+	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/doctor_details.htm">Home</a></p>
+
 <div class="dataTable">
 <label class="title">View Reports</label>
 <!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->
@@ -84,7 +94,7 @@ body{
 				<tr>
 					<!-- <th>Doctor ID</th> -->
 					<!-- <th>Patient ID</th> -->
-					<th>Patient Name</th>
+					<th>Name of the Patient</th>
 					<th>Age</th>
 					<th>Gender</th>
 					<th>Report Type</th>
@@ -117,6 +127,5 @@ body{
 	</c:choose>
 	</div>
 	<br>
-	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/doctor_details.htm">Home</a></p>
 </body>
 </html>

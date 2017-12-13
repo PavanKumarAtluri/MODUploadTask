@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login Page</title>
 </head>
 <body onload="myRemoveSessionMsg();preventBack();" >
@@ -44,7 +45,7 @@
 <title>Patient Login Page</title>
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/display.css" type="text/css" rel="stylesheet" media="all" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 
 .header{
@@ -70,7 +71,7 @@
 <div class="form-group">
 <div class="col-xs-12 margin-bottom-35 panel-top">
 <span class="register-form-label">Doctor Log in</span></div>
-<div class="row"><div class="col-xs-12 text-center"><input type="text" class="register-form-input" name="docname" placeholder="Login" onfocus="myHide()"><i class="fa fa-user input-icon" aria-hidden="true"></i></div><div class="col-xs-12 text-center"><input type="password" class="register-form-input" name="docpwd" placeholder="Password" onfocus="myHide()"><i class="fa fa-lock input-icon" aria-hidden="true"></i></div></div>
+<div class="row"><div class="col-xs-12 text-center"><input type="text" class="register-form-input" name="docname" placeholder="Login Id" onfocus="myHide()"><i class="fa fa-user input-icon" aria-hidden="true"></i></div><div class="col-xs-12 text-center"><input type="password" class="register-form-input" name="docpwd" placeholder="Password" onfocus="myHide()"><i class="fa fa-lock input-icon" aria-hidden="true"></i></div></div>
 <div id="communique" class="communique"><span class=""></span></div>
 
 <div class="row"><div class="col-xs-12 text-center"><a href="patient-screen.html" ><input type="submit" id="signInBtn" value="LOG IN" class="btn-login" /></a></div></div>

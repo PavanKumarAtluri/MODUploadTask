@@ -2,8 +2,14 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PHR Display Form</title>
+<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
+	
 <head>
 <!-- <style type="text/css">
 table, th, td {
@@ -70,26 +76,17 @@ body {
     .containerLogin{
     background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/bg-login.png); background-repeat:no-repeat;
     }
-</style>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>PHR Display Form</title>
-<style>
-body {
-    background-image: url("${pageContext.request.contextPath}/asserts/theme1/images/bg-login.png");
-}
-.header{
-    background-color:#70a1ff ; height:75px;
-    }
-    .containerLogin{
-    background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/bg-login.png); background-repeat:no-repeat;
-    }
-</style>
+           .logoutbtn{background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/logout.png); background-repeat:no-repeat; background-position:left; padding-left:30px; float:right; color:#fff; background-size:24px; height:60px; margin-right:30px; line-height:60px;text-decoration:none;
+    </style>
+
 </head>
 <body onload="preventBack()">
 <div class="header">
     <img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
+	<a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
 </div>
-<a style="text-align: right;" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
+	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a></p>
+
 	<h1 style="color: blue; text-align: center">Find Your Reports</h1>
 
 	<table align="center" bgcolor="#D6DBDF">
@@ -116,7 +113,6 @@ body {
 		</f:form>
 	</table>
 	
-	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a></p>
 	<script type="text/javascript">
 		function ValidationEvent() {
 			var patient_id1 = document.getElementById("patient_id").value;

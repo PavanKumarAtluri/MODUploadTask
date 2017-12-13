@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
+
 <head>
 <!-- <style type="text/css">
 table, th, td {
@@ -15,7 +20,7 @@ table, th, td {
 body {
     background-image: url(/E-FoldeForPatientHealthRecords/asserts/theme1/images/bg-login.png);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% auto;
     margin: 0px auto;
     font-family: Arial;
 }
@@ -44,28 +49,43 @@ margin-top:5%; margin:bottom:5%;
 </style>
 <style>
 body {
-    background-image: url("${pageContext.request.contextPath}/asserts/theme1/images/bg-login.png");
+    background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/bg-login.png); background-repeat:no-repeat;
 }
 .header{
     background-color:#70a1ff ; height:75px;
     }
-    .containerLogin{
-    background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/bg-login.png); background-repeat:no-repeat;
-    }
+   .logoutbtn{background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/logout.png); background-repeat:no-repeat; background-position:left; padding-left:30px; float:right; color:#fff; background-size:24px; height:60px; margin-right:30px; line-height:60px;text-decoration:none;
+   }
 </style>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Patient Home Page</title>
 </head>
 <body onload="preventBack()">
+
 <div class="header">
     <img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
+    <a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
+    
     </div>
-<a style="text-align: left;" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
 <h1 style="color: blue; text-align: center">Patient Home</h1>
+<div class="">
+<div>
+
+<div class="user-dashboard">
+<div class="welcome-section">
+	<a href="${pageContext.request.contextPath}/phr/phr_form_page.htm"><button class="contact-doc-btn">Upload Report</button></a>
+	<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phr_detals_form.htm"><button class="contact-doc-btn">My Reports</button></a>
+</div>
+</div>
+</div>
+</div>
+
+<%--
 <table align="center" bgcolor="#D6DBDF">
 <tr><td><a href="${pageContext.request.contextPath}/phr/phr_form_page.htm">Upload Report</a></td></tr>
 <tr><td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phr_detals_form.htm">My Reports</a></td></tr>
 </table>
+ --%>
 <script type = "text/javascript" >
     function preventBack() { 
     window.history.forward(); }
