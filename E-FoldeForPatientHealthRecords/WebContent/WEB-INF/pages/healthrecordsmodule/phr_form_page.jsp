@@ -513,15 +513,15 @@ select {
 			//alert("phr_type1.selectedIndex ::"+phr_type1.selectedIndex);
 			
 			if (doctor_id1.selectedIndex == "") {
-				alert("Please select Doctor Name");
+				alert("Please select doctor name");
 				 
 				return false;
 			} else if (phr_type1.selectedIndex == "") {
-				alert("Please select Report Type");
+				alert("Please select report type");
 				 
 				return false;
 			} else if (phr_description1 == "") {
-				alert("Please Provide Notes For Doctor");
+				alert("Please provide notes to doctor");
 				
 				return false;
 			}

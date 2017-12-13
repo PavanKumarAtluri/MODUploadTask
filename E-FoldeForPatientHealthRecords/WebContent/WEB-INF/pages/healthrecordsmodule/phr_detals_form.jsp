@@ -119,10 +119,10 @@ body {
 			var phr_type1 = document.getElementById("phr_type");
 
 			if (patient_id1 == "") {
-				alert("Patient Id must be filled out");
+				alert("Patient id must be filled out");
 				return false;
 			} else if (phr_type1.selectedIndex == "") {
-				alert("Please select PHR Type");
+				alert("Please select phr type");
 				return false;
 			}
 		}
