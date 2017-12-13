@@ -95,9 +95,9 @@ body{
 					<!-- <th>Doctor ID</th> -->
 					<th>Name of the Doctor</th>
 					<th>Specialization</th>
-					<th>Type Of Report</th>
+					<th>Type of Report</th>
 					<th>Uploaded Date</th>
-					<th>Notes For Doctor</th>
+					<th>Notes to Doctor</th>
 					<th>Original Report</th>
 					<th>PDF Report</th>
 				</tr>

@@ -430,7 +430,7 @@ select {
 				</tr> --%>
 
 				<tr>
-					<td><label for="doctor_id">Doctor Name</label></td>
+					<td><label for="doctor_id">Name of the Doctor</label></td>
 				</tr>
 				<tr>
 					<td><f:select path="doctor_id" id="doctor_id" onfocus="myHide();myRemoveSessionMsg();">
@@ -474,7 +474,7 @@ select {
 
 
 				<tr>
-					<td><label for="phr_description">Notes For Doctor</label></td>
+					<td><label for="phr_description">Notes to Doctor</label></td>
 
 				</tr>
 				<tr>
@@ -513,7 +513,7 @@ select {
 			//alert("phr_type1.selectedIndex ::"+phr_type1.selectedIndex);
 			
 			if (doctor_id1.selectedIndex == "") {
-				alert("Please select Doctor");
+				alert("Please select Doctor Name");
 				 
 				return false;
 			} else if (phr_type1.selectedIndex == "") {

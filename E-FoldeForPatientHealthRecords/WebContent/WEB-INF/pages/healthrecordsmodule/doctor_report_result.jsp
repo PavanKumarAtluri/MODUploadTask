@@ -99,7 +99,7 @@ body{
 					<th>Gender</th>
 					<th>Report Type</th>
 					<th>Uploaded Date</th>
-					<th>Notes From Patient</th>
+					<th>Notes from Patient</th>
 					<th>Original Report</th>
 					<th>PDF Report</th>
 					

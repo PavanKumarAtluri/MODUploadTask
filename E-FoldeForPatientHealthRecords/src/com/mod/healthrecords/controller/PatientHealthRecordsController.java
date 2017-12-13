@@ -125,7 +125,7 @@ public class PatientHealthRecordsController {
 		Map<Integer,String> doctorsList = new LinkedHashMap<Integer,String>();
 		/*doctorsList.put(-1, "Select");*/
 		for(Doctor d:list){
-			doctorsList.put(d.getDoctor_id(), d.getDoctor_name()+"-"+d.getDoctor_specialization());
+			doctorsList.put(d.getDoctor_id(), d.getDoctor_name()+" - "+d.getDoctor_specialization());
 		}
 		
 		return doctorsList;

@@ -61,12 +61,20 @@
 <body onload="myRemoveSessionMsg();preventBack();">
 <div class="header">
     <img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
+    <p style="float:right; margin-right:20px; color:#fff; line-height:50px; padding-top:10px; font-family:Arial">
+		<a style="color:#fff!important" href="${pageContext.request.contextPath}/phr/home.htm">&lt;-- Back</a>
+	</p>
 </div>
-<div id="myDIV1">
-<p style="color: red;text-align: center">${docerrorMsg}</p>
-</div>
+
+
 <div class="containerLogin">
-<div class="card-panel"><!-- react-text: 6 --><!-- /react-text --><div class="sign-in">
+
+<div class="card-panel">
+<div id="myDIV1" style="background-color:#fff; text-align:center">
+<span style="color: red;text-align: center">${docerrorMsg}</span>
+</div>
+
+<!-- react-text: 6 --><!-- /react-text --><div class="sign-in">
 <form id="signInFormm" action='${pageContext.request.contextPath}/phr/doctor_details.htm' method="post">
 <div class="form-group">
 <div class="col-xs-12 margin-bottom-35 panel-top">

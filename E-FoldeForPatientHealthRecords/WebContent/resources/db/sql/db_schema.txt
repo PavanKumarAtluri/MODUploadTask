@@ -90,7 +90,7 @@ SQL> commit;
 
 Commit complete.
 =====================================================================================================================================================================
-SQL> insert into doctors_tab values(10001,'dr.','Y Nayudamma','cardiology',66666666666,'aaa@gmail.com','mod','india','ts','hyd','temp');
+SQL> insert into doctors_tab values(10001,'dr.','Y Nayudamma','Cardiology',66666666666,'aaa@gmail.com','mod','india','ts','hyd','temp');
 
 1 row created.
 
@@ -99,7 +99,7 @@ SQL> insert into doctors_tab values(10002,'dr.','A L Mudaliar','Dermatology',777
 
 1 row created.
 
-SQL> insert into doctors_tab values(10003,'dr.','A G Joshi','ent','55555555555','ccc@gmail.com','mod','india','ts','hyd','temp');
+SQL> insert into doctors_tab values(10003,'dr.','A G Joshi','ENT','55555555555','ccc@gmail.com','mod','india','ts','hyd','temp');
 
 1 row created.
 
