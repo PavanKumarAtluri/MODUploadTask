@@ -78,7 +78,7 @@
 <form id="signInFormm" action='${pageContext.request.contextPath}/phr/doctor_details.htm' method="post">
 <div class="form-group">
 <div class="col-xs-12 margin-bottom-35 panel-top">
-<span class="register-form-label">Doctor Log in</span></div>
+<span class="register-form-label">Doctor Log In</span></div>
 <div class="row"><div class="col-xs-12 text-center"><input type="text" class="register-form-input" name="docname" placeholder="Login ID" onfocus="myHide()"><i class="fa fa-user input-icon" aria-hidden="true"></i></div><div class="col-xs-12 text-center"><input type="password" class="register-form-input" name="docpwd" placeholder="Password" onfocus="myHide()"><i class="fa fa-lock input-icon" aria-hidden="true"></i></div></div>
 <div id="communique" class="communique"><span class=""></span></div>
 

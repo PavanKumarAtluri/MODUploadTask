@@ -430,7 +430,7 @@ select {
 				</tr> --%>
 
 				<tr>
-					<td><label for="doctor_id">Name of the Doctor</label></td>
+					<td><label for="doctor_id">Doctor Name</label></td>
 				</tr>
 				<tr>
 					<td><f:select path="doctor_id" id="doctor_id" onfocus="myHide();myRemoveSessionMsg();">
