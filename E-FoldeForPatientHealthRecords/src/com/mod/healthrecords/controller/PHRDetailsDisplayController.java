@@ -10,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
 import com.mod.healthrecords.command.PHRDisplayCommand;
 import com.mod.healthrecords.service.PatientHealthRecordsServiceI;
+import com.mod.healthrecords.utils.JsonUtil;
 
 @Controller("phrDetailsDisplayController")
 @RequestMapping("/phrDetailsDisplay")
@@ -60,6 +63,31 @@ public class PHRDetailsDisplayController {
 		List<PatientHealthReportResp> list=patientHealthRecordsService.getPHRInfo(userIdInt, cmd.getPhr_type());
 		map.put("resultList", list);
 		return "phr_detals_result";
+	}
+	
+	@RequestMapping(value="/get_reports_by_type.htm" , method=RequestMethod.GET)
+	@ResponseBody
+	public String getReportswithajax(@RequestParam("type") String reportType,Map<String,Object> map, HttpSession session){
+		List<PatientHealthReportResp> list=null;
+		String userId = (String) session.getAttribute("userId");
+		Integer userIdInt = Integer.valueOf(userId);
+		
+		if(reportType.equalsIgnoreCase("all"))
+			list=patientHealthRecordsService.getAllPatientReportsById(userIdInt);
+		else
+			list=patientHealthRecordsService.getPHRInfo(userIdInt, reportType);
+		
+		
+		return JsonUtil.javaToJson(list);
+	}
+	
+	@RequestMapping(value="/patient_all_reports_display.htm" , method=RequestMethod.GET)
+	public String getAllReportsbyId(Map<String,Object> map, HttpSession session){
+		String userId = (String) session.getAttribute("userId");
+		Integer userIdInt = Integer.valueOf(userId);
+		List<PatientHealthReportResp> list=patientHealthRecordsService.getAllPatientReportsById(userIdInt);
+		map.put("allReports", list);
+		return "patient_all_reports_display_page";
 	}
 	
 	

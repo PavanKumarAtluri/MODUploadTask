@@ -74,7 +74,8 @@ body {
 <div class="user-dashboard">
 <div class="welcome-section">
 	<a href="${pageContext.request.contextPath}/phr/phr_form_page.htm"><button class="contact-doc-btn">Upload Report</button></a>
-	<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phr_detals_form.htm"><button class="contact-doc-btn">My Reports</button></a>
+	<%-- <a href="${pageContext.request.contextPath}/phrDetailsDisplay/phr_detals_form.htm"><button class="contact-doc-btn">My Reports</button></a> --%>
+	<a href="${pageContext.request.contextPath}/phrDetailsDisplay/patient_all_reports_display.htm"><button class="contact-doc-btn">My Reports</button></a>
 </div>
 </div>
 </div>

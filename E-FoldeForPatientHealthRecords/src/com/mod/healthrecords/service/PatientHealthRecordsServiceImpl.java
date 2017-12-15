@@ -124,4 +124,9 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 		return patientHealthRecordsDAO.getDoctorDetails();
 	}
 
+	@Override
+	public List<PatientHealthReportResp> getAllPatientReportsById(int pid) {
+		return patientHealthRecordsDAO.getAllPatientReportsById(pid);
+	}
+
 }

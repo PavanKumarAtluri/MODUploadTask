@@ -21,4 +21,6 @@ public interface PatientHealthRecordsServiceI {
 	public List<DoctorReportResponse> getDoctorReport(Integer doctor_id);
 	
 	public List<Doctor> getDoctorDetails();
+	
+	public List<PatientHealthReportResp> getAllPatientReportsById(int pid);
 }

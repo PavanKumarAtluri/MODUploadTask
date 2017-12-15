@@ -23,4 +23,6 @@ public interface PatientHealthRecordsDAOI {
 	
 	public List<Doctor> getDoctorDetails();
 	
+	public List<PatientHealthReportResp> getAllPatientReportsById(int pid);
+	
 }
