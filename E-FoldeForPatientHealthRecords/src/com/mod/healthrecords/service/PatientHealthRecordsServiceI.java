@@ -1,5 +1,6 @@
 package com.mod.healthrecords.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mod.healthrecords.beans.bo.Doctor;
@@ -23,4 +24,8 @@ public interface PatientHealthRecordsServiceI {
 	public List<Doctor> getDoctorDetails();
 	
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid);
+
+	public ArrayList<String> getAllPatients(String str);
+
+	public List<DoctorReportResponse> getRecordsByPatientname(String name,int did);
 }

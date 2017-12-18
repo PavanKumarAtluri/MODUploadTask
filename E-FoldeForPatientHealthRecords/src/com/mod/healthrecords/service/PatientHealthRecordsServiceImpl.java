@@ -2,7 +2,12 @@ package com.mod.healthrecords.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -127,6 +132,36 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	@Override
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid) {
 		return patientHealthRecordsDAO.getAllPatientReportsById(pid);
+	}
+
+	@Override
+	public ArrayList<String> getAllPatients(String str) {
+		ArrayList<String> list = new ArrayList<String>();
+		PreparedStatement ps = null;
+		Connection con = null;
+		String data;
+		try {
+			String output = str.toLowerCase();
+			String ch = "%"+ output + "%";
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "manager");
+			ps = con.prepareStatement("SELECT PATIENT_NAME FROM PATIENT_TAB WHERE PATIENT_NAME  LIKE '" + ch + "'");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				data = rs.getString(1);
+				System.out.println(data);
+				list.add(data);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
+
+	@Override
+	public List<DoctorReportResponse> getRecordsByPatientname(String name,int did) {
+		
+		return patientHealthRecordsDAO.getAllPatientReportsByName(name, did);
 	}
 
 }

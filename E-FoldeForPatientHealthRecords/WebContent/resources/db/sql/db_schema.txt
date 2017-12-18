@@ -74,7 +74,7 @@ SQL> select PHR_ID_SEQ.nextval from dual;
 ----------
        100
 =====================================================================================================================================================================
-SQL> insert into patient_tab values(1001,'mr.','pavan atluri',25,'male',7207307229,'pavan.atluri1991@gmail.com','temp','temp');
+SQL> insert into patient_tab values(1001,'mr.','pavan kumar atluri',25,'male',7207307229,'pavan.atluri1991@gmail.com','temp','temp');
 
 1 row created.
 
@@ -82,7 +82,7 @@ SQL> insert into patient_tab values(1002,'mr.','prudivi moola',25,'male',9999999
 
 1 row created.
 
-SQL> insert into patient_tab values(1003,'mr.','Mallikarjan Koraboina',27,'male',88888888888,'malli@gmail.com','temp','temp');
+SQL> insert into patient_tab values(1003,'mr.','mallikarjan koraboina',27,'male',88888888888,'malli@gmail.com','temp','temp');
 
 1 row created.
 

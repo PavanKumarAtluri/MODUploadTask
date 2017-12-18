@@ -6,8 +6,84 @@
 <!doctype html>
 <html>
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script>
+	$(document).ready(function() {
+		$(function() {
+			$("#search").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "${pageContext.request.contextPath}/doctorReportDisplay/patientnameCheck.htm",
+						type : "GET",
+						data : {
+							term : request.term
+						},
+						dataType : "json",
+						success : function(data) {
+							response(data);
+						}
+					});
+				}
+			});
+		});
+	});
+</script>
+<script>
+$(document).ready(function(){
+    $("#searchBtn").click(function(){
+    	var bla = $("#search").val();
+    	  //alert( bla);
+		 /*  if(bla == ""){
+			  alert("please provide patient name");
+			  return false;
+		  } */
+		$.get('${pageContext.request.contextPath}/doctorReportDisplay/get_reports_by_patient_name.htm?name='+bla,function(details) {
+			
+			var tr = '<tr>' ;
+			$("#t").empty();
+			
+			
+			tr += '<th>' + "Name of the Patient"  + '</th>';
+			tr += '<th>' + "Age"  + '</th>';
+			tr += '<th>' + "Gender"  + '</th>';
+			tr += '<th>' + "Report Type"  + '</th>';
+			tr += '<th>' + "Uploaded Date"  + '</th>';
+			tr += '<th>' + "Notes from Patient"  + '</th>';
+			tr += '<th>' + "Original Report"  + '</th>';
+			tr += '<th>' + "PDF Report"  + '</th>';
+			tr +='</tr>';
+			
+			
+			var e = JSON.parse(details);
+			
+			$.each(e, function(k, v) {
+	
+				tr += '<td>' + v.patient_name  + '</td>';
+		        tr += '<td>' + v.patient_age + '</td>';
+		        tr += '<td>' + v.patient_sex  + '</td>';
+		        tr += '<td>' + v.phr_type + '</td>';
+		        tr += '<td>' + v.phr_uploaded_date  + '</td>';
+		        tr += '<td>' + v.phr_description  + '</td>';
+		        tr += '<td>' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/original.jpg" alt="x" width="50" height="42"></a>' + '</td>';
+		        tr += '<td>' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf.png" alt="x" width="50" height="42"></a>' + '</td>';
+		    	tr +='</tr>';
+		    	
+		    	
+			});
+			
+			$("#t").append(tr);
+		
+		});
+    });
+});
+</script>
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 
 
@@ -78,11 +154,18 @@ body{
 
 </head>
 <body>
+
 <div class="header">
 	<img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
 	<a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
 </div>
 	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/doctor_details.htm">Home</a></p>
+	<div class="search-container">
+		<div class="ui-widget">
+			Patient Name: <input type="text" id="search" name="search" class="search" />
+			<input type="button" name="searchBtn" id="searchBtn" value="Search">
+		</div>
+	</div>
 
 <div class="dataTable">
 <label class="title">View Reports</label>
@@ -90,7 +173,7 @@ body{
 	<c:choose>
 		<c:when test="${!empty resultList}">
 		
-			<table align="center">
+			<table align="center" id="t">
 				<tr>
 					<!-- <th>Doctor ID</th> -->
 					<!-- <th>Patient ID</th> -->
@@ -114,8 +197,8 @@ body{
 						<td><c:out value="${result.phr_type}" /></td>
 						<td><c:out value="${result.phr_uploaded_date}" /></td>
 						<td><c:out value="${result.phr_description}" /></td>
-						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" target="_blank">Download</a></td>
-						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" target="_blank">Download</a></td>
+						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/original.jpg" alt="x" width="50" height="42"></a></td>
+						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf.png" alt="x" width="50" height="42"></a></td>
 					</tr>
 				</c:forEach>
 			</table>

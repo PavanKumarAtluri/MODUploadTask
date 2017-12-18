@@ -75,6 +75,16 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid) {
 		return jdbcTemplate.query(QueryConstants.GET_ALL_REPORTS_BY_ID, new PhrDetailsExtractor(), pid);
 	}
+	
+	@Override
+	public List<DoctorReportResponse> getAllPatientReportsByName(String name, int did) {
+		if(name.equals("") || name.equals(null))
+			return getDoctorReport(did);
+		else{
+			return jdbcTemplate.query(QueryConstants.GET_REPORTS_BY_NAME_AND_DOCTOR_ID, new DoctorReportExtractor(),did, name);
+		}
+			
+	}
 
 	private static class PatientDetailsRowMapper implements RowMapper<Patient> {
 
