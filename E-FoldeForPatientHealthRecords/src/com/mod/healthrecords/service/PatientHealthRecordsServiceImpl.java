@@ -154,6 +154,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return list;
 	}

@@ -12,10 +12,10 @@
     <error-code>400</error-code>
     <location>/resources/400.jsp</location>
   </error-page>
-  <error-page>
+  <!-- <error-page>
     <error-code>500</error-code>
     <location>/resources/500.jsp</location>
-  </error-page>
+  </error-page> -->
   <error-page>
     <error-code>403</error-code>
     <location>/resources/403.jsp</location>
