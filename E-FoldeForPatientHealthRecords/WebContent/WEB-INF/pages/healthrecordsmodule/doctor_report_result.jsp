@@ -40,6 +40,7 @@ $(document).ready(function(){
     $("#searchBtn").click(function(){
     	var bla = $("#search").val();
     	  //alert( bla);
+    	  
 		 /*  if(bla == ""){
 			  alert("please provide patient name");
 			  return false;
@@ -50,14 +51,14 @@ $(document).ready(function(){
 			$("#t").empty();
 			
 			
-			tr += '<th>' + "Name of the Patient"  + '</th>';
+			tr += '<th>' + "Patient Name"  + '</th>';
 			tr += '<th>' + "Age"  + '</th>';
 			tr += '<th>' + "Gender"  + '</th>';
 			tr += '<th>' + "Report Type"  + '</th>';
 			tr += '<th>' + "Uploaded Date"  + '</th>';
 			tr += '<th>' + "Notes from Patient"  + '</th>';
-			tr += '<th>' + "Original Report"  + '</th>';
-			tr += '<th>' + "PDF Report"  + '</th>';
+			tr += '<th>' + "download"  + '</th>';
+			
 			tr +='</tr>';
 			
 			
@@ -71,8 +72,7 @@ $(document).ready(function(){
 		        tr += '<td>' + v.phr_type + '</td>';
 		        tr += '<td>' + v.phr_uploaded_date  + '</td>';
 		        tr += '<td>' + v.phr_description  + '</td>';
-		        tr += '<td>' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/original.jpg" alt="x" width="50" height="42"></a>' + '</td>';
-		        tr += '<td>' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf.png" alt="x" width="50" height="42"></a>' + '</td>';
+		        tr += '<td>' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="17" height="19"></a>' + '</td>';
 		    	tr +='</tr>';
 		    	
 		    	
@@ -177,14 +177,13 @@ body{
 				<tr>
 					<!-- <th>Doctor ID</th> -->
 					<!-- <th>Patient ID</th> -->
-					<th>Name of the Patient</th>
+					<th>Patient Name</th>
 					<th>Age</th>
 					<th>Gender</th>
 					<th>Report Type</th>
 					<th>Uploaded Date</th>
 					<th>Notes from Patient</th>
-					<th>Original Report</th>
-					<th>PDF Report</th>
+					<th>Download</th>
 					
 				</tr>
 				<c:forEach var="result" items="${resultList }">
@@ -197,8 +196,7 @@ body{
 						<td><c:out value="${result.phr_type}" /></td>
 						<td><c:out value="${result.phr_uploaded_date}" /></td>
 						<td><c:out value="${result.phr_description}" /></td>
-						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/original.jpg" alt="x" width="50" height="42"></a></td>
-						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf.png" alt="x" width="50" height="42"></a></td>
+						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="17" height="19"></a></td>
 					</tr>
 				</c:forEach>
 			</table>

@@ -108,10 +108,9 @@ body{
 					<th>Doctor Name</th>
 					<th>Specialty</th>
 					<th>Report Type</th>
-					<th>Date of Upload</th>
+					<th>Uploaded Date</th>
 					<th>Notes to Doctor</th>
-					<th>Original Report</th>
-					<th>PDF Report</th>
+					<th>Download</th>
 				</tr>
 				<c:forEach var="result" items="${allReports }">
 					<tr>
@@ -122,8 +121,7 @@ body{
 						<td><c:out value="${result.phr_type }" /></td>
 						<td><c:out value="${ result.phr_uploaded_date}" /></td>
 						<td><c:out value="${result.phr_description}"/></td>
-						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/original.jpg" alt="x" width="50" height="42"></a></td>
-						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf.png" alt="x" width="50" height="42"></a></td>
+						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="17" height="19"></a></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -151,10 +149,9 @@ body{
 				tr += '<th>' + "Doctor Name"  + '</th>';
 				tr += '<th>' + "Specialty"  + '</th>';
 				tr += '<th>' + "Report Type"  + '</th>';
-				tr += '<th>' + "Date of Upload"  + '</th>';
+				tr += '<th>' + "Uploaded Date"  + '</th>';
 				tr += '<th>' + "Notes to Doctor"  + '</th>';
-				tr += '<th>' + "Original Report"  + '</th>';
-				tr += '<th>' + "PDF Report"  + '</th>';
+				tr += '<th>' + "Download"  + '</th>';
 				tr +='</tr>';
 				
 				
@@ -166,10 +163,8 @@ body{
 			        tr += '<td>' + v.phr_type  + '</td>';
 			        tr += '<td>' + v.phr_uploaded_date + '</td>';
 			        tr += '<td>' + v.phr_description  + '</td>';
-			        tr += '<td>' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/original.jpg" alt="x" width="50" height="42"></a>' + '</td>';
-			        tr += '<td>' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf.png" alt="x" width="50" height="42"></a>' + '</td>';
-			    	tr +='</tr>';
-			    	
+			        tr += '<td>' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="download pdf" alt="x" width="17" height="19"></a>' + '</td>';
+			    	tr +='</tr>';  	
 			    	
 				});
 				$("#t").append(tr);
