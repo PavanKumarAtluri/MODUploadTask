@@ -51,13 +51,13 @@ $(document).ready(function(){
 			$("#t").empty();
 			
 			
-			tr += '<th>' + "Patient Name"  + '</th>';
-			tr += '<th>' + "Age"  + '</th>';
-			tr += '<th>' + "Gender"  + '</th>';
-			tr += '<th>' + "Report Type"  + '</th>';
-			tr += '<th>' + "Uploaded Date"  + '</th>';
+			tr += '<th width="15%">' + "Name of the Patient"  + '</th>';
+			tr += '<th width="5%">' + "Age"  + '</th>';
+			tr += '<th width="5%">' + "Gender"  + '</th>';
+			tr += '<th width="15%">' + "Type of Report"  + '</th>';
+			tr += '<th width="15%">' + "Date of Uploaded"  + '</th>';
 			tr += '<th>' + "Notes from Patient"  + '</th>';
-			tr += '<th>' + "download"  + '</th>';
+			tr += '<th width="10%">' + "download"  + '</th>';
 			
 			tr +='</tr>';
 			
@@ -66,23 +66,33 @@ $(document).ready(function(){
 			
 			$.each(e, function(k, v) {
 	
-				tr += '<td>' + v.patient_name  + '</td>';
-		        tr += '<td>' + v.patient_age + '</td>';
-		        tr += '<td>' + v.patient_sex  + '</td>';
-		        tr += '<td>' + v.phr_type + '</td>';
-		        tr += '<td>' + v.phr_uploaded_date  + '</td>';
-		        tr += '<td>' + v.phr_description  + '</td>';
-		        tr += '<td>' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="17" height="19"></a>' + '</td>';
+				tr += '<td align="center">' + v.patient_name  + '</td>';
+		        tr += '<td align="center">' + v.patient_age + '</td>';
+		        tr += '<td align="center">' + v.patient_sex  + '</td>';
+		        tr += '<td align="center">' + v.phr_type + '</td>';
+		        tr += '<td align="center">' + v.phr_uploaded_date  + '</td>';
+		        tr += '<td align="center">' + v.phr_description  + '</td>';
+		        tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="22" height="24"></a>' + '</td>';
 		    	tr +='</tr>';
 		    	
 		    	
 			});
+			
+			if ($.trim(details)=='[]'){   
+			    //alert("No report is found with this name"+details);
+			    document.getElementById("errMsg").innerHTML="Patient "+bla+" doesn't exist";
+			}else
+				document.getElementById("errMsg").innerHTML="";
 			
 			$("#t").append(tr);
 		
 		});
     });
 });
+
+function removeMsg() {
+	document.getElementById("search").value = '';
+}
 </script>
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 
@@ -149,7 +159,18 @@ body{
 	display:inline-block;
     line-height: 25px;}
        .logoutbtn{background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/logout.png); background-repeat:no-repeat; background-position:left; padding-left:30px; float:right; color:#fff; background-size:24px; height:60px; margin-right:30px; line-height:60px;text-decoration:none;
-    
+    }
+      #search {
+	border: 1px solid;
+	border-color: #d9d9d9 #ccc #b3b3b3;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 1em;
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.6);
+	padding: 10px;
+	margin-bottom: 15px;
+	
 </style>
 
 </head>
@@ -160,15 +181,22 @@ body{
 	<a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
 </div>
 	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/doctor_details.htm">Home</a></p>
-	<div class="search-container">
-		<div class="ui-widget">
-			Patient Name: <input type="text" id="search" name="search" class="search" />
-			<input type="button" name="searchBtn" id="searchBtn" value="Search">
-		</div>
-	</div>
+	
 
 <div class="dataTable">
+<div style="float:left">
 <label class="title">View Reports</label>
+</div>
+<div style="float:right">
+
+<div class="search-container">
+		<div class="ui-widget">
+			<span>Patient Name:</span><span> <input type="text" id="search" name="search" class="search" onfocus="removeMsg()"/></span>
+			<span><input type="button" name="searchBtn" id="searchBtn" value="Search"></span>
+		</div>
+	</div>
+</div>
+<div style="clear:both"></div>
 <!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->
 	<c:choose>
 		<c:when test="${!empty resultList}">
@@ -177,26 +205,26 @@ body{
 				<tr>
 					<!-- <th>Doctor ID</th> -->
 					<!-- <th>Patient ID</th> -->
-					<th>Patient Name</th>
-					<th>Age</th>
-					<th>Gender</th>
-					<th>Report Type</th>
-					<th>Uploaded Date</th>
+					<th width="15%">Name of the Patient</th>
+					<th width="5%">Age</th>
+					<th width="5%">Gender</th>
+					<th width="15%">Type of Report</th>
+					<th width="15%">Date of Uploaded</th>
 					<th>Notes from Patient</th>
-					<th>Download</th>
+					<th width="10%">Download</th>
 					
 				</tr>
 				<c:forEach var="result" items="${resultList }">
 					<tr>
 						<%-- <td><c:out value="${result.doctor_id}" /></td> --%>
 						<%-- <td><c:out value="${result.patient_id }" /></td> --%>
-						<td><c:out value="${result.patient_name }" /></td>
-						<td><c:out value="${result.patient_age }" /></td>
-						<td><c:out value="${result.patient_sex }" /></td>
-						<td><c:out value="${result.phr_type}" /></td>
-						<td><c:out value="${result.phr_uploaded_date}" /></td>
-						<td><c:out value="${result.phr_description}" /></td>
-						<td><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="17" height="19"></a></td>
+						<td align="center"><c:out value="${result.patient_name }" /></td>
+						<td align="center"><c:out value="${result.patient_age }" /></td>
+						<td align="center"><c:out value="${result.patient_sex }" /></td>
+						<td align="center"><c:out value="${result.phr_type}" /></td>
+						<td align="center"><c:out value="${result.phr_uploaded_date}" /></td>
+						<td align="center"><c:out value="${result.phr_description}" /></td>
+						<td align="center"><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="22" height="24"></a></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -206,7 +234,10 @@ body{
 			<h2 style="color: green; text-align: center;">Reports Not Found</h2>
 		</c:otherwise>
 	</c:choose>
+	<p id="errMsg" style="color: red;text-align: center;"></p>
 	</div>
+	
 	<br>
+	
 </body>
 </html>

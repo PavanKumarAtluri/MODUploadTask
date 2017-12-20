@@ -65,7 +65,7 @@
 <div class="header">
     <img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
     <p style="float:right; margin-right:20px; color:#fff; line-height:50px; padding-top:10px; font-family:Arial">
-		<a style="color:#fff!important" href="${pageContext.request.contextPath}/phr/home.htm">&lt;-- Back</a>
+		<a style="color:#fff!important" href="${pageContext.request.contextPath}/phr/home.htm">Back</a>
 	</p>
 </div>
 

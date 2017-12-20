@@ -76,7 +76,19 @@ body{
 	display:inline-block;
     line-height: 25px;}
        .logoutbtn{background-image:url(${pageContext.request.contextPath}/asserts/theme1/images/logout.png); background-repeat:no-repeat; background-position:left; padding-left:30px; float:right; color:#fff; background-size:24px; height:60px; margin-right:30px; line-height:60px;text-decoration:none;
-    
+ }
+    select {
+	border: 1px solid;
+	border-color: #d9d9d9 #ccc #b3b3b3;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 1em;
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.6);
+	padding: 10px;
+	margin-bottom: 15px;
+	width: 100%
+}
 </style>
 </head>
 <body>
@@ -89,39 +101,41 @@ body{
 	<a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
 </div>
 	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a></p>
+
+<div class="dataTable" id="div1">
+<div style="float:left"><label class="title">View Reports</label></div><div style="float:right">
 <select name="phr_type" id="phr_type">
-						<option value="-1">Filter</option>
+						<option value="-1">Filter By Type</option>
 						<option value="all">all</option>
 						<option value="scan">scan</option>
 						<option value="phr">phr</option>
 						<option value="pmr">pmr</option>
 						<option value="ecg">ecg</option>
 </select>
-<div class="dataTable" id="div1">
-<label class="title">View Reports</label>
+</div>
 	<c:choose>
 		<c:when test="${!empty allReports}">
-			<table align="center" id="t">
+			<table align="center" id="t" width="100%">
 				<tr>
 					<!-- <th>Patient ID</th> -->
 					<!-- <th>Doctor ID</th> -->
-					<th>Doctor Name</th>
-					<th>Specialty</th>
-					<th>Report Type</th>
-					<th>Uploaded Date</th>
+					<th width="20%">Name of the Doctor</th>
+					<th width="10%">Specialty</th>
+					<th width="15%">Type of Report</th>
+					<th width="22%">Date of Uploaded</th>
 					<th>Notes to Doctor</th>
-					<th>Download</th>
+					<th width="10%">Download</th>
 				</tr>
 				<c:forEach var="result" items="${allReports }">
 					<tr>
 						<%-- <td><c:out value="${result.patient_id }" /></td> --%>
 						<%-- <td><c:out value="${result.doctor_id}" /></td> --%>
-						<td><c:out value="${result.doctor_name }" /></td>
-						<td><c:out value="${result.doctor_specialization }" /></td>
-						<td><c:out value="${result.phr_type }" /></td>
-						<td><c:out value="${ result.phr_uploaded_date}" /></td>
-						<td><c:out value="${result.phr_description}"/></td>
-						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="17" height="19"></a></td>
+						<td align="center"><c:out value="${result.doctor_name }" /></td>
+						<td align="center"><c:out value="${result.doctor_specialization }" /></td>
+						<td align="center"><c:out value="${result.phr_type }" /></td>
+						<td align="center"><c:out value="${ result.phr_uploaded_date}" /></td>
+						<td align="center"><c:out value="${result.phr_description}"/></td>
+						<td align="center"><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="download pdf" width="20" height="24"></a></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -130,8 +144,10 @@ body{
 			<h2 style="color: green; text-align: center;">Reports Not Found</h2>
 		</c:otherwise>
 	</c:choose>
+	<p id="errMsg" style="color: red;text-align: center;"></p>
 	</div>
 	<br>
+	
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
@@ -146,27 +162,34 @@ body{
 				$("#t").empty();
 				
 				
-				tr += '<th>' + "Doctor Name"  + '</th>';
-				tr += '<th>' + "Specialty"  + '</th>';
-				tr += '<th>' + "Report Type"  + '</th>';
-				tr += '<th>' + "Uploaded Date"  + '</th>';
+				tr += '<th width="20%">' + "Name of the Doctor"  + '</th>';
+				tr += '<th width="10%">' + "Specialty"  + '</th>';
+				tr += '<th width="15%">' + "Type of Report"  + '</th>';
+				tr += '<th width="22%">' + "Date of Uploaded"  + '</th>';
 				tr += '<th>' + "Notes to Doctor"  + '</th>';
-				tr += '<th>' + "Download"  + '</th>';
+				tr += '<th width="10%">' + "Download"  + '</th>';
 				tr +='</tr>';
 				
 				
 				var e = JSON.parse(details);
 				$.each(e, function(k, v) {
 		
-					tr += '<td>' + v.doctor_name  + '</td>';
-			        tr += '<td>' + v.doctor_specialization + '</td>';
-			        tr += '<td>' + v.phr_type  + '</td>';
-			        tr += '<td>' + v.phr_uploaded_date + '</td>';
-			        tr += '<td>' + v.phr_description  + '</td>';
-			        tr += '<td>' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="download pdf" alt="x" width="17" height="19"></a>' + '</td>';
+					tr += '<td align="center">' + v.doctor_name  + '</td>';
+			        tr += '<td align="center">' + v.doctor_specialization + '</td>';
+			        tr += '<td align="center">' + v.phr_type  + '</td>';
+			        tr += '<td align="center">' + v.phr_uploaded_date + '</td>';
+			        tr += '<td align="center">' + v.phr_description  + '</td>';
+			        tr += '<td align="center">' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="download original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="download pdf" alt="x" width="20" height="24"></a>' + '</td>';
 			    	tr +='</tr>';  	
 			    	
 				});
+				
+				if ($.trim(details)=='[]'){   
+				    //alert("No report is found with this name"+details);
+				    document.getElementById("errMsg").innerHTML="No report found with "+$("#phr_type").val()+" type";
+				}else
+					document.getElementById("errMsg").innerHTML="";
+				
 				$("#t").append(tr);
 			
 			});
