@@ -451,9 +451,9 @@ select {
 					<td><select name="phr_type" id="phr_type" onfocus="myHide();myRemoveSessionMsg();">
 							<option value="">Select</option>
 							<option value="scan">scan</option>
-							<option value="phr">phr</option>
-							<option value="pmr">pmr</option>
-							<option value="ecg">ecg</option>
+							<option value="PHR">phr</option>
+							<option value="PMR">pmr</option>
+							<option value="ECG">ecg</option>
 					</select></td>
 				</tr>
 

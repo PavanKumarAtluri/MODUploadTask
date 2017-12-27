@@ -120,7 +120,7 @@ body{
 					<!-- <th>Patient ID</th> -->
 					<!-- <th>Doctor ID</th> -->
 					<th width="20%">Doctor Name</th>
-					<th width="10%">Specialty</th>
+					<th width="10%">Speciality</th>
 					<th width="15%">Report Type</th>
 					<th width="22%">Uploaded Date</th>
 					<th>Notes to Doctor</th>
