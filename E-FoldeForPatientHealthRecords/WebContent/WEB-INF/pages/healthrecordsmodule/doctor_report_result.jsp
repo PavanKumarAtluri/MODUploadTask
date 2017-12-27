@@ -53,11 +53,11 @@ $(document).ready(function(){
 			$("#t").empty();
 			
 			
-			tr += '<th width="17%">' + "Name of the Patient"  + '</th>';
+			tr += '<th width="20%">' + "Patient Name"  + '</th>';
 			tr += '<th width="5%">' + "Age"  + '</th>';
 			tr += '<th width="5%">' + "Gender"  + '</th>';
-			tr += '<th width="15%">' + "Type of Report"  + '</th>';
-			tr += '<th width="15%">' + "Date of Uploaded"  + '</th>';
+			tr += '<th width="15%">' + "Report Type"  + '</th>';
+			tr += '<th width="15%">' + "Uploaded Date"  + '</th>';
 			tr += '<th>' + "Notes from Patient"  + '</th>';
 			tr += '<th width="10%">' + "Download"  + '</th>';
 			tr += '<th width="10%">' + "Prescription"  + '</th>';
@@ -75,8 +75,8 @@ $(document).ready(function(){
 		        tr += '<td align="center" style="text-transform: capitalize;">' + v.phr_type + '</td>';
 		        tr += '<td align="center">' + v.phr_uploaded_date  + '</td>';
 		        tr += '<td align="center">' + v.phr_description  + '</td>';
-		        tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download2.png" alt="x" title="Download Original" width="23" height="24"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a>' + '</td>';
-		    	tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/addPrescription.htm?phr_id='+v.phr_id+'&doctor_id='+v.doctor_id+'&patient_id='+v.patient_id+'"'+'><span class="glyphicon glyphicon-plus"></span></a>'  + '</td>';
+		        tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download3.png" alt="x" title="Download Original" width="17" height="24"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a>' + '</td>';
+		    	tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/addPrescription.htm?phr_id='+v.phr_id+'&doctor_id='+v.doctor_id+'&patient_id='+v.patient_id+'"'+'><span class="glyphicon glyphicon-plus" title="Add Prescription"></span></a>'  + '</td>';
 		        tr +='</tr>';
 		    	
 		    	
@@ -209,11 +209,11 @@ body{
 				<tr>
 					<!-- <th>Doctor ID</th> -->
 					<!-- <th>Patient ID</th> -->
-					<th width="17%">Name of the Patient</th>
+					<th width="20%">Patient Name</th>
 					<th width="5%">Age</th>
 					<th width="5%">Gender</th>
-					<th width="15%">Type of Report</th>
-					<th width="15%">Date of Uploaded</th>
+					<th width="15%">Report Type</th>
+					<th width="15%">Uploaded Date</th>
 					<th>Notes from Patient</th>
 					<th width="10%">Download</th>
 					<th width="10%">Prescription</th>
@@ -229,8 +229,8 @@ body{
 						<td align="center" style="text-transform: capitalize;"><c:out value="${result.phr_type}" /></td>
 						<td align="center"><c:out value="${result.phr_uploaded_date}" /></td>
 						<td align="center"><c:out value="${result.phr_description}" /></td>
-						<td align="center"><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download2.png" alt="x" title="Download Original" width="23" height="24"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a></td>
-						<td align="center"><a href="${pageContext.request.contextPath}/addPrescription.htm?phr_id=${result.phr_id}&doctor_id=${result.doctor_id}&patient_id=${result.patient_id}"><span class="glyphicon glyphicon-plus"></span></a></td>
+						<td align="center"><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download3.png" alt="x" title="Download Original" width="17" height="24"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a></td>
+						<td align="center"><a href="${pageContext.request.contextPath}/addPrescription.htm?phr_id=${result.phr_id}&doctor_id=${result.doctor_id}&patient_id=${result.patient_id}"><span class="glyphicon glyphicon-plus" title="Add Prescription"></span></a></td>
 					</tr>
 				</c:forEach>
 			</table>
