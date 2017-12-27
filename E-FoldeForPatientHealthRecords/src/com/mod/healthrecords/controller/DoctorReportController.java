@@ -40,6 +40,7 @@ public class DoctorReportController {
 		ArrayList<String> list = patientHealthRecordsService.getAllPatients(str);
 		System.out.println(list);
 		String json = new Gson().toJson(list);
+		System.out.println("DoctorReportController.getpatientName()::json::"+json);
 		return json;
 	}
 
