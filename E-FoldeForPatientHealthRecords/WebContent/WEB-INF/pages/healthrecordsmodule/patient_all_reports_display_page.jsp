@@ -106,11 +106,11 @@ body{
 <div style="float:left"><label class="title">View Reports</label></div><div style="float:right">
 <select name="phr_type" id="phr_type">
 						<option value="-1">Filter By Type</option>
-						<option value="all">all</option>
-						<option value="scan">scan</option>
-						<option value="phr">phr</option>
-						<option value="pmr">pmr</option>
-						<option value="ecg">ecg</option>
+						<option value="all">All</option>
+						<option value="scan">Scan</option>
+						<option value="PHR">PHR</option>
+						<option value="PMR">PMR</option>
+						<option value="ECG">ECG</option>
 </select>
 </div>
 	<c:choose>
@@ -163,7 +163,7 @@ body{
 				
 				
 				tr += '<th width="20%">' + "Doctor Name"  + '</th>';
-				tr += '<th width="10%">' + "Specialty"  + '</th>';
+				tr += '<th width="10%">' + "Speciality"  + '</th>';
 				tr += '<th width="15%">' + "Report Type"  + '</th>';
 				tr += '<th width="22%">' + "Uploaded Date"  + '</th>';
 				tr += '<th>' + "Notes to Doctor"  + '</th>';

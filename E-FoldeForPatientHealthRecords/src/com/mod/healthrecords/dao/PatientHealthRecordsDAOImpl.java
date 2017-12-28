@@ -58,12 +58,12 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 
 	@Override
 	public List<PatientHealthReportResp> getPHRInfo(int pid, String reportType) {
-		return jdbcTemplate.query(QueryConstants.GET_PHR_DETAILS, new PhrDetailsExtractor(), pid, reportType);
+		return jdbcTemplate.query(QueryConstants.GET_PHR_DETAILS_BY_PATIENT_ID_AND_PHR_TYPE, new PhrDetailsExtractor(), pid, reportType);
 	}
 
 	@Override
 	public List<DoctorReportResponse> getDoctorReport(Integer doctor_id) {
-		return jdbcTemplate.query(QueryConstants.GET_DOCTOR_REPORT, new DoctorReportExtractor(), doctor_id);
+		return jdbcTemplate.query(QueryConstants.GET_DOCTOR_REPORT_BY_DOCTOR_ID, new DoctorReportExtractor(), doctor_id);
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	
 	@Override
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid) {
-		return jdbcTemplate.query(QueryConstants.GET_ALL_REPORTS_BY_ID, new PhrDetailsExtractor(), pid);
+		return jdbcTemplate.query(QueryConstants.GET_ALL_REPORTS_BY_PATIENT_ID, new PhrDetailsExtractor(), pid);
 	}
 	
 	@Override
@@ -81,7 +81,7 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 		if(name.equals("") || name.equals(null))
 			return getDoctorReport(did);
 		else{
-			return jdbcTemplate.query(QueryConstants.GET_REPORTS_BY_NAME_AND_DOCTOR_ID, new DoctorReportExtractor(),did, name);
+			return jdbcTemplate.query(QueryConstants.GET_REPORTS_BY_PATIENT_NAME_AND_DOCTOR_ID, new DoctorReportExtractor(),did, name);
 		}
 			
 	}
@@ -172,11 +172,13 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	}
 
 	private static class DoctorReportExtractor implements ResultSetExtractor<List<DoctorReportResponse>> {
+		public static final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		@Override
 		public List<DoctorReportResponse> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
 			DoctorReportResponse drr = null;
+			Timestamp stamp = null;
 
 			List<DoctorReportResponse> listOfDtr = new ArrayList<>();
 			while (rs.next()) {
@@ -188,7 +190,8 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 				drr.setPatient_name(rs.getString(4));
 				drr.setPatient_age(rs.getInt(5));
 				drr.setPatient_sex(rs.getString(6));
-				drr.setPhr_uploaded_date(rs.getDate(7));
+				stamp = new Timestamp(rs.getTimestamp(7).getTime());
+				drr.setPhr_uploaded_date(formate.format(stamp));
 				drr.setPhr_type(rs.getString(8));
 				drr.setPhr_uploaded_path_original(rs.getString(9));
 				drr.setPhr_uploaded_path_pdf(rs.getString(10));

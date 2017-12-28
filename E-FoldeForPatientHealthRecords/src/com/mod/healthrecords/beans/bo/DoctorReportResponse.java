@@ -11,7 +11,7 @@ public class DoctorReportResponse {
 	private int patient_age;
 	private String patient_sex;
 	private String phr_type;
-	private Date phr_uploaded_date;
+	private String phr_uploaded_date;
 	private String phr_uploaded_path_original;
 	private String phr_uploaded_path_pdf;
 	private String phr_description;
@@ -46,10 +46,10 @@ public class DoctorReportResponse {
 	public void setPhr_type(String phr_type) {
 		this.phr_type = phr_type;
 	}
-	public Date getPhr_uploaded_date() {
+	public String getPhr_uploaded_date() {
 		return phr_uploaded_date;
 	}
-	public void setPhr_uploaded_date(java.sql.Date date) {
+	public void setPhr_uploaded_date(String date) {
 		this.phr_uploaded_date = date;
 	}
 	public String getPhr_uploaded_path_original() {

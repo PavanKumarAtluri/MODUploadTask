@@ -57,7 +57,7 @@ $(document).ready(function(){
 			tr += '<th width="5%">' + "Age"  + '</th>';
 			tr += '<th width="5%">' + "Gender"  + '</th>';
 			tr += '<th width="15%">' + "Report Type"  + '</th>';
-			tr += '<th width="15%">' + "Uploaded Date"  + '</th>';
+			tr += '<th width="22%">' + "Uploaded Date"  + '</th>';
 			tr += '<th>' + "Notes from Patient"  + '</th>';
 			tr += '<th width="10%">' + "Download"  + '</th>';
 			tr += '<th width="10%">' + "Prescription"  + '</th>';
@@ -213,7 +213,7 @@ body{
 					<th width="5%">Age</th>
 					<th width="5%">Gender</th>
 					<th width="15%">Report Type</th>
-					<th width="15%">Uploaded Date</th>
+					<th width="22%">Uploaded Date</th>
 					<th>Notes from Patient</th>
 					<th width="10%">Download</th>
 					<th width="10%">Prescription</th>

@@ -20,8 +20,8 @@ public class PHRDownloadController {
 		File file = null;
 		InputStream is = null;
 		OutputStream os = null;
-
-		res.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+		
+		res.addHeader("Content-Disposition", "attachment;fileName=" + "medical report"+fileName.substring(fileName.lastIndexOf('.'), fileName.length()));
 
 		file = new File(fileName);
 
