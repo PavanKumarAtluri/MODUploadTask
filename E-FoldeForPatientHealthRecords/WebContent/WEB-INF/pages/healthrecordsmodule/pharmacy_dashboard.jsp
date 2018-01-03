@@ -58,9 +58,10 @@ body {
 
     <img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
    <a class="logoutbtn" href="${pageContext.request.contextPath}/pharmacy/logout.htm">Logout</a>
-   
     </div>
+    <span style="float: right;color: #9000A1;font-style: normal;font-size:smaller;">Welcome:&nbsp;${pharmacyId} (Pharmacist)&nbsp;&nbsp;&nbsp;</span>
 <h1 style="color: blue; text-align: center">Pharmacy Home</h1>
+
 <div class="user-dashboard">
 	<div class="welcome-section">
 		<a href="${pageContext.request.contextPath}/pharmacy/pharmacy_orders_result.htm?id=${pharmacyId}"><button class="contact-doc-btn">MY ORDERS</button></a>

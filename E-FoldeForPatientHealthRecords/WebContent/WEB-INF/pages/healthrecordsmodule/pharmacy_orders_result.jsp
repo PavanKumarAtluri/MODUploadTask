@@ -195,6 +195,7 @@ body {
 			height="75" /> <a class="logoutbtn"
 			href="${pageContext.request.contextPath}/pharmacy/logout.htm">Logout</a>
 	</div>
+	<span style="float: right;color: #9000A1;font-style: normal;font-size:smaller;">Welcome:&nbsp;${pharmacyId} (Pharmacist)&nbsp;&nbsp;&nbsp;</span>
 	<p style="text-align: center">
 		<a href="${pageContext.request.contextPath}/pharmacy/pharmacy_dashboard.htm">Home</a>
 	</p>

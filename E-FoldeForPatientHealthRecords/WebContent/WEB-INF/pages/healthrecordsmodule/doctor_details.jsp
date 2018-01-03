@@ -58,8 +58,8 @@ body {
 
     <img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
    <a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
-   
     </div>
+    <span style="float: right;color: #9000A1;font-style: normal;font-size:smaller;">Welcome:&nbsp;${doctorId} (Doctor)&nbsp;&nbsp;&nbsp;</span>
 <h1 style="color: blue; text-align: center">Doctor Home</h1>
 <div class="user-dashboard">
 	<div class="welcome-section">

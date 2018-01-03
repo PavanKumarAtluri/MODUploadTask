@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <!doctype html>
 <html>
 <head>
@@ -67,6 +67,7 @@ body {
     <a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
     
     </div>
+    <span style="float: right;color: #9000A1;font-style: normal;font-size:smaller;">Welcome:&nbsp;${userId} (Patient)&nbsp;&nbsp;&nbsp;</span>
 <h1 style="color: blue; text-align: center">Patient Home</h1>
 <div class="">
 <div>
