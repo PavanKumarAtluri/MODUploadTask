@@ -153,7 +153,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 			String output = str.toLowerCase();
 			String ch = "%"+ output + "%";
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "manager");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "Ad3!nAd3!n");
 			ps = con.prepareStatement("SELECT PATIENT_NAME FROM PATIENT_TAB WHERE PATIENT_NAME  LIKE '" + ch + "'");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
