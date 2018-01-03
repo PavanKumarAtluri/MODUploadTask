@@ -22,7 +22,9 @@ import com.mod.healthrecords.beans.bo.Patient;
 import com.mod.healthrecords.beans.bo.PatientHealthReport;
 import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
 import com.mod.healthrecords.beans.dto.DoctorPrescription;
+import com.mod.healthrecords.beans.dto.Order;
 import com.mod.healthrecords.beans.dto.PatientHealthReportDTO;
+import com.mod.healthrecords.beans.dto.Resp;
 import com.mod.healthrecords.beans.dto.Response;
 import com.mod.healthrecords.constants.FileConstants;
 import com.mod.healthrecords.dao.PatientHealthRecordsDAOI;
@@ -151,7 +153,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 			String output = str.toLowerCase();
 			String ch = "%"+ output + "%";
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "Ad3!nAd3!n");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "manager");
 			ps = con.prepareStatement("SELECT PATIENT_NAME FROM PATIENT_TAB WHERE PATIENT_NAME  LIKE '" + ch + "'");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -195,6 +197,74 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	public int getpharmacyIdByPatientId(int patientId) {
 		
 		return patientHealthRecordsDAO.selectPharmacyIdByPatientId(patientId);
+	}
+
+	@Override
+	public Resp getOrderDetailsByOrderId(int orderId) {
+		String jsonResp = null;
+		Resp resp = null;
+
+		// call client method to delete the book
+		jsonResp = phrmacyServiceClient.getOrderDetailsByOrderId(orderId);
+
+		// convert jsonResponse to java Object
+		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+
+		return resp;
+	}
+
+	@Override
+	public List<Order> getOrderDetailsByPatientIdAndPharmacyId(int pharmacyId, int patientId) {
+		
+		String jsonResp = null;
+		Resp resp = null;
+		List<Order> list=new ArrayList<>();
+
+		// call client method to delete the book
+		jsonResp = phrmacyServiceClient.getOrderDetailsByPatientIdAndPharmacyId(pharmacyId, patientId);
+
+		// convert jsonResponse to java Object
+		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+		
+		if(resp.getStatus()==(byte)1){
+			list=JsonUtil.jsonToJava(resp.getData(), List.class);
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<Order> getAllOrdersByPharmacyId(int pharmacyId) {
+		String jsonResp = null;
+		Resp resp = null;
+		List<Order> list=new ArrayList<>();
+
+		// call client method to delete the book
+		jsonResp = phrmacyServiceClient.getAllOrdersByPharmacyId(pharmacyId);
+
+		// convert jsonResponse to java Object
+		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+		
+		if(resp.getStatus()==(byte)1){
+			list=JsonUtil.jsonToJava(resp.getData(), List.class);
+		}
+		
+
+		return list;
+	}
+
+	@Override
+	public Resp changeDeliveryStatus(int orderId) {
+		String jsonResp = null;
+		Resp resp = null;
+
+		// call client method to delete the book
+		jsonResp = phrmacyServiceClient.changeDeliveryStatus(orderId);
+
+		// convert jsonResponse to java Object
+		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+
+		return resp;
 	}
 
 }

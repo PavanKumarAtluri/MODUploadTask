@@ -123,7 +123,7 @@ select {
 		<a href="${pageContext.request.contextPath}/doctorReportDisplay/doctor_report_result.htm?id=${doctorId}">Back</a>
 	</p>
 	<div id="myDIV">
-		<h1 style="color: red; text-align: center;">${resultMsg}</h1>
+		<h1 style="color: green; text-align: center;">${resultMsg}</h1>
 	</div>
 	
 	<div class="col-xs-12 col-md-8 col-md-offset-2">

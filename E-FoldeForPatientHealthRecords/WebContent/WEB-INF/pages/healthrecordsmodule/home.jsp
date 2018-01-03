@@ -79,6 +79,7 @@ body {
 	<div class="welcome-section">
 	<a href="${pageContext.request.contextPath}/phr/doctor_login.htm"><button class="contact-doc-btn">Doctor Login</button></a>
 	<a href="${pageContext.request.contextPath}/phr/patient_login.htm"><button class="contact-doc-btn">Patient Login</button></a>
+	<a href="${pageContext.request.contextPath}/pharmacy/pharmacy_login.htm"><button class="contact-doc-btn">Pharmacy Login</button></a>
 </div>
 
 </div>
@@ -87,6 +88,11 @@ body {
 <tr><td><a href="${pageContext.request.contextPath}/phr/doctor_login.htm">Doctor Login</a></td></tr>
 <tr><td><a href="${pageContext.request.contextPath}/phr/patient_login.htm">Patient Login</a></td></tr>
 </table> --%>
-
+<!-- <script type = "text/javascript" >
+    function preventBack() { 
+    window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script> -->
 </body>
 </html>

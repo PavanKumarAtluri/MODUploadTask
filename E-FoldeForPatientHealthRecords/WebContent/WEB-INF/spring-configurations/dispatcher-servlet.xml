@@ -19,6 +19,12 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
 		<property name="basename" value="com/mod/healthrecords/commons/views" />
 	</bean>
+	
+	<bean id="irvr"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/"/>
+		<property name="suffix" value=".jsp" />
+	</bean>
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.mod.healthrecords.controller" />
 </beans>

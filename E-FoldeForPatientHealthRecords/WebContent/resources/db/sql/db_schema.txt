@@ -118,7 +118,7 @@ create sequence ORDER_ID_SEQ start with 8 increment by 2;
 
 create table pharmacy_details_tab(pharmacyId number(4) primary key,pharmacyName varchar2(30) not null,pharmacyAddress varchar2(120) not null);
 
-create table phrmacy_orders_tab(orderId number(4) primary key,pharmacyId number(6) not null,phrId number(6) not null,doctorId number(6) not null,patientId number(6) not null,Prescrition varchar2(150) not null,date_prescrition date not null,is_delivered number(2) not null,delivered_date date,CONSTRAINT fk_pharmacyId FOREIGN KEY(pharmacyId) REFERENCES pharmacy_details_tab(pharmacyId));
+create table pharmacy_orders_tab(orderId number(4) primary key,pharmacyId number(6) not null,phrId number(6) not null,doctorId number(6) not null,patientId number(6) not null,Prescrition varchar2(150) not null,date_prescrition timestamp(3) not null,is_delivered number(2) not null,delivered_date timestamp(3),CONSTRAINT fk_pharmacyId FOREIGN KEY(pharmacyId) REFERENCES pharmacy_details_tab(pharmacyId));
 
 insert into pharmacy_details_tab values(PHARMACY_ID_SEQ .nextval,'phrmacy1','address1');
 
