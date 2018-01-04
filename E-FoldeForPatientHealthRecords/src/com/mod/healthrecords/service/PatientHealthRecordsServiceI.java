@@ -7,7 +7,9 @@ import com.mod.healthrecords.beans.bo.Doctor;
 import com.mod.healthrecords.beans.bo.DoctorReportResponse;
 import com.mod.healthrecords.beans.bo.Patient;
 import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
+import com.mod.healthrecords.beans.dto.DoctorPrescription;
 import com.mod.healthrecords.beans.dto.PatientHealthReportDTO;
+import com.mod.healthrecords.beans.dto.Response;
 import com.mod.healthrecords.exceptions.PHRException;
 
 public interface PatientHealthRecordsServiceI {
@@ -28,4 +30,8 @@ public interface PatientHealthRecordsServiceI {
 	public ArrayList<String> getAllPatients(String str);
 
 	public List<DoctorReportResponse> getRecordsByPatientname(String name,int did);
+	
+	public Response sendDoctorPrescriptionToRequestedPharmacy(DoctorPrescription doctorPrescription);
+	
+	public int getpharmacyIdByPatientId(int patientId);
 }

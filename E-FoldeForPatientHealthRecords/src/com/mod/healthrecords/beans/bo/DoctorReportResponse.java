@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class DoctorReportResponse {
 	
+	private int phr_id;
 	private int doctor_id;
 	private int patient_id;
 	private String patient_name;
@@ -15,6 +16,12 @@ public class DoctorReportResponse {
 	private String phr_uploaded_path_pdf;
 	private String phr_description;
 	
+	public int getPhr_id() {
+		return phr_id;
+	}
+	public void setPhr_id(int phr_id) {
+		this.phr_id = phr_id;
+	}
 	public int getDoctor_id() {
 		return doctor_id;
 	}
@@ -75,6 +82,5 @@ public class DoctorReportResponse {
 	public void setPatient_sex(String patient_sex) {
 		this.patient_sex = patient_sex;
 	}
-	
 	
 }

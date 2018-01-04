@@ -78,11 +78,11 @@
 <form id="signInFormm" action='${pageContext.request.contextPath}/phr/patient_details.htm' method="post">
 <div class="form-group">
 <div class="col-xs-12 margin-bottom-35 panel-top">
-<span class="register-form-label">Patient Log In</span></div>
+<span class="register-form-label">PATIENT LOGIN</span></div>
 <div class="row"><div class="col-xs-12 text-center"><input type="text" class="register-form-input" name="uname" placeholder="Login ID" onfocus="myHide()" ><i class="fa fa-user input-icon" aria-hidden="true"></i></div><div class="col-xs-12 text-center"><input type="password" class="register-form-input" name="pwd" placeholder="Password" onfocus="myHide()"><i class="fa fa-lock input-icon" aria-hidden="true"></i></div></div>
 <div id="communique" class="communique"><span class=""></span></div>
 
-<div class="row"><div class="col-xs-12 text-center"><a href="patient-screen.html" ><input type="submit" id="signInBtn" value="LOG IN" class="btn-login" /></a></div></div>
+<div class="row"><div class="col-xs-12 text-center"><a href="patient-screen.html" ><input type="submit" id="signInBtn" value="Login" class="btn-login" /></a></div></div>
 <!--
 <div class="row registerAndforgot"><div class="col-xs-6 forgotPasswordDiv text-center"><a id="forgotPasswordBtn" class="forgotPasswordBtn" href="/restore_password">Forgotten password</a></div><div class="col-xs-6 registerDiv text-center"><a id="registerUserBtn" class="registerBtn" href="/register_first_step">Register</a></div></div>-->
 

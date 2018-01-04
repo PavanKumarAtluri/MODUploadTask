@@ -51,6 +51,7 @@ public class DoctorReportController {
 		List<DoctorReportResponse> list = null;
 		String did = (String) session.getAttribute("doctorId");
 		Integer doctorIdInt = Integer.valueOf(did);
+		System.out.println(name+" "+doctorIdInt);
 		list = patientHealthRecordsService.getRecordsByPatientname(name, doctorIdInt);
 		
 		return JsonUtil.javaToJson(list);

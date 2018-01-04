@@ -106,3 +106,36 @@ SQL> insert into doctors_tab values(10003,'dr.','A G Joshi','ENT','55555555555',
 SQL> commit;
 
 Commit complete.
+
+=========================================================(For Pharmacy Module[For both client and service])==============================================================================================================
+alter table patient_tab add PHARMACYID number(6);
+
+alter table patient_tab add pharmacyname varchar2(30);
+
+create sequence PHARMACY_ID_SEQ start with 9 increment by 2;
+
+create sequence ORDER_ID_SEQ start with 8 increment by 2;
+
+create table pharmacy_details_tab(pharmacyId number(4) primary key,pharmacyName varchar2(30) not null,pharmacyAddress varchar2(120) not null);
+
+create table phrmacy_orders_tab(orderId number(4) primary key,pharmacyId number(6) not null,phrId number(6) not null,doctorId number(6) not null,patientId number(6) not null,Prescrition varchar2(150) not null,date_prescrition date not null,is_delivered number(2) not null,delivered_date date,CONSTRAINT fk_pharmacyId FOREIGN KEY(pharmacyId) REFERENCES pharmacy_details_tab(pharmacyId));
+
+insert into pharmacy_details_tab values(PHARMACY_ID_SEQ .nextval,'phrmacy1','address1');
+
+insert into pharmacy_details_tab values(PHARMACY_ID_SEQ .nextval,'phrmacy2','address2');
+
+insert into pharmacy_details_tab values(PHARMACY_ID_SEQ .nextval,'phrmacy3','address3');
+
+insert into pharmacy_details_tab values(PHARMACY_ID_SEQ .nextval,'phrmacy4','address4');
+
+insert into pharmacy_details_tab values(PHARMACY_ID_SEQ .nextval,'phrmacy5','address5');
+
+commit;
+
+update patient_tab set PHARMACYID=9 ,PHARMACYNAME='phrmacy1' where PATIENT_ID=1001;
+
+update patient_tab set PHARMACYID=11 ,PHARMACYNAME='phrmacy2' where PATIENT_ID=1002;
+
+update patient_tab set PHARMACYID=13 ,PHARMACYNAME='phrmacy3' where PATIENT_ID=1003;
+
+commit;

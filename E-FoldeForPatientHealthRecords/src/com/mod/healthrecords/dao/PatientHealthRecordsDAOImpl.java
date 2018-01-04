@@ -85,6 +85,11 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 		}
 			
 	}
+	
+	@Override
+	public int selectPharmacyIdByPatientId(int patientId) {
+		return jdbcTemplate.queryForObject(QueryConstants.GET_PHARMACYID_BY_PATIENTID, Integer.class,patientId);
+	}
 
 	private static class PatientDetailsRowMapper implements RowMapper<Patient> {
 
@@ -176,17 +181,18 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 			List<DoctorReportResponse> listOfDtr = new ArrayList<>();
 			while (rs.next()) {
 				drr = new DoctorReportResponse();
-
-				drr.setDoctor_id(rs.getInt(1));
-				drr.setPatient_id(rs.getInt(2));
-				drr.setPatient_name(rs.getString(3));
-				drr.setPatient_age(rs.getInt(4));
-				drr.setPatient_sex(rs.getString(5));
-				drr.setPhr_uploaded_date(rs.getDate(6));
-				drr.setPhr_type(rs.getString(7));
-				drr.setPhr_uploaded_path_original(rs.getString(8));
-				drr.setPhr_uploaded_path_pdf(rs.getString(9));
-				drr.setPhr_description(rs.getString(10));
+				
+				drr.setPhr_id(rs.getInt(1));
+				drr.setDoctor_id(rs.getInt(2));
+				drr.setPatient_id(rs.getInt(3));
+				drr.setPatient_name(rs.getString(4));
+				drr.setPatient_age(rs.getInt(5));
+				drr.setPatient_sex(rs.getString(6));
+				drr.setPhr_uploaded_date(rs.getDate(7));
+				drr.setPhr_type(rs.getString(8));
+				drr.setPhr_uploaded_path_original(rs.getString(9));
+				drr.setPhr_uploaded_path_pdf(rs.getString(10));
+				drr.setPhr_description(rs.getString(11));
 
 				listOfDtr.add(drr);
 			}
@@ -217,5 +223,7 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 		}
 
 	}
+
+	
 
 }

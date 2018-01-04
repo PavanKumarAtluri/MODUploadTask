@@ -27,4 +27,7 @@ public interface PatientHealthRecordsDAOI {
 
 	public List<DoctorReportResponse> getAllPatientReportsByName(String name, int did);
 	
+	public int selectPharmacyIdByPatientId(int patientId);
+	
+	
 }

@@ -21,17 +21,24 @@ import com.mod.healthrecords.beans.bo.DoctorReportResponse;
 import com.mod.healthrecords.beans.bo.Patient;
 import com.mod.healthrecords.beans.bo.PatientHealthReport;
 import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
+import com.mod.healthrecords.beans.dto.DoctorPrescription;
 import com.mod.healthrecords.beans.dto.PatientHealthReportDTO;
+import com.mod.healthrecords.beans.dto.Response;
 import com.mod.healthrecords.constants.FileConstants;
 import com.mod.healthrecords.dao.PatientHealthRecordsDAOI;
 import com.mod.healthrecords.exceptions.PHRException;
+import com.mod.healthrecords.remoteservice.client.PhrmacyServiceClient;
 import com.mod.healthrecords.utils.ImageToPdfUtiil;
+import com.mod.healthrecords.utils.JsonUtil;
 
 @Service("patientHealthRecordsServiceImpl")
 public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServiceI {
 
 	@Autowired
 	private PatientHealthRecordsDAOI patientHealthRecordsDAO;
+	
+	@Autowired
+	private PhrmacyServiceClient phrmacyServiceClient;
 
 	@Override
 	public Patient getPatientDetails(int pid) {
@@ -163,6 +170,31 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	public List<DoctorReportResponse> getRecordsByPatientname(String name,int did) {
 		
 		return patientHealthRecordsDAO.getAllPatientReportsByName(name, did);
+	}
+
+	@Override
+	public Response sendDoctorPrescriptionToRequestedPharmacy(DoctorPrescription doctorPrescription) {
+		String jsonDoctorPrescription = null;
+		String jsonResponse = null;
+		Response resp = null;
+		
+		// convert BookDTO to json
+		jsonDoctorPrescription = JsonUtil.javaToJson(doctorPrescription);
+
+		// call client method to register book details
+		jsonResponse = phrmacyServiceClient.sendDoctorPrescriptionToRequestedPharmacy(jsonDoctorPrescription);
+
+		// convert json to java
+		resp = new Response();
+		resp = JsonUtil.jsonToJava(jsonResponse, Response.class);
+
+		return resp;
+	}
+
+	@Override
+	public int getpharmacyIdByPatientId(int patientId) {
+		
+		return patientHealthRecordsDAO.selectPharmacyIdByPatientId(patientId);
 	}
 
 }

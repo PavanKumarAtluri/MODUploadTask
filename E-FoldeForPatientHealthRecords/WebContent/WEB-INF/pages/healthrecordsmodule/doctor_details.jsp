@@ -63,7 +63,7 @@ body {
 <h1 style="color: blue; text-align: center">Doctor Home</h1>
 <div class="user-dashboard">
 	<div class="welcome-section">
-		<a href="${pageContext.request.contextPath}/doctorReportDisplay/doctor_report_result.htm?id=${doctorId}"><button class="contact-doc-btn">My Patient's Medical Reports</button></a>
+		<a href="${pageContext.request.contextPath}/doctorReportDisplay/doctor_report_result.htm?id=${doctorId}"><button class="contact-doc-btn">MEDICAL REPORTS</button></a>
 	</div>
 </div>
 <%-- 

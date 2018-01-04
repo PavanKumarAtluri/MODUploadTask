@@ -110,8 +110,8 @@ body{
 						<td><c:out value="${result.phr_type }" /></td>
 						<td><c:out value="${ result.phr_uploaded_date}" /></td>
 						<td><c:out value="${result.phr_description}"/></td>
-						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" target="_blank">Download</a></td>
-						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" target="_blank">Download</a></td>
+						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" >Download</a></td>
+						<td><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" >Download</a></td>
 					</tr>
 				</c:forEach>
 			</table>
