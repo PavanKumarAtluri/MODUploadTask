@@ -11,7 +11,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <script>
@@ -73,8 +75,8 @@ $(document).ready(function(){
 		        tr += '<td align="center" style="text-transform: capitalize;">' + v.phr_type + '</td>';
 		        tr += '<td align="center">' + v.phr_uploaded_date  + '</td>';
 		        tr += '<td align="center">' + v.phr_description  + '</td>';
-		        tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="Download Original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a>' + '</td>';
-		    	tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/addPrescription.htm?phr_id='+v.phr_id+'&doctor_id='+v.doctor_id+'&patient_id='+v.patient_id+'"'+'>Add</a>'  + '</td>';
+		        tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download2.png" alt="x" title="Download Original" width="23" height="24"></a>'+'&nbsp;&nbsp;&nbsp;' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a>' + '</td>';
+		    	tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/addPrescription.htm?phr_id='+v.phr_id+'&doctor_id='+v.doctor_id+'&patient_id='+v.patient_id+'"'+'><span class="glyphicon glyphicon-plus"></span></a>'  + '</td>';
 		        tr +='</tr>';
 		    	
 		    	
@@ -227,8 +229,8 @@ body{
 						<td align="center" style="text-transform: capitalize;"><c:out value="${result.phr_type}" /></td>
 						<td align="center"><c:out value="${result.phr_uploaded_date}" /></td>
 						<td align="center"><c:out value="${result.phr_description}" /></td>
-						<td align="center"><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="Download Original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a></td>
-						<td align="center"><a href="${pageContext.request.contextPath}/addPrescription.htm?phr_id=${result.phr_id}&doctor_id=${result.doctor_id}&patient_id=${result.patient_id}">Add</a></td>
+						<td align="center"><a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download2.png" alt="x" title="Download Original" width="23" height="24"></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/phrDetailsDisplay/phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}"><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="22" height="24"></a></td>
+						<td align="center"><a href="${pageContext.request.contextPath}/addPrescription.htm?phr_id=${result.phr_id}&doctor_id=${result.doctor_id}&patient_id=${result.patient_id}"><span class="glyphicon glyphicon-plus"></span></a></td>
 					</tr>
 				</c:forEach>
 			</table>

@@ -135,7 +135,7 @@ body{
 						<td align="center" style="text-transform: capitalize;"><c:out value="${result.phr_type }" /></td>
 						<td align="center"><c:out value="${ result.phr_uploaded_date}" /></td>
 						<td align="center"><c:out value="${result.phr_description}"/></td>
-						<td align="center"><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="Download Original" width="20" height="22"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="20" height="24"></a></td>
+						<td align="center"><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download2.png" alt="x" title="Download Original" width="23" height="24"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="20" height="24"></a></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -179,7 +179,7 @@ body{
 			        tr += '<td align="center" style="text-transform: capitalize;">' + v.phr_type  + '</td>';
 			        tr += '<td align="center">' + v.phr_uploaded_date + '</td>';
 			        tr += '<td align="center">' + v.phr_description  + '</td>';
-			        tr += '<td align="center">' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download1.png" alt="x" title="Download Original" width="20" height="22"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="Download pdf" alt="x" width="20" height="24"></a>' + '</td>';
+			        tr += '<td align="center">' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download2.png" alt="x" title="Download Original" width="23" height="24"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="Download pdf" alt="x" width="20" height="24"></a>' + '</td>';
 			    	tr +='</tr>';  	
 			    	
 				});
