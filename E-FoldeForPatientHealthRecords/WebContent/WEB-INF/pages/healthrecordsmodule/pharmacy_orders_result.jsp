@@ -30,7 +30,7 @@ $(document).ready(function(){
 			$("#t").empty();
 			
 			
-			tr += '<th width="10%">' + "Order id"  + '</th>';
+			tr += '<th width="10%">' + "Order ID"  + '</th>';
 			tr += '<th width="30%">' + "Prescription"  + '</th>';
 			tr += '<th width="15%">' + "Prescribed Date"  + '</th>';
 			tr += '<th width="15%">' + "Delivery Status"  + '</th>';
@@ -212,7 +212,7 @@ body {
 
 			<div class="search-container">
 				<div class="ui-widget">
-					<span>Patient Id:</span><span> <input type="text"
+					<span>Patient ID:</span><span> <input type="text"
 						id="search" name="search" class="search" onfocus="removeMsg()" /></span>
 					<span><input type="button" name="searchBtn" id="searchBtn"
 						value="Search"></span>
@@ -227,7 +227,7 @@ body {
 				<table align="center" id="t">
 					<tr>
 
-						<th width="10%">Order Id</th>
+						<th width="10%">Order ID</th>
 						<th width="30%">Prescription</th>
 						<th width="15%">Prescribed Date</th>
 						<th width="15%">Delivery Status</th>

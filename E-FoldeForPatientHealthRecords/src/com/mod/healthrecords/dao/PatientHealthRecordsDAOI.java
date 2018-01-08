@@ -29,5 +29,5 @@ public interface PatientHealthRecordsDAOI {
 	
 	public int selectPharmacyIdByPatientId(int patientId);
 	
-	
+	public int updatePrescriptionDetailsByPhrId(String prescription,int phrId);
 }

@@ -60,7 +60,7 @@ body {
    <a class="logoutbtn" href="${pageContext.request.contextPath}/phr/logout.htm">Logout</a>
     </div>
     <span style="float: right;color: #9000A1;font-style: normal;font-size:smaller;">Welcome:&nbsp;${doctorId} (Doctor)&nbsp;&nbsp;&nbsp;</span>
-<h1 style="color: blue; text-align: center">Doctor Home</h1>
+<h1 style="color: blue; text-align: center">Doctor Dashboard</h1>
 <div class="user-dashboard">
 	<div class="welcome-section">
 		<a href="${pageContext.request.contextPath}/doctorReportDisplay/doctor_report_result.htm?id=${doctorId}"><button class="contact-doc-btn">MEDICAL REPORTS</button></a>

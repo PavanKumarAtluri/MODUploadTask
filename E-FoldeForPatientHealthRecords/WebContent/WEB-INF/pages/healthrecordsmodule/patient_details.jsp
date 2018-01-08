@@ -68,7 +68,7 @@ body {
     
     </div>
     <span style="float: right;color: #9000A1;font-style: normal;font-size:smaller;">Welcome:&nbsp;${userId} (Patient)&nbsp;&nbsp;&nbsp;</span>
-<h1 style="color: blue; text-align: center">Patient Home</h1>
+<h1 style="color: blue; text-align: center">Patient Dashboard</h1>
 <div class="">
 <div>
 
@@ -76,7 +76,7 @@ body {
 <div class="welcome-section">
 	<a href="${pageContext.request.contextPath}/phr/phr_form_page.htm"><button class="contact-doc-btn">Upload Report</button></a>
 	<%-- <a href="${pageContext.request.contextPath}/phrDetailsDisplay/phr_detals_form.htm"><button class="contact-doc-btn">My Reports</button></a> --%>
-	<a href="${pageContext.request.contextPath}/phrDetailsDisplay/patient_all_reports_display.htm"><button class="contact-doc-btn">My Reports</button></a>
+	<a href="${pageContext.request.contextPath}/phrDetailsDisplay/patient_all_reports_display.htm"><button class="contact-doc-btn">MEDICAL REPORTS</button></a>
 </div>
 </div>
 </div>

@@ -11,6 +11,7 @@ public class PatientHealthReportResp {
 	private String phr_description;
 	private String doctor_name;
 	private String doctor_specialization;
+	private String patient_prescription;
 	
 	public int getPhr_id() {
 		return phr_id;
@@ -72,14 +73,20 @@ public class PatientHealthReportResp {
 	public void setDoctor_specialization(String doctor_specialization) {
 		this.doctor_specialization = doctor_specialization;
 	}
+	public String getPatient_prescription() {
+		return patient_prescription;
+	}
+	public void setPatient_prescription(String patient_prescription) {
+		this.patient_prescription = patient_prescription;
+	}
 	@Override
 	public String toString() {
 		return "PatientHealthReportResp [phr_id=" + phr_id + ", patient_id=" + patient_id + ", doctor_id=" + doctor_id
 				+ ", phr_uploaded_date=" + phr_uploaded_date + ", phr_type=" + phr_type
 				+ ", phr_uploaded_path_original=" + phr_uploaded_path_original + ", phr_uploaded_path_pdf="
 				+ phr_uploaded_path_pdf + ", phr_description=" + phr_description + ", doctor_name=" + doctor_name
-				+ ", doctor_specialization=" + doctor_specialization + "]";
+				+ ", doctor_specialization=" + doctor_specialization + ", patient_prescription=" + patient_prescription
+				+ "]";
 	}
-
 	
 }

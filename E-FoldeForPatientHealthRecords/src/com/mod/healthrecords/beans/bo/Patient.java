@@ -10,6 +10,8 @@ public class Patient {
 	private String patient_email_id;
 	private String patient_image_path;
 	private String patient_identity_path;
+	private int patient_pharmacy_id;
+	private String patient_pharmacy_name;
 
 	public int getPatient_id() {
 		return patient_id;
@@ -83,12 +85,29 @@ public class Patient {
 		this.patient_identity_path = patient_identity_path;
 	}
 
+	public int getPatient_pharmacy_id() {
+		return patient_pharmacy_id;
+	}
+
+	public void setPatient_pharmacy_id(int patient_pharmacy_id) {
+		this.patient_pharmacy_id = patient_pharmacy_id;
+	}
+
+	public String getPatient_pharmacy_name() {
+		return patient_pharmacy_name;
+	}
+
+	public void setPatient_pharmacy_name(String patient_pharmacy_name) {
+		this.patient_pharmacy_name = patient_pharmacy_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Patient [patient_id=" + patient_id + ", patient_title=" + patient_title + ", patient_name="
 				+ patient_name + ", patient_age=" + patient_age + ", patient_sex=" + patient_sex + ", patient_mobileno="
 				+ patient_mobileno + ", patient_email_id=" + patient_email_id + ", patient_image_path="
-				+ patient_image_path + ", patient_identity_path=" + patient_identity_path + "]";
+				+ patient_image_path + ", patient_identity_path=" + patient_identity_path + ", patient_pharmacy_id="
+				+ patient_pharmacy_id + ", patient_pharmacy_name=" + patient_pharmacy_name + "]";
 	}
 
 }

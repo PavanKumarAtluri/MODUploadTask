@@ -41,12 +41,12 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 
 	@Override
 	public int insertPatientRecord(PatientHealthReport patientHealthReport) {
-		System.out.println(new java.sql.Date(patientHealthReport.getPhr_uploaded_date().getTime()));
-		System.out.println(patientHealthReport.getPhr_uploaded_date());
+		//System.out.println("PatientHealthRecordsDAOImpl.insertPatientRecord()::"+new java.sql.Timestamp(new java.util.Date().getTime()));
+		java.sql.Timestamp stamp=new java.sql.Timestamp(new java.util.Date().getTime());
 
 		return jdbcTemplate.update(QueryConstants.INSERT_PATIENT_HEALTH_RECORD_DETAILS_QUERY,
 				patientHealthReport.getPhr_id(), patientHealthReport.getPatient_id(),
-				patientHealthReport.getDoctor_id(), patientHealthReport.getPhr_uploaded_date(),
+				patientHealthReport.getDoctor_id(),stamp,
 				patientHealthReport.getPhr_type(), patientHealthReport.getPhr_uploaded_path_original(),
 				patientHealthReport.getPhr_uploaded_path_pdf(), patientHealthReport.getPhr_description());
 	}
@@ -90,6 +90,12 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	public int selectPharmacyIdByPatientId(int patientId) {
 		return jdbcTemplate.queryForObject(QueryConstants.GET_PHARMACYID_BY_PATIENTID, Integer.class,patientId);
 	}
+	
+	@Override
+	public int updatePrescriptionDetailsByPhrId(String prescription,int phrId) {
+		
+		return jdbcTemplate.update(QueryConstants.UPDATE_PRESCRIPTION_DETAILS_BY_PHR_ID, prescription, phrId);
+	}
 
 	private static class PatientDetailsRowMapper implements RowMapper<Patient> {
 
@@ -107,6 +113,8 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 			patient.setPatient_email_id(rs.getString(7));
 			patient.setPatient_image_path(rs.getString(8));
 			patient.setPatient_identity_path(rs.getString(9));
+			patient.setPatient_pharmacy_id(rs.getInt(10));
+			patient.setPatient_pharmacy_name(rs.getString(11));
 
 			return patient;
 		}
@@ -138,12 +146,12 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	}
 
 	private static class PhrDetailsExtractor implements ResultSetExtractor<List<PatientHealthReportResp>> {
-		public static final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//public static final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		@Override
 		public List<PatientHealthReportResp> extractData(ResultSet rs) throws SQLException, DataAccessException {
 			PatientHealthReportResp patientHealthReport = null;
-			Timestamp stamp = null;
+			//Timestamp stamp = null;
 
 			List<PatientHealthReportResp> listOfPHRs = new ArrayList<>();
 			while (rs.next()) {
@@ -152,17 +160,16 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 				patientHealthReport.setPhr_id(rs.getInt(1));
 				patientHealthReport.setPatient_id(rs.getInt(2));
 				patientHealthReport.setDoctor_id(rs.getInt(3));
-				System.out.println("rs.getTimestamp(4) :: " + rs.getTimestamp(4));
-				stamp = new Timestamp(rs.getTimestamp(4).getTime());
-				System.out.println("stamp :: " + stamp);
-				System.out.println("Pavan ::" + formate.format(stamp));
-				patientHealthReport.setPhr_uploaded_date(formate.format(stamp));
+				//stamp = new Timestamp(rs.getTimestamp(4).getTime());
+				//patientHealthReport.setPhr_uploaded_date(formate.format(stamp));
+				patientHealthReport.setPhr_uploaded_date(rs.getString(4));
 				patientHealthReport.setPhr_type(rs.getString(5));
 				patientHealthReport.setPhr_uploaded_path_original(rs.getString(6));
 				patientHealthReport.setPhr_uploaded_path_pdf(rs.getString(7));
 				patientHealthReport.setPhr_description(rs.getString(8));
 				patientHealthReport.setDoctor_name(rs.getString(9));
-				patientHealthReport.setDoctor_specialization(rs.getString(10));;
+				patientHealthReport.setDoctor_specialization(rs.getString(10));
+				patientHealthReport.setPatient_prescription(rs.getString(11));
 
 				listOfPHRs.add(patientHealthReport);
 			}
@@ -172,13 +179,13 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	}
 
 	private static class DoctorReportExtractor implements ResultSetExtractor<List<DoctorReportResponse>> {
-		public static final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//public static final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		@Override
 		public List<DoctorReportResponse> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
 			DoctorReportResponse drr = null;
-			Timestamp stamp = null;
+			//Timestamp stamp = null;
 
 			List<DoctorReportResponse> listOfDtr = new ArrayList<>();
 			while (rs.next()) {
@@ -190,8 +197,9 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 				drr.setPatient_name(rs.getString(4));
 				drr.setPatient_age(rs.getInt(5));
 				drr.setPatient_sex(rs.getString(6));
-				stamp = new Timestamp(rs.getTimestamp(7).getTime());
-				drr.setPhr_uploaded_date(formate.format(stamp));
+				//stamp = new Timestamp(rs.getTimestamp(7).getTime());
+				//drr.setPhr_uploaded_date(formate.format(stamp));
+				drr.setPhr_uploaded_date(rs.getString(7));
 				drr.setPhr_type(rs.getString(8));
 				drr.setPhr_uploaded_path_original(rs.getString(9));
 				drr.setPhr_uploaded_path_pdf(rs.getString(10));
@@ -225,8 +233,6 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 			return listOfDtrs;
 		}
 
-	}
-
-	
+	}	
 
 }

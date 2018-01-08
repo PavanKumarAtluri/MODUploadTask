@@ -24,12 +24,15 @@ import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
 import com.mod.healthrecords.beans.dto.DoctorPrescription;
 import com.mod.healthrecords.beans.dto.Order;
 import com.mod.healthrecords.beans.dto.PatientHealthReportDTO;
+import com.mod.healthrecords.beans.dto.PrescriptionSMSBean;
 import com.mod.healthrecords.beans.dto.Resp;
 import com.mod.healthrecords.beans.dto.Response;
+import com.mod.healthrecords.beans.dto.SMSResp;
 import com.mod.healthrecords.constants.FileConstants;
 import com.mod.healthrecords.dao.PatientHealthRecordsDAOI;
 import com.mod.healthrecords.exceptions.PHRException;
 import com.mod.healthrecords.remoteservice.client.PhrmacyServiceClient;
+import com.mod.healthrecords.remoteservice.client.SMSServiceClient;
 import com.mod.healthrecords.utils.ImageToPdfUtiil;
 import com.mod.healthrecords.utils.JsonUtil;
 
@@ -41,7 +44,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	
 	@Autowired
 	private PhrmacyServiceClient phrmacyServiceClient;
-
+	
+	@Autowired
+	private SMSServiceClient smsServiceClient;
+	
 	@Override
 	public Patient getPatientDetails(int pid) {
 
@@ -189,7 +195,48 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 		// convert json to java
 		resp = new Response();
 		resp = JsonUtil.jsonToJava(jsonResponse, Response.class);
-
+		
+		if(resp.getStatus()==(byte)1){
+			try{
+				Patient p=patientHealthRecordsDAO.getPatientDetails(doctorPrescription.getPatId());
+				Doctor d=patientHealthRecordsDAO.getDoctorDetails(doctorPrescription.getDocId());
+				
+				PrescriptionSMSBean smsBean=new PrescriptionSMSBean();
+				smsBean.setFrom("MODAPP");
+				smsBean.setTo(p.getPatient_mobileno());
+				smsBean.setTemplateName("MOD_PATIENT_PRESCRIPTION");
+				smsBean.setVAR1(p.getPatient_name());
+				smsBean.setVAR2(p.getPatient_pharmacy_name());
+				smsBean.setVAR3(d.getDoctor_name());
+				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_3Jan18_build_19s/");
+				
+				String jsonPrescriptionSMSBean=JsonUtil.javaToJson(smsBean);
+				System.out.println(jsonPrescriptionSMSBean);
+				
+				try{
+					String jsonSMSResponse=smsServiceClient.sendPrescriptionSMS(jsonPrescriptionSMSBean);
+					
+					SMSResp smsResp=JsonUtil.jsonToJava(jsonSMSResponse, SMSResp.class);
+					
+					System.out.println("ststus::"+smsResp.getStatus()+" "+" Details::"+smsResp.getDetails());
+					
+					if(smsResp.getStatus().equals("Success"))
+						System.out.println("SMS Sended");
+					else
+						System.out.println("SMS Not Sended");
+				}catch(Exception e){
+					System.out.println("getting error while sending message");
+					e.printStackTrace();
+				}
+				
+				int c=patientHealthRecordsDAO.updatePrescriptionDetailsByPhrId(doctorPrescription.getMedicalPrescrition(),doctorPrescription.getPhrId());
+			}catch(Exception e){
+				System.out.println("getting error while setting props to sending message");
+				e.printStackTrace();
+			}
+			
+		}
+		
 		return resp;
 	}
 

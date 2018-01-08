@@ -123,8 +123,9 @@ body{
 					<th width="20%">Doctor Name</th>
 					<th width="10%">Speciality</th>
 					<th width="15%">Report Type</th>
-					<th width="22%">Uploaded Date</th>
+					<th width="20%">Uploaded Date</th>
 					<th>Notes to Doctor</th>
+					<th>Prescription</th>
 					<th width="10%">Download</th>
 				</tr>
 				<c:forEach var="result" items="${allReports }">
@@ -136,6 +137,14 @@ body{
 						<td align="center" style="text-transform: capitalize;"><c:out value="${result.phr_type }" /></td>
 						<td align="center"><c:out value="${ result.phr_uploaded_date}" /></td>
 						<td align="center"><c:out value="${result.phr_description}"/></td>
+						<c:choose>
+								<c:when test="${!empty result.patient_prescription}">
+						<td align="center"><c:out value="${result.patient_prescription}"/></td>
+						</c:when>
+								<c:otherwise>
+									<td align="center" style="color: red;"><c:out value="Not Prescribed" /></td>
+								</c:otherwise>
+							</c:choose>
 						<td align="center"><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download3.png" alt="x" title="Download Original" width="17" height="24"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="18" height="24"></a></td>
 					</tr>
 				</c:forEach>
@@ -166,8 +175,9 @@ body{
 				tr += '<th width="20%">' + "Doctor Name"  + '</th>';
 				tr += '<th width="10%">' + "Speciality"  + '</th>';
 				tr += '<th width="15%">' + "Report Type"  + '</th>';
-				tr += '<th width="22%">' + "Uploaded Date"  + '</th>';
+				tr += '<th width="20%">' + "Uploaded Date"  + '</th>';
 				tr += '<th>' + "Notes to Doctor"  + '</th>';
+				tr += '<th>' + "Prescription"  + '</th>';
 				tr += '<th width="10%">' + "Download"  + '</th>';
 				tr +='</tr>';
 				
@@ -180,6 +190,13 @@ body{
 			        tr += '<td align="center" style="text-transform: capitalize;">' + v.phr_type  + '</td>';
 			        tr += '<td align="center">' + v.phr_uploaded_date + '</td>';
 			        tr += '<td align="center">' + v.phr_description  + '</td>';
+			        if(v.patient_prescription!=null){
+			        	tr += '<td align="center">' + v.patient_prescription  + '</td>';
+			        }else{
+			        	tr += '<td align="center" style="color: red;">' + "Not Prescribed" + '</td>';
+			        }
+			        
+			        
 			        tr += '<td align="center">' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download3.png" alt="x" title="Download Original" width="17" height="24"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="Download pdf" alt="x" width="20" height="24"></a>' + '</td>';
 			    	tr +='</tr>';  	
 			    	

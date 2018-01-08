@@ -1,6 +1,5 @@
 package com.mod.healthrecords.remoteservice.client;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,14 +24,14 @@ public class PhrmacyServiceClientimpl implements PhrmacyServiceClient {
 	public String sendDoctorPrescriptionToRequestedPharmacy(String jsonDoctorPrescription) {
 		HttpHeaders headers = null;
 		HttpEntity<String> entity = null;
-		String jsonBookResponse = null;
+		String jsonResponse = null;
 
 		headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		entity = new HttpEntity<String>(jsonDoctorPrescription, headers);
-		jsonBookResponse = template.postForObject(PhrmacyServiceURIConstants.SEND_DOCTOR_PRESCRIPTION_URL, entity,
+		jsonResponse = template.postForObject(PhrmacyServiceURIConstants.SEND_DOCTOR_PRESCRIPTION_URL, entity,
 				String.class);
-		return jsonBookResponse;
+		return jsonResponse;
 	}
 
 	@Override
@@ -58,8 +57,8 @@ public class PhrmacyServiceClientimpl implements PhrmacyServiceClient {
 				map);
 		return jsondResp;*/
 		
-		Map<String, Object> map = null;
-		String jsondResp = null;
+		//Map<String, Object> map = null;
+		//String jsondResp = null;
 		HttpEntity<String> entity=null;
 
 		
