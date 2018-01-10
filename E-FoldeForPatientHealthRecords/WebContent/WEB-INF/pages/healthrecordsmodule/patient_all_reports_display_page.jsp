@@ -152,7 +152,7 @@ body{
 									<%-- <td align="center"><c:out value="${result.patient_prescription}"/></td> --%>
 									<c:if test="${result.deliveryStatus==0 && result.paymentStatus==0}">
 										<td align="center"><c:out value="Order Placed" /></td>
-										<td align="center" style="color: red"><c:out value="PENDING" /></td>
+										<td align="center" style="color: red"><c:out value="Pending" /></td>
 									</c:if>
 									<c:if test="${result.deliveryStatus==1 && result.paymentStatus==0}">
 										<td align="center"><c:out value="Order Ready" /></td>
@@ -220,7 +220,7 @@ body{
 			        	/* tr += '<td align="center">' + v.patient_prescription  + '</td>'; */
 			        	if(v.deliveryStatus==0 && v.paymentStatus==0){
 			        		tr += '<td align="center">' + "Order Placed"  + '</td>';
-			        		tr += '<td align="center" style="color: red;">' + "PENDING"  + '</td>';
+			        		tr += '<td align="center" style="color: red;">' + "Pending"  + '</td>';
 			        	}else if(v.deliveryStatus==1 && v.paymentStatus==0){
 			        		tr += '<td align="center">' + "Order Ready"  + '</td>';
 			        		tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/changePaymentStatusByphrId.htm?phrId='+v.phr_id+'"'+'>Make Payment</a>'  + '</td>';

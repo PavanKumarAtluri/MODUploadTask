@@ -57,11 +57,11 @@ $(document).ready(function(){
 		 	
 		        if(v.is_delivered==0 && v.payment_status==0){
 		        	tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}pharmacy/changeDeliveryStatus.htm?orderid='+v.phr_id+'&patientid='+v.patientid+'"'+'>Make ready to deliver</a>'  + '</td>';
-					tr += '<td align="center" style="color: red;">' + "PENDING" + '</td>';
+					tr += '<td align="center" style="color: red;">' + "Pending" + '</td>';
 					tr += '<td align="center">' + "N/A"  + '</td>';
 		        }else if(v.is_delivered==1 && v.payment_status==0){
 		        	tr += '<td align="center" >' + "Ready to deliver" + '</td>';
-		        	tr += '<td align="center" style="color: red;">' + "PENDING" + '</td>';
+		        	tr += '<td align="center" style="color: red;">' + "Pending" + '</td>';
 					tr += '<td align="center">' + "N/A"  + '</td>';
 				}else if(v.is_delivered==1 && v.payment_status==1){
 					tr += '<td align="center" style="color: green;">' + "Delivered" + '</td>';
@@ -223,7 +223,7 @@ body {
 		<div style="float: left">
 			<label class="title">View Orders</label>
 		</div>
-		<div style="float: right">
+		<!-- <div style="float: right">
 
 			<div class="search-container">
 				<div class="ui-widget">
@@ -233,7 +233,7 @@ body {
 						value="Search"></span>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div style="clear: both"></div>
 		<!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->
 		<c:choose>
@@ -259,12 +259,12 @@ body {
 							
 							<c:if test="${result.is_delivered==0 && result.payment_status==0}">
 								<td align="center"><a href="${pageContext.request.contextPath}/pharmacy/changeDeliveryStatus.htm?orderid=${result.orderid }&patientid=${result.patientid }">Make ready to deliver</a></td>
-								<td align="center" style="color: red"><c:out value="PENDING" /></td>
+								<td align="center" style="color: red"><c:out value="Pending" /></td>
 								<td align="center"><c:out value="N/A" /></td>
 							</c:if>
 							<c:if test="${result.is_delivered==1 && result.payment_status==0}">
 								<td align="center"><c:out value="Ready to deliver" /></td>
-								<td align="center" style="color: red"><c:out value="PENDING" /></td>
+								<td align="center" style="color: red"><c:out value="Pending" /></td>
 								<td align="center"><c:out value="N/A" /></td>
 							</c:if>
 							<c:if test="${result.is_delivered==1 && result.payment_status==1}">
