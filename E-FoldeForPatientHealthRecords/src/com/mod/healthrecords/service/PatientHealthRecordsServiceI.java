@@ -10,6 +10,7 @@ import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
 import com.mod.healthrecords.beans.dto.DoctorPrescription;
 import com.mod.healthrecords.beans.dto.Order;
 import com.mod.healthrecords.beans.dto.PatientHealthReportDTO;
+import com.mod.healthrecords.beans.dto.PatientHealthReportRespWithOrderSatusDetails;
 import com.mod.healthrecords.beans.dto.Resp;
 import com.mod.healthrecords.beans.dto.Response;
 import com.mod.healthrecords.exceptions.PHRException;
@@ -28,7 +29,9 @@ public interface PatientHealthRecordsServiceI {
 	public List<Doctor> getDoctorDetails();
 
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid);
-
+	
+	//public List<PatientHealthReportRespWithOrderSatusDetails> getAllPatientReportsById(int pid);
+	
 	public ArrayList<String> getAllPatients(String str);
 
 	public List<DoctorReportResponse> getRecordsByPatientname(String name, int did);
@@ -37,11 +40,15 @@ public interface PatientHealthRecordsServiceI {
 
 	public int getpharmacyIdByPatientId(int patientId);
 
-	public Resp getOrderDetailsByOrderId(int orderId);
+	public Order getOrderDetailsByOrderId(int orderId);
 
 	public List<Order> getOrderDetailsByPatientIdAndPharmacyId(int pharmacyId, int patientId);
 
 	public List<Order> getAllOrdersByPharmacyId(int pharmacyId);
 
-	public Resp changeDeliveryStatus(int orderId);
+	public Resp changeDeliveryStatus(int orderId,int patientid);
+	
+	public Resp changePaymentStatus(int orderId,int patientid);
+	
+	public int changePaymentStatusByPhrId(int phrId);
 }

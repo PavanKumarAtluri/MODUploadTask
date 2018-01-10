@@ -90,5 +90,20 @@ public class PHRDetailsDisplayController {
 		return "patient_all_reports_display_page";
 	}
 	
+	@RequestMapping(value="/changePaymentStatusByphrId.htm",method=RequestMethod.GET)
+	public String changePaymentStatusByPhrId(@RequestParam("phrId") Integer phrId,HttpSession session,Map<String,Object> map){
+		
+	
+		
+		int count=patientHealthRecordsService.changePaymentStatusByPhrId(phrId);
+		
+		String userId = (String) session.getAttribute("userId");
+		Integer userIdInt = Integer.valueOf(userId);
+		List<PatientHealthReportResp> list=patientHealthRecordsService.getAllPatientReportsById(userIdInt);
+		
+		map.put("allReports", list);
+		return "patient_all_reports_display_page";
+		
+	}
 	
 }

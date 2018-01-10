@@ -69,12 +69,13 @@ public class PharmacyController {
 	
 	
 	@RequestMapping(value="/pharmacy_orders_result.htm",method = RequestMethod.GET)
-	public String getAllOrdersOfAPharmacy(@RequestParam("id") Integer pharmacyId,Model model,@RequestParam(required=false,value="statusMsg") String statusMsg){
+	public String getAllOrdersOfAPharmacy(@RequestParam("id") Integer pharmacyId,Model model,@RequestParam(required=false,value="statusMsg") String statusMsg,@RequestParam(required=false,value="statusMsg1") String statusMsg1){
 		
 		List<Order> list=service.getAllOrdersByPharmacyId(pharmacyId);
 		
 		model.addAttribute("listOfOrders", list);
 		model.addAttribute("statusMsg", statusMsg);
+		model.addAttribute("statusMsg1", statusMsg1);
 		return "pharmacy_orders_result";
 	}
 	
@@ -85,21 +86,35 @@ public class PharmacyController {
 		String pharmacyId = (String) session.getAttribute("pharmacyId");
 		Integer pharmacyId1 = Integer.valueOf(pharmacyId);
 		List<Order> list=service.getOrderDetailsByPatientIdAndPharmacyId(pharmacyId1, patientId);
-		
+		//System.out.println(list.get(0).getIs_delivered());
 		
 		return JsonUtil.javaToJson(list);
 		
 	}
+	
 	@RequestMapping(value="/changeDeliveryStatus.htm",method=RequestMethod.GET)
-	public String changeDeliveryStatus(@RequestParam("orderid") Integer orderId,HttpSession session){
+	public String changeDeliveryStatus(@RequestParam("orderid") Integer orderId,@RequestParam("patientid") Integer patientid,HttpSession session){
 		String pharmacyId = (String) session.getAttribute("pharmacyId");
 		Integer pharmacyId1 = Integer.valueOf(pharmacyId);
 		
-		Resp resp=service.changeDeliveryStatus(orderId);
+		Resp resp=service.changeDeliveryStatus(orderId,patientid);
 		
 		
 		
 		return "redirect:pharmacy_orders_result.htm?id="+pharmacyId1+"&statusMsg="+resp.getMsg();
+		
+	}
+	
+	@RequestMapping(value="/changePaymentStatus.htm",method=RequestMethod.GET)
+	public String changePaymentStatus(@RequestParam("orderid") Integer orderId,@RequestParam("patientid") Integer patientid,HttpSession session){
+		String pharmacyId = (String) session.getAttribute("pharmacyId");
+		Integer pharmacyId1 = Integer.valueOf(pharmacyId);
+		
+		Resp resp=service.changePaymentStatus(orderId,patientid);
+		
+		
+		
+		return "redirect:pharmacy_orders_result.htm?id="+pharmacyId1+"&statusMsg1="+resp.getMsg();
 		
 	}
 

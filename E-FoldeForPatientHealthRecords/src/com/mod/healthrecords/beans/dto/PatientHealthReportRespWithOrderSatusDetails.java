@@ -1,6 +1,6 @@
-package com.mod.healthrecords.beans.bo;
+package com.mod.healthrecords.beans.dto;
 
-public class PatientHealthReportResp {
+public class PatientHealthReportRespWithOrderSatusDetails {
 	private int phr_id;
 	private int patient_id;
 	private int doctor_id;
@@ -12,8 +12,12 @@ public class PatientHealthReportResp {
 	private String doctor_name;
 	private String doctor_specialization;
 	private String patient_prescription;
-	private int deliveryStatus;
-	private int paymentStatus;
+	public String prescription;
+	public String prescribedDate;
+	public int deliveryStatus;
+	public String deliveredDate;
+	public int paymentStatus;
+	
 	
 	public int getPhr_id() {
 		return phr_id;
@@ -81,27 +85,37 @@ public class PatientHealthReportResp {
 	public void setPatient_prescription(String patient_prescription) {
 		this.patient_prescription = patient_prescription;
 	}
+	public String getPrescription() {
+		return prescription;
+	}
+	public void setPrescription(String prescription) {
+		this.prescription = prescription;
+	}
+	public String getPrescribedDate() {
+		return prescribedDate;
+	}
+	public void setPrescribedDate(String prescribedDate) {
+		this.prescribedDate = prescribedDate;
+	}
 	public int getDeliveryStatus() {
 		return deliveryStatus;
 	}
-	public int getPaymentStatus() {
-		return paymentStatus;
-	}
 	public void setDeliveryStatus(int deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
+	}
+	public String getDeliveredDate() {
+		return deliveredDate;
+	}
+	public void setDeliveredDate(String deliveredDate) {
+		this.deliveredDate = deliveredDate;
+	}
+	public int getPaymentStatus() {
+		return paymentStatus;
 	}
 	public void setPaymentStatus(int paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 	
-	@Override
-	public String toString() {
-		return "PatientHealthReportResp [phr_id=" + phr_id + ", patient_id=" + patient_id + ", doctor_id=" + doctor_id
-				+ ", phr_uploaded_date=" + phr_uploaded_date + ", phr_type=" + phr_type
-				+ ", phr_uploaded_path_original=" + phr_uploaded_path_original + ", phr_uploaded_path_pdf="
-				+ phr_uploaded_path_pdf + ", phr_description=" + phr_description + ", doctor_name=" + doctor_name
-				+ ", doctor_specialization=" + doctor_specialization + ", patient_prescription=" + patient_prescription
-				+ "]";
-	}
+	
 	
 }

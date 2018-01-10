@@ -23,9 +23,11 @@ public class SMSServiceClientImpl implements SMSServiceClient {
 
 		headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		System.out.println("SMSServiceClientImpl.sendPrescriptionSMS().jsonPrescriptionSMSBean::"+jsonPrescriptionSMSBean);
 		entity = new HttpEntity<String>(jsonPrescriptionSMSBean, headers);
 		jsonSMSResponse = template.postForObject(PhrmacyServiceURIConstants.SEND_SMS_PRESCRIPTION_URL, entity,
 				String.class);
+		System.out.println("SMSServiceClientImpl.sendPrescriptionSMS().jsonSMSResponse:: "+jsonSMSResponse);
 		return jsonSMSResponse;
 	}
 

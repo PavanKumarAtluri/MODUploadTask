@@ -48,7 +48,7 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 				patientHealthReport.getPhr_id(), patientHealthReport.getPatient_id(),
 				patientHealthReport.getDoctor_id(),stamp,
 				patientHealthReport.getPhr_type(), patientHealthReport.getPhr_uploaded_path_original(),
-				patientHealthReport.getPhr_uploaded_path_pdf(), patientHealthReport.getPhr_description());
+				patientHealthReport.getPhr_uploaded_path_pdf(), patientHealthReport.getPhr_description(),0,0);
 	}
 
 	@Override
@@ -170,6 +170,8 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 				patientHealthReport.setDoctor_name(rs.getString(9));
 				patientHealthReport.setDoctor_specialization(rs.getString(10));
 				patientHealthReport.setPatient_prescription(rs.getString(11));
+				patientHealthReport.setDeliveryStatus(rs.getInt(12));
+				patientHealthReport.setPaymentStatus(rs.getInt(13));
 
 				listOfPHRs.add(patientHealthReport);
 			}
@@ -233,6 +235,28 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 			return listOfDtrs;
 		}
 
+	}
+
+	@Override
+	public int updateDeliveryStatusByPhrId(int phrId) {
+		return jdbcTemplate.update(QueryConstants.UPDATE_DELIVERY_STATUS_BY_PHR_ID, 1, phrId);
+	}
+
+	@Override
+	public int updatePaymentStatusByPhrId( int phrId) {
+		return jdbcTemplate.update(QueryConstants.UPDATE_PAYMENT_STATUS_BY_PHR_ID, 1, phrId);
+	}
+
+	@Override
+	public int getPHRIdByOrderId(int orderId) {
+		
+		return jdbcTemplate.queryForObject(QueryConstants.SELECT_PHRID_BY_ORDER_ID, Integer.class, orderId);
+	}
+
+	@Override
+	public int updateDeliveryStatusOfOrderTabByPhrId(int phrId) {
+		return jdbcTemplate.update(QueryConstants.UPDATE_ORDER_PAYMENT_STATUS_BY_PHRID,
+				new java.sql.Timestamp(new java.util.Date().getTime()), 1, phrId);
 	}	
 
 }

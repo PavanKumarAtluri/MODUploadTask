@@ -36,13 +36,24 @@ public class PhrmacyServiceClientimpl implements PhrmacyServiceClient {
 
 	@Override
 	public String getOrderDetailsByOrderId(int orderId) {
-		Map<String, Object> map = null;
+		/*Map<String, Object> map = null;
 		String jsondResp = null;
 
 		map = new HashMap<>();
 		map.put("orderId", orderId);
 		jsondResp = template.getForObject(PhrmacyServiceURIConstants.GET_ORDER_BY_ORDERID_URL, String.class, map);
-		return jsondResp;
+		return jsondResp;*/
+		
+		HttpEntity<String> entity=null;
+
+		
+		
+		 HttpHeaders headers = new HttpHeaders();
+		 headers.add("Content-Type", "application/json");
+		entity=new HttpEntity<String>(headers);
+		ResponseEntity<String> resp=template.exchange(PhrmacyServiceURIConstants.GET_ORDER_BY_ORDERID_URL, HttpMethod.GET, entity, String.class, orderId);
+		System.out.println(resp.getBody());
+		return resp.getBody();
 	}
 
 	@Override
@@ -101,4 +112,40 @@ public class PhrmacyServiceClientimpl implements PhrmacyServiceClient {
 		return resp.getBody();
 	}
 
+	@Override
+	public String changePaymentStatus(int orderId) {
+		//String jsondResp = null;
+		HttpEntity<String> entity=null;
+
+		//jsondResp = template.getForObject(PhrmacyServiceURIConstants.GET_ALL_ORDERS_OF_PHARMACY_URL, String.class,orderId);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		entity=new HttpEntity<String>(headers);
+		ResponseEntity<String> resp=template.exchange(PhrmacyServiceURIConstants.CHANGE_PAYMENT_STATUS, HttpMethod.GET, entity, String.class, orderId);
+		System.out.println(resp.getBody());
+		return resp.getBody();
+	}
+	
+	@Override
+	public String getOrderStatusByphrId(int phrId) {
+		/*Map<String, Object> map = null;
+		String jsondResp = null;
+
+		map = new HashMap<>();
+		map.put("orderId", orderId);
+		jsondResp = template.getForObject(PhrmacyServiceURIConstants.GET_ORDER_BY_ORDERID_URL, String.class, map);
+		return jsondResp;*/
+		
+		HttpEntity<String> entity=null;
+
+		
+		
+		 HttpHeaders headers = new HttpHeaders();
+		 headers.add("Content-Type", "application/json");
+		entity=new HttpEntity<String>(headers);
+		ResponseEntity<String> resp=template.exchange(PhrmacyServiceURIConstants.GET_ORDERSTATUS_BYPHRID, HttpMethod.GET, entity, String.class, phrId);
+		System.out.println(resp.getBody());
+		return resp.getBody();
+	}
 }

@@ -6,4 +6,6 @@ public interface PhrmacyServiceClient {
 	public String getOrderDetailsByPatientIdAndPharmacyId(int pharmacyId,int patientId);
 	public String getAllOrdersByPharmacyId(int pharmacyId);
 	public String changeDeliveryStatus(int orderId);
+	public String changePaymentStatus(int orderId);
+	public String getOrderStatusByphrId(int phrId);
 }

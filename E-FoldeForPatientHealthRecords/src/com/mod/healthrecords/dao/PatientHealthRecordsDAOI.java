@@ -30,4 +30,12 @@ public interface PatientHealthRecordsDAOI {
 	public int selectPharmacyIdByPatientId(int patientId);
 	
 	public int updatePrescriptionDetailsByPhrId(String prescription,int phrId);
+	
+	public int updateDeliveryStatusByPhrId(int phrId);
+	
+	public int updatePaymentStatusByPhrId(int phrId);
+	
+	public int getPHRIdByOrderId(int orderId);
+	
+	public int updateDeliveryStatusOfOrderTabByPhrId(int phrId);
 }

@@ -23,7 +23,9 @@ import com.mod.healthrecords.beans.bo.PatientHealthReport;
 import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
 import com.mod.healthrecords.beans.dto.DoctorPrescription;
 import com.mod.healthrecords.beans.dto.Order;
+import com.mod.healthrecords.beans.dto.OrderStatus;
 import com.mod.healthrecords.beans.dto.PatientHealthReportDTO;
+import com.mod.healthrecords.beans.dto.PatientHealthReportRespWithOrderSatusDetails;
 import com.mod.healthrecords.beans.dto.PrescriptionSMSBean;
 import com.mod.healthrecords.beans.dto.Resp;
 import com.mod.healthrecords.beans.dto.Response;
@@ -35,6 +37,8 @@ import com.mod.healthrecords.remoteservice.client.PhrmacyServiceClient;
 import com.mod.healthrecords.remoteservice.client.SMSServiceClient;
 import com.mod.healthrecords.utils.ImageToPdfUtiil;
 import com.mod.healthrecords.utils.JsonUtil;
+
+import oracle.net.aso.p;
 
 @Service("patientHealthRecordsServiceImpl")
 public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServiceI {
@@ -143,12 +147,62 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	public List<Doctor> getDoctorDetails() {
 		return patientHealthRecordsDAO.getDoctorDetails();
 	}
-
+	
 	@Override
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid) {
 		return patientHealthRecordsDAO.getAllPatientReportsById(pid);
 	}
-
+	
+	
+	/*
+	@Override
+	public List<PatientHealthReportRespWithOrderSatusDetails> getAllPatientReportsById(int pid) {
+		List<PatientHealthReportResp> list=patientHealthRecordsDAO.getAllPatientReportsById(pid);
+		PatientHealthReportRespWithOrderSatusDetails phros=null; 
+		
+		
+		List<PatientHealthReportRespWithOrderSatusDetails> listwithOrderStatus=new ArrayList<>();
+		for(PatientHealthReportResp resp:list){
+			phros=new PatientHealthReportRespWithOrderSatusDetails();
+			
+			if(resp.getPatient_prescription()!=null){
+				String jsonOrderStatus=phrmacyServiceClient.getOrderStatusByphrId(resp.getPhr_id());
+				OrderStatus orderStatus=JsonUtil.jsonToJava(jsonOrderStatus, OrderStatus.class);
+				phros.setPatient_prescription(orderStatus.getPrescription());
+				phros.setPrescribedDate(orderStatus.getPrescribedDate());
+				phros.setDeliveredDate(orderStatus.getDeliveredDate());
+				phros.setDeliveryStatus(orderStatus.getDeliveryStatus());
+				phros.setPaymentStatus(orderStatus.getPaymentStatus());
+			}
+			
+			private int phr_id;
+			private int patient_id;
+			private int doctor_id;
+			private String phr_uploaded_date;
+			private String phr_type;
+			private String phr_uploaded_path_original;
+			private String phr_uploaded_path_pdf;
+			private String phr_description;
+			private String doctor_name;
+			private String doctor_specialization;
+			 
+			phros.setPhr_id(resp.getPhr_id());
+			phros.setPatient_id(resp.getPatient_id());
+			phros.setDoctor_id(resp.getDoctor_id());
+			phros.setPhr_uploaded_date(resp.getPhr_uploaded_date());
+			phros.setPhr_type(resp.getPhr_type());
+			phros.setPhr_uploaded_path_original(resp.getPhr_uploaded_path_original());
+			phros.setPhr_uploaded_path_pdf(resp.getPhr_uploaded_path_pdf());
+			phros.setPhr_description(resp.getPhr_description());
+			phros.setDoctor_name(resp.getDoctor_name());
+			phros.setDoctor_specialization(resp.getDoctor_specialization());
+			
+			listwithOrderStatus.add(phros);
+			
+		}
+		return listwithOrderStatus;
+	}
+	 */
 	@Override
 	public ArrayList<String> getAllPatients(String str) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -198,17 +252,18 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 		
 		if(resp.getStatus()==(byte)1){
 			try{
+				patientHealthRecordsDAO.updatePrescriptionDetailsByPhrId(doctorPrescription.getMedicalPrescrition(),doctorPrescription.getPhrId());
 				Patient p=patientHealthRecordsDAO.getPatientDetails(doctorPrescription.getPatId());
 				Doctor d=patientHealthRecordsDAO.getDoctorDetails(doctorPrescription.getDocId());
 				
 				PrescriptionSMSBean smsBean=new PrescriptionSMSBean();
-				smsBean.setFrom("MODAPP");
+				smsBean.setFrom("MODMSG");
 				smsBean.setTo(p.getPatient_mobileno());
-				smsBean.setTemplateName("MOD_PATIENT_PRESCRIPTION");
+				smsBean.setTemplateName("MOD_MESSAGE_TEMPLATE1");
 				smsBean.setVAR1(p.getPatient_name());
 				smsBean.setVAR2(p.getPatient_pharmacy_name());
 				smsBean.setVAR3(d.getDoctor_name());
-				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_3Jan18_build_19s/");
+				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_10thJan18_19s/phr/patient_login.htm");
 				
 				String jsonPrescriptionSMSBean=JsonUtil.javaToJson(smsBean);
 				System.out.println(jsonPrescriptionSMSBean);
@@ -229,7 +284,6 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 					e.printStackTrace();
 				}
 				
-				int c=patientHealthRecordsDAO.updatePrescriptionDetailsByPhrId(doctorPrescription.getMedicalPrescrition(),doctorPrescription.getPhrId());
 			}catch(Exception e){
 				System.out.println("getting error while setting props to sending message");
 				e.printStackTrace();
@@ -247,17 +301,22 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	}
 
 	@Override
-	public Resp getOrderDetailsByOrderId(int orderId) {
+	public Order getOrderDetailsByOrderId(int orderId) {
 		String jsonResp = null;
 		Resp resp = null;
+		Order order=new Order();
 
 		// call client method to delete the book
 		jsonResp = phrmacyServiceClient.getOrderDetailsByOrderId(orderId);
 
 		// convert jsonResponse to java Object
 		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+		
+		if(resp.getStatus()==(byte)1){
+			order=JsonUtil.jsonToJava(resp.getData(), Order.class);
+		}
 
-		return resp;
+		return order;
 	}
 
 	@Override
@@ -301,7 +360,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 	}
 
 	@Override
-	public Resp changeDeliveryStatus(int orderId) {
+	public Resp changeDeliveryStatus(int orderId, int patientid) {
 		String jsonResp = null;
 		Resp resp = null;
 
@@ -310,8 +369,77 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 
 		// convert jsonResponse to java Object
 		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+		
+		if(resp.getStatus()==(byte)1){
+			try{
+				patientHealthRecordsDAO.updateDeliveryStatusByPhrId(patientHealthRecordsDAO.getPHRIdByOrderId(orderId));
+				Patient p=patientHealthRecordsDAO.getPatientDetails(patientid);
+				
+				
+				PrescriptionSMSBean smsBean=new PrescriptionSMSBean();
+				smsBean.setFrom("MODSMS");
+				smsBean.setTo(p.getPatient_mobileno());
+				smsBean.setTemplateName("MOD_ORDER_MSG_TEMPLATE");
+				smsBean.setVAR1(p.getPatient_name());
+				smsBean.setVAR2(String.valueOf(orderId));
+				smsBean.setVAR3(p.getPatient_pharmacy_name());
+				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_10thJan18_19s/phr/patient_login.htm");
+				
+				String jsonPrescriptionSMSBean=JsonUtil.javaToJson(smsBean);
+				System.out.println(jsonPrescriptionSMSBean);
+				
+				try{
+					String jsonSMSResponse=smsServiceClient.sendPrescriptionSMS(jsonPrescriptionSMSBean);
+					
+					SMSResp smsResp=JsonUtil.jsonToJava(jsonSMSResponse, SMSResp.class);
+					
+					System.out.println("ststus::"+smsResp.getStatus()+" "+" Details::"+smsResp.getDetails());
+					
+					if(smsResp.getStatus().equals("Success"))
+						System.out.println("SMS Sended");
+					else
+						System.out.println("SMS Not Sended");
+				}catch(Exception e){
+					System.out.println("getting error while sending message");
+					e.printStackTrace();
+				}
+				
+			}catch(Exception e){
+				System.out.println("getting error while setting props to sending message");
+				e.printStackTrace();
+			}
+		}
 
 		return resp;
+	}
+
+	@Override
+	public Resp changePaymentStatus(int orderId, int patientid) {
+		String jsonResp = null;
+		Resp resp = null;
+
+		// call client method to delete the book
+		jsonResp = phrmacyServiceClient.changePaymentStatus(orderId);
+
+		// convert jsonResponse to java Object
+		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+		
+		return resp;
+	}
+
+	@Override
+	public int changePaymentStatusByPhrId(int phrId) {
+		int cnt=0,cnt1=0;
+		
+		
+		cnt=patientHealthRecordsDAO.updatePaymentStatusByPhrId(phrId);
+		
+		if(cnt!=0)
+			cnt1=patientHealthRecordsDAO.updateDeliveryStatusOfOrderTabByPhrId(phrId);
+		
+		
+		
+		return cnt1;
 	}
 
 }

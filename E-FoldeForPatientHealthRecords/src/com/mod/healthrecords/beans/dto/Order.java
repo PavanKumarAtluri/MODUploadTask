@@ -10,6 +10,7 @@ public class Order {
 	private String date_prescription;
 	private int is_delivered;
 	private String delivered_date;
+	private int payment_status;
 	
 	public int getOrderid() {
 		return orderid;
@@ -64,6 +65,12 @@ public class Order {
 	}
 	public void setDelivered_date(String delivered_date) {
 		this.delivered_date = delivered_date;
+	}
+	public int getPayment_status() {
+		return payment_status;
+	}
+	public void setPayment_status(int payment_status) {
+		this.payment_status = payment_status;
 	}
 	
 }

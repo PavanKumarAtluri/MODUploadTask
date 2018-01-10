@@ -9,8 +9,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
+	<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 	
 <title>Result Page</title>
 
@@ -126,6 +125,8 @@ body{
 					<th width="20%">Uploaded Date</th>
 					<th>Notes to Doctor</th>
 					<th>Prescription</th>
+					<th>Order Delivery Status</th>
+					<th>Order Payment Status</th>
 					<th width="10%">Download</th>
 				</tr>
 				<c:forEach var="result" items="${allReports }">
@@ -139,10 +140,24 @@ body{
 						<td align="center"><c:out value="${result.phr_description}"/></td>
 						<c:choose>
 								<c:when test="${!empty result.patient_prescription}">
-						<td align="center"><c:out value="${result.patient_prescription}"/></td>
-						</c:when>
+									<td align="center"><c:out value="${result.patient_prescription}"/></td>
+									<c:if test="${result.deliveryStatus==0 && result.paymentStatus==0}">
+										<td align="center"><c:out value="Order Placed" /></td>
+										<td align="center" style="color: red"><c:out value="PENDING" /></td>
+									</c:if>
+									<c:if test="${result.deliveryStatus==1 && result.paymentStatus==0}">
+										<td align="center"><c:out value="Order Ready" /></td>
+										<td align="center" style="color: red"><a href="${pageContext.request.contextPath}/phrDetailsDisplay/changePaymentStatusByphrId.htm?phrId=${result.phr_id }">Make Payment</a></td>	
+									</c:if>
+									<c:if test="${result.deliveryStatus==1 && result.paymentStatus==1}">
+										<td align="center" style="color: green"><c:out value="Delivered" /></td>
+										<td align="center" style="color: green"><c:out value="Completed" /></td>
+									</c:if>
+								</c:when>
 								<c:otherwise>
 									<td align="center" style="color: red;"><c:out value="Not Prescribed" /></td>
+									<td align="center">N/A</td>
+									<td align="center">N/A</td>
 								</c:otherwise>
 							</c:choose>
 						<td align="center"><a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_original}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download3.png" alt="x" title="Download Original" width="17" height="24"></a>&nbsp;&nbsp;&nbsp;<a href="phrDownload/phrDownloadHandler.htm?path=${result.phr_uploaded_path_pdf}" ><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" alt="x" title="Download pdf" width="18" height="24"></a></td>
@@ -176,8 +191,10 @@ body{
 				tr += '<th width="10%">' + "Speciality"  + '</th>';
 				tr += '<th width="15%">' + "Report Type"  + '</th>';
 				tr += '<th width="20%">' + "Uploaded Date"  + '</th>';
-				tr += '<th>' + "Notes to Doctor"  + '</th>';
+				tr += '<th >' + "Notes to Doctor"  + '</th>';
 				tr += '<th>' + "Prescription"  + '</th>';
+				tr += '<th>' + "Order Delivery Status"  + '</th>';
+				tr += '<th>' + "Order Payment Status"  + '</th>';
 				tr += '<th width="10%">' + "Download"  + '</th>';
 				tr +='</tr>';
 				
@@ -192,8 +209,23 @@ body{
 			        tr += '<td align="center">' + v.phr_description  + '</td>';
 			        if(v.patient_prescription!=null){
 			        	tr += '<td align="center">' + v.patient_prescription  + '</td>';
+			        	if(v.deliveryStatus==0 && v.paymentStatus==0){
+			        		tr += '<td align="center">' + "Order Placed"  + '</td>';
+			        		tr += '<td align="center" style="color: red;">' + "PENDING"  + '</td>';
+			        	}else if(v.deliveryStatus==1 && v.paymentStatus==0){
+			        		tr += '<td align="center">' + "Order Ready"  + '</td>';
+			        		tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/changePaymentStatusByphrId.htm?phrId='+v.phr_id+'"'+'>Make Payment</a>'  + '</td>';
+			        		
+			        	}else if(v.deliveryStatus==1 && v.paymentStatus==1){
+			        		tr += '<td align="center" style="color: green;">' + "Delivered"  + '</td>';
+			        		tr += '<td align="center" style="color: green;">' + "Completed"  + '</td>';
+			        		
+			        	}
+			        	
 			        }else{
 			        	tr += '<td align="center" style="color: red;">' + "Not Prescribed" + '</td>';
+			        	tr += '<td align="center" >' + "N/A" + '</td>';
+			        	tr += '<td align="center" >' + "N/A" + '</td>';
 			        }
 			        
 			        

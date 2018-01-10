@@ -11,6 +11,8 @@ public class PatientHealthReport {
 	private String phr_uploaded_path_original;
 	private String phr_uploaded_path_pdf;
 	private String phr_description;
+	private int is_delivered;
+	private int payment_status;
 	
 
 	public int getPhr_id() {
@@ -83,6 +85,22 @@ public class PatientHealthReport {
 				+ ", phr_uploaded_date=" + phr_uploaded_date + ", phr_type=" + phr_type
 				+ ", phr_uploaded_path_original=" + phr_uploaded_path_original + ", phr_uploaded_path_pdf="
 				+ phr_uploaded_path_pdf + ", phr_description=" + phr_description + "]";
+	}
+
+	public int getIs_delivered() {
+		return is_delivered;
+	}
+
+	public void setIs_delivered(int is_delivered) {
+		this.is_delivered = is_delivered;
+	}
+
+	public int getPayment_status() {
+		return payment_status;
+	}
+
+	public void setPayment_status(int payment_status) {
+		this.payment_status = payment_status;
 	}
 
 }

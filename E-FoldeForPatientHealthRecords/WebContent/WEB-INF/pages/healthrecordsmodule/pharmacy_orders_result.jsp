@@ -29,11 +29,11 @@ $(document).ready(function(){
 			var tr = '<tr>' ;
 			$("#t").empty();
 			
-			
 			tr += '<th width="10%">' + "Order ID"  + '</th>';
 			tr += '<th width="30%">' + "Prescription"  + '</th>';
 			tr += '<th width="15%">' + "Prescribed Date"  + '</th>';
 			tr += '<th width="15%">' + "Delivery Status"  + '</th>';
+			tr += '<th width="15%">' + "Payment Status"  + '</th>';
 			tr += '<th width="15%">' + "Delivered Date"  + '</th>';
 			
 			
@@ -53,17 +53,20 @@ $(document).ready(function(){
 				tr += '<td align="center">' + v.orderid  + '</td>';
 		        tr += '<td align="center">' + v.prescription + '</td>';
 		        tr += '<td align="center">' + v.date_prescription  + '</td>';
-		       
 		        
-		 
-		        if(v.is_delivered==1){
-				tr += '<td align="center">' + "Delivered" + '</td>';
-				 tr += '<td align="center">' + v.delivered_date  + '</td>';
-				
-		        }
-				else{
-					tr += '<td align="center">' + '<a href='+'"'+'${pageContext.request.contextPath}/pharmacy/changeDeliveryStatus.htm?orderid='+v.orderid+'"'+'>Pay</a>'+ '</td>';
-					tr += '<td align="center">' + "N/A" + '</td>';
+		 	
+		        if(v.is_delivered==0 && v.payment_status==0){
+		        	tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}pharmacy/changeDeliveryStatus.htm?orderid='+v.phr_id+'&patientid='+v.patientid+'"'+'>Make ready to deliver</a>'  + '</td>';
+					tr += '<td align="center" style="color: red;">' + "PENDING" + '</td>';
+					tr += '<td align="center">' + "N/A"  + '</td>';
+		        }else if(v.is_delivered==1 && v.payment_status==0){
+		        	tr += '<td align="center" >' + "Ready to deliver" + '</td>';
+		        	tr += '<td align="center" style="color: red;">' + "PENDING" + '</td>';
+					tr += '<td align="center">' + "N/A"  + '</td>';
+				}else if(v.is_delivered==1 && v.payment_status==1){
+					tr += '<td align="center" style="color: green;">' + "Delivered" + '</td>';
+					tr += '<td align="center" style="color: green;">' + "Completed" + '</td>';
+					tr += '<td align="center">' + v.delivered_date  + '</td>';
 				}
 		       	tr +='</tr>';
 		    	
@@ -187,7 +190,7 @@ body {
 </style>
 
 </head>
-<body onclick="showStatusMsg();">
+<body onclick="hideStatusMsg();" onload="hideStatusMsg();">
 
 	<div class="header">
 		<img
@@ -202,6 +205,9 @@ body {
 
 	<div id="statusdiv">
 		<h3 style="color: green; text-align: center;">${statusMsg}</h3>
+	</div>
+	<div id="statusdiv1">
+		<h3 style="color: green; text-align: center;">${statusMsg1}</h3>
 	</div>
 	
 	<div class="dataTable">
@@ -231,6 +237,7 @@ body {
 						<th width="30%">Prescription</th>
 						<th width="15%">Prescribed Date</th>
 						<th width="15%">Delivery Status</th>
+						<th width="15%">Payment Status</th>
 						<th width="15%">Delivered Date</th>
 
 					</tr>
@@ -239,20 +246,23 @@ body {
 
 							<td align="center"><c:out value="${result.orderid }" /></td>
 							<td align="center"><c:out value="${result.prescription }" /></td>
-							<td align="center"><c:out
-									value="${result.date_prescription }" /></td>
-							<c:choose>
-								<c:when test="${result.is_delivered==1}">
-									<td align="center"><c:out value="Delivered" /></td>
-									<td align="center"><c:out value="${result.delivered_date }" /></td>
-									
-								</c:when>
-								<c:otherwise>
-									<td align="center"><a href="${pageContext.request.contextPath}/pharmacy/changeDeliveryStatus.htm?orderid=${result.orderid }">Pay</a></td>
-									<td align="center"><c:out value="N/A" /></td>
-								</c:otherwise>
-							</c:choose>
-
+							<td align="center"><c:out value="${result.date_prescription }" /></td>
+							
+							<c:if test="${result.is_delivered==0 && result.payment_status==0}">
+								<td align="center"><a href="${pageContext.request.contextPath}/pharmacy/changeDeliveryStatus.htm?orderid=${result.orderid }&patientid=${result.patientid }">Make ready to deliver</a></td>
+								<td align="center" style="color: red"><c:out value="PENDING" /></td>
+								<td align="center"><c:out value="N/A" /></td>
+							</c:if>
+							<c:if test="${result.is_delivered==1 && result.payment_status==0}">
+								<td align="center"><c:out value="Ready to deliver" /></td>
+								<td align="center" style="color: red"><c:out value="PENDING" /></td>
+								<td align="center"><c:out value="N/A" /></td>
+							</c:if>
+							<c:if test="${result.is_delivered==1 && result.payment_status==1}">
+								<td align="center" style="color: green"><c:out value="Delivered" /></td>
+								<td align="center" style="color: green"><c:out value="Completed" /></td>
+								<td align="center"><c:out value="${result.delivered_date }" /></td>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</table>
@@ -267,9 +277,10 @@ body {
 
 	<br>
 	<script type="text/javascript">
-		function showStatusMsg() {
+		function hideStatusMsg() {
 			//alert("hi")
 			document.getElementById('statusdiv').style.display = 'none';
+			document.getElementById('statusdiv1').style.display = 'none';
 		}
 	</script>
 </body>
