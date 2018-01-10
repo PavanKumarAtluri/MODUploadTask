@@ -98,6 +98,15 @@ table, th, td {
 }
 </style> -->
 <style>
+th {
+    font-size: 16px;
+    font-family: Arial;
+}
+td {
+    font-size: 14px;
+    font-family: Arial;
+}
+
 body {
 	margin: 0px;
 	font-family: Arial, Monteserrat-Light;

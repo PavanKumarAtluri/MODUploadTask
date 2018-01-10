@@ -22,6 +22,15 @@ table, th, td {
 </style> -->
 
 <style>
+th {
+    font-size: 16px;
+    font-family: Arial;
+}
+td {
+    font-size: 14px;
+    font-family: Arial;
+}
+
 body{
 	margin:0px;
 	font-family: Arial,Monteserrat-Light;
@@ -122,12 +131,12 @@ body{
 					<th width="20%">Doctor Name</th>
 					<th width="10%">Speciality</th>
 					<th width="15%">Report Type</th>
-					<th width="20%">Uploaded Date</th>
+					<th width="30%">Uploaded Date</th>
 					<th>Notes to Doctor</th>
-					<th>Prescription</th>
-					<th>Order Delivery Status</th>
-					<th>Order Payment Status</th>
-					<th width="10%">Download</th>
+					<!-- <th>Prescription</th> -->
+					<th width="15%">Delivery Status</th>
+					<th width="25%">Payment Status</th>
+					<th width="10">Download</th>
 				</tr>
 				<c:forEach var="result" items="${allReports }">
 					<tr>
@@ -140,7 +149,7 @@ body{
 						<td align="center"><c:out value="${result.phr_description}"/></td>
 						<c:choose>
 								<c:when test="${!empty result.patient_prescription}">
-									<td align="center"><c:out value="${result.patient_prescription}"/></td>
+									<%-- <td align="center"><c:out value="${result.patient_prescription}"/></td> --%>
 									<c:if test="${result.deliveryStatus==0 && result.paymentStatus==0}">
 										<td align="center"><c:out value="Order Placed" /></td>
 										<td align="center" style="color: red"><c:out value="PENDING" /></td>
@@ -155,7 +164,7 @@ body{
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<td align="center" style="color: red;"><c:out value="Not Prescribed" /></td>
+									<%-- <td align="center" style="color: red;"><c:out value="Not Prescribed" /></td> --%>
 									<td align="center">N/A</td>
 									<td align="center">N/A</td>
 								</c:otherwise>
@@ -190,11 +199,11 @@ body{
 				tr += '<th width="20%">' + "Doctor Name"  + '</th>';
 				tr += '<th width="10%">' + "Speciality"  + '</th>';
 				tr += '<th width="15%">' + "Report Type"  + '</th>';
-				tr += '<th width="20%">' + "Uploaded Date"  + '</th>';
+				tr += '<th width="30%">' + "Uploaded Date"  + '</th>';
 				tr += '<th >' + "Notes to Doctor"  + '</th>';
-				tr += '<th>' + "Prescription"  + '</th>';
-				tr += '<th>' + "Order Delivery Status"  + '</th>';
-				tr += '<th>' + "Order Payment Status"  + '</th>';
+				/* tr += '<th>' + "Prescription"  + '</th>'; */
+				tr += '<th width="15%">' + "Delivery Status"  + '</th>';
+				tr += '<th width="25%">' + "Payment Status"  + '</th>';
 				tr += '<th width="10%">' + "Download"  + '</th>';
 				tr +='</tr>';
 				
@@ -208,7 +217,7 @@ body{
 			        tr += '<td align="center">' + v.phr_uploaded_date + '</td>';
 			        tr += '<td align="center">' + v.phr_description  + '</td>';
 			        if(v.patient_prescription!=null){
-			        	tr += '<td align="center">' + v.patient_prescription  + '</td>';
+			        	/* tr += '<td align="center">' + v.patient_prescription  + '</td>'; */
 			        	if(v.deliveryStatus==0 && v.paymentStatus==0){
 			        		tr += '<td align="center">' + "Order Placed"  + '</td>';
 			        		tr += '<td align="center" style="color: red;">' + "PENDING"  + '</td>';
@@ -223,7 +232,7 @@ body{
 			        	}
 			        	
 			        }else{
-			        	tr += '<td align="center" style="color: red;">' + "Not Prescribed" + '</td>';
+			        	/* tr += '<td align="center" style="color: red;">' + "Not Prescribed" + '</td>'; */
 			        	tr += '<td align="center" >' + "N/A" + '</td>';
 			        	tr += '<td align="center" >' + "N/A" + '</td>';
 			        }
