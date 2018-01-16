@@ -79,6 +79,19 @@ public class PharmacyController {
 		return "pharmacy_orders_result";
 	}
 	
+	
+	@RequestMapping(value="/get_order_by_order_id.htm",method = RequestMethod.GET)
+	@ResponseBody
+	public String getOrderbyOrderId(@RequestParam("orderId") Integer orderId,HttpSession session){
+		
+		
+		Order list=service.getOrderDetailsByOrderId(orderId);
+		System.out.println(list.getOrderid());
+		
+		return JsonUtil.javaToJson(list);
+		
+	}
+	
 	@RequestMapping(value="/get_orders_by_patient_id.htm",method = RequestMethod.GET)
 	@ResponseBody
 	public String getOrdersbyPatientId(@RequestParam("id") Integer patientId,HttpSession session){

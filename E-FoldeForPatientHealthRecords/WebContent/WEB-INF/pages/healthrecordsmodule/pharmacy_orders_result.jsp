@@ -9,21 +9,22 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="//codv.jquery.com/jquery-1.10.2.js"></script>
+<script src="//codv.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-latest.js"></script> -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	href="//codv.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
 <script>
 $(document).ready(function(){
     $("#searchBtn").click(function(){
     	var id = $("#search").val();
-    	 
+    	//alert(id);
 		$.get('${pageContext.request.contextPath}/pharmacy/get_orders_by_patient_id.htm?id='+id,function(details) {
 			
 			var tr = '<tr>' ;
@@ -82,6 +83,85 @@ $(document).ready(function(){
 
 	function removeMsg() {
 		document.getElementById("search").value = '';
+	}
+</script>
+
+<script>
+$(document).ready(function(){
+    $("#searchBtn1").click(function(){
+    	var orderId = $("#search1").val();
+    	alert(orderId);
+    	var tr = '<tr>' ;
+    	 
+		$.get('${pageContext.request.contextPath}/pharmacy/get_order_by_order_id.htm?orderId='+orderId,function(details) {
+			alert(details);
+			
+			
+			
+			$("#t").empty();
+			
+			tr += '<th width="10%">' + "Order ID"  + '</th>';
+			tr += '<th width="30%">' + "Prescription"  + '</th>';
+			tr += '<th width="15%">' + "Prescribed Date"  + '</th>';
+			tr += '<th width="15%">' + "Delivery Status"  + '</th>';
+			tr += '<th width="15%">' + "Payment Status"  + '</th>';
+			tr += '<th width="15%">' + "Delivered Date"  + '</th>';
+			
+			
+			tr += '</tr>';
+			
+			
+			var e = JSON.parse(details);
+			
+			alert(e.orderid)
+			
+			 if (e.orderid==0){   
+			    document.getElementById("errMsg1").innerHTML="Order "+orderId+" not exist";
+			    return false;
+			}else
+				document.getElementById("errMsg1").innerHTML=""; 
+			
+			alert(e.orderid+" "+e.prescription)
+			
+			//$.each(e, function(k, v) {
+				
+				tr += '<td align="center">' + e.orderid  + '</td>';
+		        tr += '<td align="center">' + e.prescription + '</td>';
+		        tr += '<td align="center">' + e.date_prescription  + '</td>';
+		        
+		        alert(e.orderid+" "+e.prescription)
+		       
+		        
+		        if(e.is_delivered==0 && e.payment_status==0){
+		        	alert("if1")
+		        	tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}pharmacy/changeDeliveryStatus.htm?orderid='+e.phr_id+'&patientid='+e.patientid+'"'+'>Make ready to deliver</a>'  + '</td>';
+					tr += '<td align="center" style="color: red;">' + "Pending" + '</td>';
+					tr += '<td align="center">' + "N/A"  + '</td>';
+		        }else if(e.is_delivered==1 && e.payment_status==0){
+		        	alert("if2")
+		        	tr += '<td align="center" >' + "Ready to deliver" + '</td>';
+		        	tr += '<td align="center" style="color: red;">' + "Pending" + '</td>';
+					tr += '<td align="center">' + "N/A"  + '</td>';
+				}else if(e.is_delivered==1 && e.payment_status==1){
+					alert("if3")
+					tr += '<td align="center" style="color: green;">' + "Delivered" + '</td>';
+					tr += '<td align="center" style="color: green;">' + "Completed" + '</td>';
+					tr += '<td align="center">' + e.delivered_date  + '</td>';
+				}
+		       	tr +='</tr>';
+		    	
+			});
+			
+			
+			
+			$("#t").html(tr);
+		
+		});
+    });
+//});
+
+	function removeMsg1() {
+		document.getElementById("search1").value = '';
 	}
 </script>
 <link
@@ -234,6 +314,19 @@ body {
 				</div>
 			</div>
 		</div> -->
+		
+		<!-- <div style="float: right">
+
+			<div class="search-container">
+				<div class="ui-widget">
+					<span>Order ID:</span><span> <input type="text"
+						id="search1" name="search1" class="search1" onfocus="removeMsg1()" /></span>
+					<span><input type="button" name="searchBtn1" id="searchBtn1"
+						value="Search"></span>
+				</div>
+			</div>
+		</div> -->
+		
 		<div style="clear: both"></div>
 		<!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->
 		<c:choose>
@@ -282,6 +375,7 @@ body {
 			</c:otherwise>
 		</c:choose>
 		<p id="errMsg" style="color: red; text-align: center;"></p>
+		<p id="errMsg1" style="color: red; text-align: center;"></p>
 	</div>
 
 	<br>
