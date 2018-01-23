@@ -139,3 +139,14 @@ update patient_tab set PHARMACYID=11 ,PHARMACYNAME='phrmacy2' where PATIENT_ID=1
 update patient_tab set PHARMACYID=13 ,PHARMACYNAME='phrmacy3' where PATIENT_ID=1003;
 
 commit;
+========================================================================================================================================================
+alter table phr_tab add patient_prescription varchar(150);
+alter table pharmacy_orders_tab add payment_status number(2);
+
+alter table phr_tab add payment_status number(2);
+alter table phr_tab add IS_DELIVERED number(2);
+
+
+update phr_tab set IS_DELIVERED=0, PAYMENT_STATUS=0,PATIENT_PRESCRIPTION=null;
+
+commit;
