@@ -207,19 +207,43 @@ body{
 	
 
 <div class="dataTable">
-<div style="float:left">
-<label class="title">View Reports</label>
-</div>
-<div style="float:right">
+		<div style="float: left">
+			<label class="title" style="font-size: 18px;">View Orders</label>
+		</div>
+<!-- <div style="float:right">
 
-<div class="search-container">
+	<div class="search-container">
 		<div class="ui-widget">
 			<span>Patient Name:</span><span> <input type="text" id="search" name="search" class="search" onfocus="removeMsg()"/></span>
 			<span>Report Type:</span><span> <input type="text" id="search1" name="search1" class="search" onfocus="removeMsg1()"/></span>
 			<span><input type="button" name="searchBtn" id="searchBtn" value="Search"></span>
 		</div>
 	</div>
-</div>
+</div> -->
+
+<div class="row" style="float: right;">
+		<div class="col-sm-12 col-md-4">
+			<fieldset class="form-group">
+				<label for="search" style="font-weight: normal;">Patient Name:</label>
+				<input type="text" id="search" class="form-control search" name="search" onfocus="removeMsg()">
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-4">
+			<fieldset class="form-group">
+				<label for="search" style="font-weight: normal;">Report Type:</label>
+				<input type="text" id="search1" class="form-control search" name="search1" onfocus="removeMsg1()">
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-4" style="margin-top: 30px">
+			<fieldset class="form-group">
+				<!-- <!-- <label for=" "> </label> -->
+				<!-- <input type="button" name="searchBtn" id="searchBtn" value="Search" class=" form-control searchbtn btn-info glyphicon glyphicon-search "> -->
+				 <button type="button" class="btn btn-info" name="searchBtn" id="searchBtn">
+      				<span class="glyphicon glyphicon-search" style="font-size: 15px;"></span> Search
+    			</button>
+			</fieldset>
+		</div>
+	</div>
 <div style="clear:both"></div>
 <!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->
 	<c:choose>

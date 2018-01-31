@@ -256,25 +256,30 @@ body{
 	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a></p>
 
 <div class="dataTable" id="div1">
-<div style="float:left"><label class="title">View Reports</label></div>
-<div style="float:right">
+<!-- <div style="float:left"><label class="title">View Reports</label></div> -->
+<!-- <div> -->
 <div class="search-container">
 	<div class="row">
+		<div class="col-sm-12">
+			<h4 style="font-weight: bold;">View Reports</h4>
+		</div>
+	</div>
+	<div class="row" style="float: right;">
 		<div class="col-sm-12 col-md-2">
 			<fieldset class="form-group">
-				<label for="search">Doctor Name:</label>
+				<label for="search" style="font-weight: normal;">Doctor Name:</label>
 				<input type="text" id="search" class="form-control search" name="search" onfocus="removeMsg()">
 			</fieldset>
 		</div>
 		<div class="col-sm-12 col-md-2">
 			<fieldset class="form-group">
-				<label for="search">Speciality:</label>
+				<label for="search" style="font-weight: normal;">Speciality:</label>
 				<input type="text" id="search1" class="form-control search" name="search1" onfocus="removeMsg1()">
 			</fieldset>
 		</div>
 		<div class="col-sm-12 col-md-2">
 			<fieldset class="form-group">
-				<label for="search">Report Type:</label>
+				<label for="search" style="font-weight: normal;">Report Type:</label>
 				<select name="search2" id="search2" class="form-control search">
 					<option value="-1">Select</option>
 					<option value="SCAN">Scan</option>
@@ -286,7 +291,7 @@ body{
 		</div>
 		<div class="col-sm-12 col-md-2">
 			<fieldset class="form-group">
-				<label for="search">Delivery Status:</label>
+				<label for="search" style="font-weight: normal;">Delivery Status:</label>
 				<select name="search4" id="search4" class="form-control search">
 					<option value="-1">Select</option>
 					<option value="1">Order Placed</option>
@@ -297,7 +302,7 @@ body{
 		</div>
 		<div class="col-sm-12 col-md-2">
 			<fieldset class="form-group">
-				<label for="search">Payment Status:</label>
+				<label for="search" style="font-weight: normal;">Payment Status:</label>
 				 <select name="search5" id="search5" class="form-control search">
 						<option value="-1">Select</option>
 						<option value="1">Pending</option>
@@ -306,10 +311,13 @@ body{
 				</select>
 			</fieldset>
 		</div>
-		<div class="col-sm-12 col-md-2">
+		<div class="col-sm-12 col-md-2" style="margin-top: 30px">
 			<fieldset class="form-group">
-				<label for=" "> </label>
-				<input type="button" name="searchBtn" id="searchBtn" value="Search" class=" form-control search btn btn-info glyphicon glyphicon-search ">
+				<!-- <!-- <label for=" "> </label> -->
+				<!-- <input type="button" name="searchBtn" id="searchBtn" value="Search" class=" form-control searchbtn btn-info glyphicon glyphicon-search "> -->
+				 <button type="button" class="btn btn-info" name="searchBtn" id="searchBtn">
+      				<span class="glyphicon glyphicon-search" style="font-size: 16px;"></span> Search
+    			</button>
 			</fieldset>
 		</div>
 	</div>
@@ -350,7 +358,7 @@ body{
 						<option value="PMR">PMR</option>
 						<option value="ECG">ECG</option>
 </select> -->
-</div>
+<!-- </div> -->
 	<c:choose>
 		<c:when test="${!empty allReports}">
 			<table align="center" id="t" width="100%">

@@ -436,7 +436,7 @@ select {
 				<tr>
 					<td><f:select path="doctor_id" id="doctor_id" onfocus="myHide();myRemoveSessionMsg();">
 							<option value="">Select</option>
-							<f:options style="text-transform: capitalize;" items="${doctorsList}"/>
+							<f:options items="${doctorsList}"/>
 						</f:select></td>
 					<%-- <td><f:input path="doctor_id" id="doctor_id"
 							onfocus="myHide();myRemoveSessionMsg();" /></td> --%>

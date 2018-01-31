@@ -91,14 +91,15 @@ $(document).ready(function(){
     $("#searchBtn1").click(function(){
     	var orderId = $("#search1").val();
     	//alert(orderId);
-    	var tr = '<tr>' ;
+    	
     	 
 		$.get('${pageContext.request.contextPath}/pharmacy/get_order_by_order_id.htm?orderId='+orderId,function(details) {
 			//alert(details);
 			document.getElementById("search1").value = '';
-			
-			
 			$("#t").empty();
+			var tr = '<tr>' ;
+			
+			
 			
 			tr += '<th width="10%">' + "Order ID"  + '</th>';
 			tr += '<th width="30%">' + "Prescription"  + '</th>';
@@ -106,20 +107,12 @@ $(document).ready(function(){
 			tr += '<th width="15%">' + "Delivery Status"  + '</th>';
 			tr += '<th width="15%">' + "Payment Status"  + '</th>';
 			tr += '<th width="15%">' + "Delivered Date"  + '</th>';
-			
-			
 			tr += '</tr>';
 			
 			
 			var e = JSON.parse(details);
 			
 			//alert(e.orderid)
-			
-			 if ($.trim(details)=='[]'){
-			    document.getElementById("errMsg1").innerHTML="Order "+orderId+" not exist";
-			    return false;
-			}else
-				document.getElementById("errMsg1").innerHTML="";
 			
 			//alert(e.orderid+" "+e.prescription)
 			
@@ -152,9 +145,13 @@ $(document).ready(function(){
 		    	
 			});
 			
+			 if ($.trim(details)=='[]'){
+				    document.getElementById("errMsg1").innerHTML="Order "+orderId+" not exist";
+				    return false;
+				}else
+					document.getElementById("errMsg1").innerHTML="";
 			
-			
-			$("#t").html(tr);
+			$("#t").append(tr);
 		
 		});
     });
@@ -301,7 +298,7 @@ body {
 	
 	<div class="dataTable">
 		<div style="float: left">
-			<label class="title">View Orders</label>
+			<label class="title" style="font-size: 18px;">View Orders</label>
 		</div>
 		<!-- <div style="float: right">
 
@@ -315,7 +312,7 @@ body {
 			</div>
 		</div> -->
 		
-		<div style="float: right">
+		<!-- <div style="float: right">
 
 			<div class="search-container">
 				<div class="ui-widget">
@@ -325,7 +322,25 @@ body {
 						value="Search"></span>
 				</div>
 			</div>
+		</div> -->
+		
+	<div class="row" style="float: right;">
+		<div class="col-sm-12 col-md-6">
+			<fieldset class="form-group">
+				<label for="search" style="font-weight: normal;">Order ID:</label>
+				<input type="text" id="search1" class="form-control search" name="search1" onfocus="removeMsg1()">
+			</fieldset>
 		</div>
+		<div class="col-sm-12 col-md-6" style="margin-top: 30px">
+			<fieldset class="form-group">
+				<!-- <!-- <label for=" "> </label> -->
+				<!-- <input type="button" name="searchBtn" id="searchBtn" value="Search" class=" form-control searchbtn btn-info glyphicon glyphicon-search "> -->
+				 <button type="button" class="btn btn-info" name="searchBtn1" id="searchBtn1">
+      				<span class="glyphicon glyphicon-search" style="font-size: 15px;"></span> Search
+    			</button>
+			</fieldset>
+		</div>
+	</div>
 		
 		<div style="clear: both"></div>
 		<!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->
