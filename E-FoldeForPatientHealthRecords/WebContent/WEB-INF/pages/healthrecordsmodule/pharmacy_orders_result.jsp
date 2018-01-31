@@ -95,7 +95,7 @@ $(document).ready(function(){
     	 
 		$.get('${pageContext.request.contextPath}/pharmacy/get_order_by_order_id.htm?orderId='+orderId,function(details) {
 			//alert(details);
-			
+			document.getElementById("search1").value = '';
 			
 			
 			$("#t").empty();

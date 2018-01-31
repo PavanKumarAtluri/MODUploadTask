@@ -150,3 +150,13 @@ alter table phr_tab add IS_DELIVERED number(2);
 update phr_tab set IS_DELIVERED=0, PAYMENT_STATUS=0,PATIENT_PRESCRIPTION=null;
 
 commit;
+========================================================================================================================================================
+update phr_tab set phr_type='SCAN' where phr_type='scan';
+update doctors_tab set DOCTOR_NAME='y nayudamma' where DOCTOR_NAME='Y Nayudamma';
+update doctors_tab set DOCTOR_NAME='a l mudaliar' where DOCTOR_NAME='A L Mudaliar';
+update doctors_tab set DOCTOR_NAME='a g joshi' where DOCTOR_NAME='A G Joshi';
+commit;
+update doctors_tab set DOCTOR_SPECIALIZATION='neurology' where DOCTOR_ID=10003;
+update doctors_tab set DOCTOR_SPECIALIZATION='dermatology' where DOCTOR_ID=10002;
+update doctors_tab set DOCTOR_SPECIALIZATION='cardiology' where DOCTOR_ID=10001;
+commit;
