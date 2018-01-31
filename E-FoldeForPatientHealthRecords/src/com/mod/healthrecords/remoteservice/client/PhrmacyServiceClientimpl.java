@@ -35,7 +35,7 @@ public class PhrmacyServiceClientimpl implements PhrmacyServiceClient {
 	}
 
 	@Override
-	public String getOrderDetailsByOrderId(int orderId) {
+	public String getOrderDetailsByOrderId(int pharmacyId,int orderId) {
 		/*Map<String, Object> map = null;
 		String jsondResp = null;
 
@@ -51,7 +51,7 @@ public class PhrmacyServiceClientimpl implements PhrmacyServiceClient {
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.add("Content-Type", "application/json");
 		entity=new HttpEntity<String>(headers);
-		ResponseEntity<String> resp=template.exchange(PhrmacyServiceURIConstants.GET_ORDER_BY_ORDERID_URL, HttpMethod.GET, entity, String.class, orderId);
+		ResponseEntity<String> resp=template.exchange(PhrmacyServiceURIConstants.GET_ORDER_BY_ORDERID_URL, HttpMethod.GET, entity, String.class,pharmacyId,orderId);
 		System.out.println(resp.getBody());
 		return resp.getBody();
 	}

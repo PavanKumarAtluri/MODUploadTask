@@ -10,7 +10,7 @@
 	
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 	
-<title>Result Page</title>
+<title>Reports View</title>
 
 <!-- <style>
 table, th, td {

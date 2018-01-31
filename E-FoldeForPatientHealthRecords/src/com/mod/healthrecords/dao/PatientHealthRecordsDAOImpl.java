@@ -77,11 +77,25 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	}
 	
 	@Override
-	public List<DoctorReportResponse> getAllPatientReportsByName(String name, int did) {
-		if(name.equals("") || name.equals(null))
+	public List<DoctorReportResponse> getAllPatientReportsByName(String name,String type, int did) {
+		System.out.println("type::"+type);
+		System.out.println(name.equals("")+" "+name.equals(null)+" "+type.equals("")+" "+ type.equals(null));
+		if((name.equals("") || name.equals(null))&& (type.equals("") || type.equals(null))){
+			//System.out.println("if1");
 			return getDoctorReport(did);
-		else{
-			return jdbcTemplate.query(QueryConstants.GET_REPORTS_BY_PATIENT_NAME_AND_DOCTOR_ID, new DoctorReportExtractor(),did, name);
+		}else if(!(name.equals("") || name.equals(null)) && (type.equals("") || type.equals(null))){
+			//System.out.println("if2");
+			//return jdbcTemplate.query(QueryConstants.GET_REPORTS_BY_PATIENT_NAME_AND_DOCTOR_ID, new DoctorReportExtractor(),did, name);
+			return jdbcTemplate.query("select ph.PHR_ID, ph.doctor_id, p.patient_id, p.patient_name, p.patient_age, p.patient_sex, to_char(TO_TIMESTAMP(ph.PHR_UPLOADED_DATE),'YYYY-MM-DD HH:MI:SS AM'), ph.phr_type, ph.phr_uploaded_path_original, ph.phr_uploaded_path_pdf, ph.phr_description from phr_tab ph inner join patient_tab p on ph.patient_id = p.patient_id where ph.doctor_id=? and p.patient_name like '%"+name+"%' order by ph.PHR_ID desc", new DoctorReportExtractor(),did);
+		}else if(!(type.equals("") || type.equals(null)) && (name.equals("") || name.equals(null))){
+			//System.out.println("if3");
+			String type1=type.toUpperCase();
+			System.out.println(type1);
+			return jdbcTemplate.query("select ph.PHR_ID, ph.doctor_id, p.patient_id, p.patient_name, p.patient_age, p.patient_sex, to_char(TO_TIMESTAMP(ph.PHR_UPLOADED_DATE),'YYYY-MM-DD HH:MI:SS AM'), ph.phr_type, ph.phr_uploaded_path_original, ph.phr_uploaded_path_pdf, ph.phr_description from phr_tab ph inner join patient_tab p on ph.patient_id = p.patient_id where ph.doctor_id=? and ph.PHR_TYPE like '%"+type1+"%' order by ph.PHR_ID desc", new DoctorReportExtractor(),did);
+		}else{
+			//System.out.println("if4");
+			String type1=type.toUpperCase();
+			return jdbcTemplate.query("select ph.PHR_ID, ph.doctor_id, p.patient_id, p.patient_name, p.patient_age, p.patient_sex, to_char(TO_TIMESTAMP(ph.PHR_UPLOADED_DATE),'YYYY-MM-DD HH:MI:SS AM'), ph.phr_type, ph.phr_uploaded_path_original, ph.phr_uploaded_path_pdf, ph.phr_description from phr_tab ph inner join patient_tab p on ph.patient_id = p.patient_id where ph.doctor_id=? and ph.PHR_TYPE like '%"+type1+"%'and p.patient_name like '%"+name+"%' order by ph.PHR_ID desc", new DoctorReportExtractor(),did);
 		}
 			
 	}
@@ -257,6 +271,120 @@ public class PatientHealthRecordsDAOImpl implements PatientHealthRecordsDAOI {
 	public int updateDeliveryStatusOfOrderTabByPhrId(int phrId) {
 		return jdbcTemplate.update(QueryConstants.UPDATE_ORDER_PAYMENT_STATUS_BY_PHRID,
 				new java.sql.Timestamp(new java.util.Date().getTime()), 1, phrId);
+	}
+	
+	/*
+	 PHR_ID                                    NOT NULL NUMBER(6)
+	 PATIENT_ID                                NOT NULL NUMBER(6)
+	 DOCTOR_ID                                 NOT NULL NUMBER(6)
+	 PHR_UPLOADED_DATE                         NOT NULL TIMESTAMP(3)
+	 PHR_TYPE                                  NOT NULL VARCHAR2(20)
+	 PHR_UPLOADED_PATH_ORIGINAL                NOT NULL VARCHAR2(150)
+	 PHR_UPLOADED_PATH_PDF                     NOT NULL VARCHAR2(150)
+	 PHR_DESCRIPTION                           NOT NULL VARCHAR2(155)
+	 PATIENT_PRESCRIPTION                               VARCHAR2(150)
+	 PAYMENT_STATUS                                     NUMBER(2)
+	 IS_DELIVERED                                       NUMBER(2)
+	*/
+	
+	/*
+	 DOCTOR_ID                                 NOT NULL NUMBER(6)
+	 DOCTOR_TITLE                              NOT NULL VARCHAR2(5)
+	 DOCTOR_NAME                               NOT NULL VARCHAR2(40)
+	 DOCTOR_SPECIALIZATION                     NOT NULL VARCHAR2(30)
+	 DOCTOR_MOBILENO                           NOT NULL VARCHAR2(15)
+	 DOCTOR_EMAILID                            NOT NULL VARCHAR2(30)
+	 HOSPITAL                                  NOT NULL VARCHAR2(30)
+	 COUNTRY                                   NOT NULL VARCHAR2(30)
+	 STATE                                     NOT NULL VARCHAR2(30)
+	 CITY                                      NOT NULL VARCHAR2(30)
+	 DOCTOR_IMAGE_PATH                         NOT NULL VARCHAR2(30)
+	*/
+	
+	@Override
+	public List<PatientHealthReportResp> getReportsForAdvSearch(int patientId, String name, String speciality,
+			String type, String dstatus, String pstatus) {
+		System.out.println("In DAO==>name::"+name+" speciality::"+speciality+" type::"+type+" dstatus::"+dstatus+" pstatus::"+pstatus);
+		StringBuffer advSearchQuery=new StringBuffer("select p.PHR_ID,PATIENT_ID,p.DOCTOR_ID,to_char(TO_TIMESTAMP(p.PHR_UPLOADED_DATE),'YYYY-MM-DD HH:MI:SS AM'), p.PHR_TYPE,p.PHR_UPLOADED_PATH_ORIGINAL,p.PHR_UPLOADED_PATH_PDF,p.PHR_DESCRIPTION,d.DOCTOR_NAME,d.DOCTOR_SPECIALIZATION,p.PATIENT_PRESCRIPTION,IS_DELIVERED,payment_status from phr_tab p, doctors_tab d ");
+		if((name.equals("") || name.equals(null)) && (speciality.equals("") || speciality.equals(null)) 
+				&& (type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			return getAllPatientReportsById(patientId);
+		}else if(!(name.equals("") || name.equals(null)) && !(speciality.equals("") || speciality.equals(null)) 
+				&& !(type.equals("-1")) && !(dstatus.equals("-1")) && !(pstatus.equals("-1"))){
+			//System.out.println("else-if1");
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and d.DOCTOR_NAME like '%"+name+"%' and d.DOCTOR_SPECIALIZATION like '%"+speciality+"%' and p.patient_id=? "
+					+ "and p.PHR_TYPE=? and p.IS_DELIVERED=? and p.PAYMENT_STATUS=? and p.PATIENT_PRESCRIPTION is not null order by p.PHR_ID desc");
+			if(dstatus.equals("1") && pstatus.equals("1")){
+				//System.out.println(new String(advSearchQuery));
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, type, 0, 0 );
+			}else if(dstatus.equals("1") && pstatus.equals("2")){
+				return null;
+			}else if(dstatus.equals("1") && pstatus.equals("3")){
+				return null;
+			}else if(dstatus.equals("2") && pstatus.equals("1")){
+				return null;
+			}else if(dstatus.equals("2") && pstatus.equals("2")){
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, type, 1, 0 );
+			}else if(dstatus.equals("2") && pstatus.equals("3")){
+				return null;
+			}else if(dstatus.equals("3") && pstatus.equals("1")){
+				return null;
+			}else if(dstatus.equals("3") && pstatus.equals("2")){
+				return null;
+			}else {
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, type, 1, 1 );
+			}
+			
+		}else  if(!(name.equals("") || name.equals(null)) && (speciality.equals("") || speciality.equals(null)) 
+				&& (type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and d.DOCTOR_NAME like '%"+name+"%' order by p.PHR_ID desc");
+			return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId );
+		}else if((name.equals("") || name.equals(null)) && !(speciality.equals("") || speciality.equals(null)) 
+				&& (type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and d.DOCTOR_SPECIALIZATION like '%"+speciality+"%' order by p.PHR_ID desc");
+			return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId);
+		}else  if((name.equals("") || name.equals(null)) && (speciality.equals("") || speciality.equals(null)) 
+				&& !(type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and p.PHR_TYPE=? order by p.PHR_ID desc");
+			return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, type );
+		}else  if((name.equals("") || name.equals(null)) && (speciality.equals("") || speciality.equals(null)) 
+				&& (type.equals("-1")) && !(dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and p.IS_DELIVERED=? and p.PAYMENT_STATUS=? and p.PATIENT_PRESCRIPTION is not null order by p.PHR_ID desc");
+			
+			if(dstatus.equals("1")){
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, 0, 0 );
+			}else if(dstatus.equals("2")){
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, 1, 0 );
+			}else{
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, 1, 1 );
+			}
+			
+		}else if((name.equals("") || name.equals(null)) && (speciality.equals("") || speciality.equals(null)) 
+				&& (type.equals("-1")) && (dstatus.equals("-1")) && !(pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and p.IS_DELIVERED=? and p.PAYMENT_STATUS=? and p.PATIENT_PRESCRIPTION is not null order by p.PHR_ID desc");
+			
+			if(pstatus.equals("1")){
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, 0, 0 );
+			}else if(pstatus.equals("2")){
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, 1, 0 );
+			}else{
+				return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, 1, 1 );
+			}
+		}else if(!(name.equals("") || name.equals(null)) && !(speciality.equals("") || speciality.equals(null)) 
+				&& (type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and d.DOCTOR_NAME like '%"+name+"%' and d.DOCTOR_SPECIALIZATION like '%"+speciality+"%' order by p.PHR_ID desc");
+			return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId );
+		}else if(!(name.equals("") || name.equals(null)) && (speciality.equals("") || speciality.equals(null)) 
+				&& !(type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and p.PHR_TYPE=? and d.DOCTOR_NAME like '%"+name+"%' order by p.PHR_ID desc");
+			return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, type );
+		}else if(!(name.equals("") || name.equals(null)) && !(speciality.equals("") || speciality.equals(null)) 
+				&& !(type.equals("-1")) && (dstatus.equals("-1")) && (pstatus.equals("-1"))){
+			advSearchQuery.append("where p.doctor_id=d.doctor_id and p.patient_id=? and p.PHR_TYPE=? and d.DOCTOR_NAME like '%"+name+"%' and d.DOCTOR_SPECIALIZATION like '%"+speciality+"%' order by p.PHR_ID desc");
+			return jdbcTemplate.query(new String(advSearchQuery), new PhrDetailsExtractor(), patientId, type );
+		}else {
+			return null;
+		}
 	}	
 
 }

@@ -36,19 +36,23 @@
 			});
 		});
 	});
+	
 </script>
 <script>
 $(document).ready(function(){
     $("#searchBtn").click(function(){
     	var bla = $("#search").val();
+    	var bla1 = $("#search1").val();
     	  //alert( bla);
+    	  //alert(bla1);
     	  
 		 /*  if(bla == ""){
 			  alert("please provide patient name");
 			  return false;
 		  } */
-		$.get('${pageContext.request.contextPath}/doctorReportDisplay/get_reports_by_patient_name.htm?name='+bla,function(details) {
-			
+		$.get('${pageContext.request.contextPath}/doctorReportDisplay/get_reports_by_patient_name.htm?name='+bla+'&type='+bla1,function(details) {
+			document.getElementById("search").value = '';
+			document.getElementById("search1").value = '';
 			var tr = '<tr>' ;
 			$("#t").empty();
 			
@@ -84,7 +88,8 @@ $(document).ready(function(){
 			
 			if ($.trim(details)=='[]'){   
 			    //alert("No report is found with this name"+details);
-			    document.getElementById("errMsg").innerHTML="Patient "+bla+" doesn't exist";
+			    //document.getElementById("errMsg").innerHTML="Patient "+bla+" doesn't exist";
+			    document.getElementById("errMsg").innerHTML="No reports were found that match the specified search criteria";
 			}else
 				document.getElementById("errMsg").innerHTML="";
 			
@@ -97,11 +102,15 @@ $(document).ready(function(){
 function removeMsg() {
 	document.getElementById("search").value = '';
 }
+
+function removeMsg1() {
+	document.getElementById("search1").value = '';
+}
 </script>
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 
 
-<title>Result Page</title>
+<title>Doctor Reports</title>
 <!-- <style>
 table, th, td {
     border: 1px solid black;
@@ -206,6 +215,7 @@ body{
 <div class="search-container">
 		<div class="ui-widget">
 			<span>Patient Name:</span><span> <input type="text" id="search" name="search" class="search" onfocus="removeMsg()"/></span>
+			<span>Report Type:</span><span> <input type="text" id="search1" name="search1" class="search" onfocus="removeMsg1()"/></span>
 			<span><input type="button" name="searchBtn" id="searchBtn" value="Search"></span>
 		</div>
 	</div>

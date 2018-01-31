@@ -43,17 +43,18 @@ public class DoctorReportController {
 		System.out.println("DoctorReportController.getpatientName()::json::"+json);
 		return json;
 	}
+	
 
 	@RequestMapping(value = "/get_reports_by_patient_name.htm", method = RequestMethod.GET)
 	@ResponseBody
-	public String getReportsbyPatientNameWithajax(@RequestParam("name") String name, Map<String, Object> map,
+	public String getReportsbyPatientNameWithajax(@RequestParam("name") String name,@RequestParam("type") String type, Map<String, Object> map,
 			HttpSession session) {
-		System.out.println("DoctorReportController.getReportsbyPatientNameWithajax().name::"+name);
+		//System.out.println("DoctorReportController.getReportsbyPatientNameWithajax().name::"+name);
 		List<DoctorReportResponse> list = null;
 		String did = (String) session.getAttribute("doctorId");
 		Integer doctorIdInt = Integer.valueOf(did);
 		System.out.println(name+" "+doctorIdInt);
-		list = patientHealthRecordsService.getRecordsByPatientname(name, doctorIdInt);
+		list = patientHealthRecordsService.getRecordsByPatientname(name,type, doctorIdInt);
 		
 		return JsonUtil.javaToJson(list);
 	}

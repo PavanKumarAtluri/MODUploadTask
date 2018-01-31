@@ -45,7 +45,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>Patient Login Page</title>
+<title>Patient Login</title>
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/display.css" type="text/css" rel="stylesheet" media="all" />
 

@@ -1,5 +1,6 @@
 package com.mod.healthrecords.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mod.healthrecords.beans.bo.Doctor;
@@ -25,7 +26,7 @@ public interface PatientHealthRecordsDAOI {
 	
 	public List<PatientHealthReportResp> getAllPatientReportsById(int pid);
 
-	public List<DoctorReportResponse> getAllPatientReportsByName(String name, int did);
+	public List<DoctorReportResponse> getAllPatientReportsByName(String name,String type, int did);
 	
 	public int selectPharmacyIdByPatientId(int patientId);
 	
@@ -38,4 +39,6 @@ public interface PatientHealthRecordsDAOI {
 	public int getPHRIdByOrderId(int orderId);
 	
 	public int updateDeliveryStatusOfOrderTabByPhrId(int phrId);
+	
+	public List<PatientHealthReportResp> getReportsForAdvSearch(int patientId, String name,String speciality,String type,String dstatus,String pstatus);
 }

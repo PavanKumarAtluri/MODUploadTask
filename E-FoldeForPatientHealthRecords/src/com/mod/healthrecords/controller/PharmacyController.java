@@ -83,10 +83,20 @@ public class PharmacyController {
 	@RequestMapping(value="/get_order_by_order_id.htm",method = RequestMethod.GET)
 	@ResponseBody
 	public String getOrderbyOrderId(@RequestParam("orderId") Integer orderId,HttpSession session){
+		List<Order> list=null;
 		
+		String pharmacyId = (String) session.getAttribute("pharmacyId");
+		Integer pharmacyId1 = Integer.valueOf(pharmacyId);
 		
-		Order list=service.getOrderDetailsByOrderId(orderId);
-		System.out.println(list.getOrderid());
+		if(orderId==null){
+			list=service.getOrderDetailsByOrderId(pharmacyId1,0);
+		}else{
+			list=service.getOrderDetailsByOrderId(pharmacyId1,orderId);
+		}
+			
+		
+			
+		
 		
 		return JsonUtil.javaToJson(list);
 		

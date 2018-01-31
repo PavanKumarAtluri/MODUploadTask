@@ -10,8 +10,152 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script>
+	$(document).ready(function() {
+		$(function() {
+			$("#search").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "${pageContext.request.contextPath}/phrDetailsDisplay/doctorNameCheck.htm",
+						type : "GET",
+						data : {
+							term : request.term
+						},
+						dataType : "json",
+						success : function(data) {
+							response(data);
+						}
+					});
+				}
+			});
+		});
+	});
 	
-<title>Result Page</title>
+	$(document).ready(function() {
+		$(function() {
+			$("#search1").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "${pageContext.request.contextPath}/phrDetailsDisplay/doctorSpecialityCheck.htm",
+						type : "GET",
+						data : {
+							term : request.term
+						},
+						dataType : "json",
+						success : function(data) {
+							response(data);
+						}
+					});
+				}
+			});
+		});
+	});
+</script>
+<script>
+$(document).ready(function(){
+    $("#searchBtn").click(function(){
+    	var bla = $("#search").val();
+    	var bla1 = $("#search1").val();
+    	var bla2 = $("#search2").val();
+    	var bla3 = $("#search4").val();
+    	var bla4 = $("#search5").val();
+    	  //alert( bla);
+    	  //alert(bla1);
+    	  //alert(bla+" "+bla1+" "+bla2+" "+bla3+" "+bla4);
+    	  
+		 /*  if(bla == ""){
+			  alert("please provide patient name");
+			  return false;
+		  } */
+		$.get('${pageContext.request.contextPath}/phrDetailsDisplay/get_reports_by_adv_search.htm?name='+bla+'&speciality='+bla1+'&type='+bla2+'&dstatus='+bla3+'&pstatus='+bla4,function(details) {
+			document.getElementById('search2').getElementsByTagName('option')[0].selected = 'selected';
+			document.getElementById('search4').getElementsByTagName('option')[0].selected = 'selected';
+			document.getElementById('search5').getElementsByTagName('option')[0].selected = 'selected';
+			document.getElementById("search").value = '';
+			document.getElementById("search1").value = '';
+			
+			var tr = '<tr>' ;
+			$("#t").empty();
+			
+			
+			tr += '<th width="20%">' + "Doctor Name"  + '</th>';
+			tr += '<th width="10%">' + "Speciality"  + '</th>';
+			tr += '<th width="15%">' + "Report Type"  + '</th>';
+			tr += '<th width="30%">' + "Uploaded Date"  + '</th>';
+			tr += '<th >' + "Notes to Doctor"  + '</th>';
+			/* tr += '<th>' + "Prescription"  + '</th>'; */
+			tr += '<th width="15%">' + "Delivery Status"  + '</th>';
+			tr += '<th width="25%">' + "Payment Status"  + '</th>';
+			tr += '<th width="10%">' + "Download"  + '</th>';
+			tr +='</tr>';
+			
+			
+			var e = JSON.parse(details);
+			$.each(e, function(k, v) {
+	
+				tr += '<td align="center" style="text-transform: capitalize;">' + v.doctor_name  + '</td>';
+		        tr += '<td align="center" style="text-transform: capitalize;">' + v.doctor_specialization + '</td>';
+		        tr += '<td align="center" style="text-transform: capitalize;">' + v.phr_type  + '</td>';
+		        tr += '<td align="center">' + v.phr_uploaded_date + '</td>';
+		        tr += '<td align="center">' + v.phr_description  + '</td>';
+		        if(v.patient_prescription!=null){
+		        	/* tr += '<td align="center">' + v.patient_prescription  + '</td>'; */
+		        	if(v.deliveryStatus==0 && v.paymentStatus==0){
+		        		tr += '<td align="center">' + "Order Placed"  + '</td>';
+		        		tr += '<td align="center" style="color: red;">' + "Pending"  + '</td>';
+		        	}else if(v.deliveryStatus==1 && v.paymentStatus==0){
+		        		tr += '<td align="center">' + "Order Ready"  + '</td>';
+		        		tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}/phrDetailsDisplay/changePaymentStatusByphrId.htm?phrId='+v.phr_id+'"'+'>Make Payment</a>'  + '</td>';
+		        		
+		        	}else if(v.deliveryStatus==1 && v.paymentStatus==1){
+		        		tr += '<td align="center" style="color: green;">' + "Delivered"  + '</td>';
+		        		tr += '<td align="center" style="color: green;">' + "Completed"  + '</td>';
+		        		
+		        	}
+		        	
+		        }else{
+		        	/* tr += '<td align="center" style="color: red;">' + "Not Prescribed" + '</td>'; */
+		        	tr += '<td align="center" >' + "N/A" + '</td>';
+		        	tr += '<td align="center" >' + "N/A" + '</td>';
+		        }
+		        
+		        
+		        tr += '<td align="center">' + '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_original+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/doc_download3.png" alt="x" title="Download Original" width="17" height="24"></a>'+'&nbsp;&nbsp;&nbsp;'+ '<a href='+'"'+'phrDownload/phrDownloadHandler.htm?path='+v.phr_uploaded_path_pdf+'"'+'><img src="${pageContext.request.contextPath}/asserts/theme1/images/pdf_download1.png" title="Download pdf" alt="x" width="20" height="24"></a>' + '</td>';
+		    	tr +='</tr>';  	
+		    	
+			});
+			
+			if ($.trim(details)=='[]'){   
+			    //alert("No report is found with this name"+details);
+			    //document.getElementById("errMsg").innerHTML="Patient "+bla+" doesn't exist";
+			    document.getElementById("errMsg").innerHTML="No reports were found that match the specified search criteria";
+			}else
+				document.getElementById("errMsg").innerHTML="";
+			
+			$("#t").append(tr);
+		
+		});
+    });
+});
+
+function removeMsg() {
+	document.getElementById("search").value = '';
+}
+
+function removeMsg1() {
+	document.getElementById("search1").value = '';
+}
+
+</script>
+	<title>Patient Reports</title>
 
 <!-- <style>
 table, th, td {
@@ -100,9 +244,9 @@ body{
 </style>
 </head>
 <body>
-<script type="text/javascript"
-		src="${pageContext.request.contextPath }/asserts/theme1/jquery/jquery-3.2.1.min.js">
-</script>
+<%-- <script type="text/javascript"
+		src="${pageContext.request.contextPath }/asserts/theme1/jquery/jquery-3.2.1.min.js"> 
+</script> --%>
 <!-- <h1 style="color: red;text-align: center;">All Reports Details</h1> -->
 <div class="header">
 	<img src="${pageContext.request.contextPath}/asserts/theme1/images/logo.png" height="75" />
@@ -112,15 +256,100 @@ body{
 	<p style="text-align: center"><a href="${pageContext.request.contextPath}/phr/patient_details.htm">Home</a></p>
 
 <div class="dataTable" id="div1">
-<div style="float:left"><label class="title">View Reports</label></div><div style="float:right">
-<select name="phr_type" id="phr_type">
+<div style="float:left"><label class="title">View Reports</label></div>
+<div style="float:right">
+<div class="search-container">
+	<div class="row">
+		<div class="col-sm-12 col-md-2">
+			<fieldset class="form-group">
+				<label for="search">Doctor Name:</label>
+				<input type="text" id="search" class="form-control search" name="search" onfocus="removeMsg()">
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-2">
+			<fieldset class="form-group">
+				<label for="search">Speciality:</label>
+				<input type="text" id="search1" class="form-control search" name="search1" onfocus="removeMsg1()">
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-2">
+			<fieldset class="form-group">
+				<label for="search">Report Type:</label>
+				<select name="search2" id="search2" class="form-control search">
+					<option value="-1">Select</option>
+					<option value="SCAN">Scan</option>
+					<option value="PHR">PHR</option>
+					<option value="PMR">PMR</option>
+					<option value="ECG">ECG</option>
+				</select>
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-2">
+			<fieldset class="form-group">
+				<label for="search">Delivery Status:</label>
+				<select name="search4" id="search4" class="form-control search">
+					<option value="-1">Select</option>
+					<option value="1">Order Placed</option>
+					<option value="2">Order Ready</option>
+					<option value="3">Delivered</option>
+				</select>
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-2">
+			<fieldset class="form-group">
+				<label for="search">Payment Status:</label>
+				 <select name="search5" id="search5" class="form-control search">
+						<option value="-1">Select</option>
+						<option value="1">Pending</option>
+						<option value="2">Make Payment</option>
+						<option value="3">Completed</option>
+				</select>
+			</fieldset>
+		</div>
+		<div class="col-sm-12 col-md-2">
+			<fieldset class="form-group">
+				<label for=" "> </label>
+				<input type="button" name="searchBtn" id="searchBtn" value="Search" class=" form-control search btn btn-info glyphicon glyphicon-search ">
+			</fieldset>
+		</div>
+	</div>
+		<!-- <div class="ui-widget">
+			<span>Doctor Name:</span><span> <input type="text" id="search" name="search" class="search" onfocus="removeMsg()"/></span>
+			<span>Speciality:</span><span> <input type="text" id="search1" name="search1" class="search" onfocus="removeMsg1()"/></span>
+			<span>Report Type:</span><span><select name="search2" id="search2">
+												<option value="-1">Select</option>
+												<option value="SCAN">Scan</option>
+												<option value="PHR">PHR</option>
+												<option value="PMR">PMR</option>
+												<option value="ECG">ECG</option>
+											</select>
+									</span>
+			<span>Uploaded Date:</span><span> <input type="text" id="search3" name="search3" class="search" onfocus="removeMsg3()"/></span>
+			<span>Delivery Status:</span><span><select name="search4" id="search4">
+													<option value="-1">Select</option>
+													<option value="1">Order Placed</option>
+													<option value="2">Order Ready</option>
+													<option value="3">Delivered</option>
+												</select>
+										</span>
+			<span>Payment Status:</span><span> <select name="search5" id="search5">
+													<option value="-1">Select</option>
+													<option value="1">Pending</option>
+													<option value="2">Make Payment</option>
+													<option value="3">Completed</option>
+												</select>
+										</span>
+			<span><input type="button" name="searchBtn" id="searchBtn" value="Search"></span>
+		</div> -->
+	</div>
+	<!-- <select name="phr_type" id="phr_type">
 						<option value="-1">Filter By Type</option>
 						<option value="all">All</option>
-						<option value="scan">Scan</option>
+						<option value="SCAN">Scan</option>
 						<option value="PHR">PHR</option>
 						<option value="PMR">PMR</option>
 						<option value="ECG">ECG</option>
-</select>
+</select> -->
 </div>
 	<c:choose>
 		<c:when test="${!empty allReports}">
@@ -183,7 +412,7 @@ body{
 	<br>
 	
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		$('select').on('change', function() {
 			  //alert( this.value );
@@ -255,6 +484,6 @@ body{
 		})
 	});
 	
-	</script>
+	</script> -->
 </body>
 </html>

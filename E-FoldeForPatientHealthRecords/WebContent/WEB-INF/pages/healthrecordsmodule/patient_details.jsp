@@ -58,7 +58,7 @@ body {
    }
 </style>
 
-<title>Patient Home Page</title>
+<title>Patient DashBoard</title>
 </head>
 <body onload="preventBack()">
 

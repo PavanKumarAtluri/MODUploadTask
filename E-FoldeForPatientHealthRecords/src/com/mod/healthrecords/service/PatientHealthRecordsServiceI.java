@@ -34,13 +34,15 @@ public interface PatientHealthRecordsServiceI {
 	
 	public ArrayList<String> getAllPatients(String str);
 
-	public List<DoctorReportResponse> getRecordsByPatientname(String name, int did);
+	public List<DoctorReportResponse> getRecordsByPatientname(String name,String type, int did);
 
 	public Response sendDoctorPrescriptionToRequestedPharmacy(DoctorPrescription doctorPrescription);
 
 	public int getpharmacyIdByPatientId(int patientId);
 
-	public Order getOrderDetailsByOrderId(int orderId);
+	//public Order getOrderDetailsByOrderId(int orderId);
+	
+	public List<Order> getOrderDetailsByOrderId(int pharmacyId,int orderId);
 
 	public List<Order> getOrderDetailsByPatientIdAndPharmacyId(int pharmacyId, int patientId);
 
@@ -51,4 +53,10 @@ public interface PatientHealthRecordsServiceI {
 	public Resp changePaymentStatus(int orderId,int patientid);
 	
 	public int changePaymentStatusByPhrId(int phrId);
+	
+	public ArrayList<String> getAllDoctors(String str);
+	
+	public ArrayList<String> getDoctorsSpecialities(String str);
+	
+	public List<PatientHealthReportResp> getReportsForAdvSearch(int patientId, String name,String speciality,String type,String dstatus,String pstatus);
 }

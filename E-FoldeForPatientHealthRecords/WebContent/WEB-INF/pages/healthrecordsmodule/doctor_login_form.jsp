@@ -42,10 +42,11 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Patient Login Page</title>
+<title>Doctor Login</title>
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/display.css" type="text/css" rel="stylesheet" media="all" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Login</title>
 <style>
 
 .header{

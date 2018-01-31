@@ -90,11 +90,11 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#searchBtn1").click(function(){
     	var orderId = $("#search1").val();
-    	alert(orderId);
+    	//alert(orderId);
     	var tr = '<tr>' ;
     	 
 		$.get('${pageContext.request.contextPath}/pharmacy/get_order_by_order_id.htm?orderId='+orderId,function(details) {
-			alert(details);
+			//alert(details);
 			
 			
 			
@@ -113,40 +113,40 @@ $(document).ready(function(){
 			
 			var e = JSON.parse(details);
 			
-			alert(e.orderid)
+			//alert(e.orderid)
 			
-			 if (e.orderid==0){   
+			 if ($.trim(details)=='[]'){
 			    document.getElementById("errMsg1").innerHTML="Order "+orderId+" not exist";
 			    return false;
 			}else
-				document.getElementById("errMsg1").innerHTML=""; 
+				document.getElementById("errMsg1").innerHTML="";
 			
-			alert(e.orderid+" "+e.prescription)
+			//alert(e.orderid+" "+e.prescription)
 			
-			//$.each(e, function(k, v) {
+			$.each(e, function(k, v) {
 				
-				tr += '<td align="center">' + e.orderid  + '</td>';
-		        tr += '<td align="center">' + e.prescription + '</td>';
-		        tr += '<td align="center">' + e.date_prescription  + '</td>';
+				tr += '<td align="center">' + v.orderid  + '</td>';
+		        tr += '<td align="center">' + v.prescription + '</td>';
+		        tr += '<td align="center">' + v.date_prescription  + '</td>';
 		        
-		        alert(e.orderid+" "+e.prescription)
+		        //alert(e.orderid+" "+e.prescription)
 		       
 		        
-		        if(e.is_delivered==0 && e.payment_status==0){
-		        	alert("if1")
-		        	tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}pharmacy/changeDeliveryStatus.htm?orderid='+e.phr_id+'&patientid='+e.patientid+'"'+'>Make ready to deliver</a>'  + '</td>';
+		        if(v.is_delivered==0 && v.payment_status==0){
+		        	//alert("if1")
+		        	tr += '<td align="center" style="color: red;">' + '<a href='+'"'+'${pageContext.request.contextPath}pharmacy/changeDeliveryStatus.htm?orderid='+v.phr_id+'&patientid='+v.patientid+'"'+'>Make ready to deliver</a>'  + '</td>';
 					tr += '<td align="center" style="color: red;">' + "Pending" + '</td>';
 					tr += '<td align="center">' + "N/A"  + '</td>';
-		        }else if(e.is_delivered==1 && e.payment_status==0){
-		        	alert("if2")
+		        }else if(v.is_delivered==1 && v.payment_status==0){
+		        	//alert("if2")
 		        	tr += '<td align="center" >' + "Ready to deliver" + '</td>';
 		        	tr += '<td align="center" style="color: red;">' + "Pending" + '</td>';
 					tr += '<td align="center">' + "N/A"  + '</td>';
-				}else if(e.is_delivered==1 && e.payment_status==1){
-					alert("if3")
+				}else if(v.is_delivered==1 && v.payment_status==1){
+					//alert("if3")
 					tr += '<td align="center" style="color: green;">' + "Delivered" + '</td>';
 					tr += '<td align="center" style="color: green;">' + "Completed" + '</td>';
-					tr += '<td align="center">' + e.delivered_date  + '</td>';
+					tr += '<td align="center">' + v.delivered_date  + '</td>';
 				}
 		       	tr +='</tr>';
 		    	
@@ -158,7 +158,7 @@ $(document).ready(function(){
 		
 		});
     });
-//});
+});
 
 	function removeMsg1() {
 		document.getElementById("search1").value = '';
@@ -169,7 +169,7 @@ $(document).ready(function(){
 	type="text/css" rel="stylesheet" media="all" />
 
 
-<title>Result Page</title>
+<title>Pharmacy Orders Page</title>
 <!-- <style>
 table, th, td {
     border: 1px solid black;
@@ -315,7 +315,7 @@ body {
 			</div>
 		</div> -->
 		
-		<!-- <div style="float: right">
+		<div style="float: right">
 
 			<div class="search-container">
 				<div class="ui-widget">
@@ -325,7 +325,7 @@ body {
 						value="Search"></span>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		
 		<div style="clear: both"></div>
 		<!-- <h1 style="color: red;text-align: center;">Doctor Report Details</h1> -->

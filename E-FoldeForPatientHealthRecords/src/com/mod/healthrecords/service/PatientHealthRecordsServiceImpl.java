@@ -227,11 +227,61 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 		}
 		return list;
 	}
+	
+	@Override
+	public ArrayList<String> getAllDoctors(String str) {
+		ArrayList<String> list = new ArrayList<String>();
+		PreparedStatement ps = null;
+		Connection con = null;
+		String data;
+		try {
+			String output = str.toLowerCase();
+			String ch = "%"+ output + "%";
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "manager");
+			ps = con.prepareStatement("SELECT DOCTOR_NAME FROM DOCTORS_TAB WHERE DOCTOR_NAME LIKE '" + ch + "'");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				data = rs.getString(1);
+				System.out.println(data);
+				list.add(data);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public ArrayList<String> getDoctorsSpecialities(String str) {
+		ArrayList<String> list = new ArrayList<String>();
+		PreparedStatement ps = null;
+		Connection con = null;
+		String data;
+		try {
+			String output = str.toLowerCase();
+			String ch = "%"+ output + "%";
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "manager");
+			ps = con.prepareStatement("SELECT DOCTOR_SPECIALIZATION FROM DOCTORS_TAB WHERE DOCTOR_SPECIALIZATION LIKE '" + ch + "'");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				data = rs.getString(1);
+				System.out.println(data);
+				list.add(data);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	@Override
-	public List<DoctorReportResponse> getRecordsByPatientname(String name,int did) {
+	public List<DoctorReportResponse> getRecordsByPatientname(String name,String type,int did) {
 		
-		return patientHealthRecordsDAO.getAllPatientReportsByName(name, did);
+		return patientHealthRecordsDAO.getAllPatientReportsByName(name,type, did);
 	}
 
 	@Override
@@ -257,13 +307,13 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 				Doctor d=patientHealthRecordsDAO.getDoctorDetails(doctorPrescription.getDocId());
 				
 				PrescriptionSMSBean smsBean=new PrescriptionSMSBean();
-				smsBean.setFrom("MODMSG");
+				smsBean.setFrom("APPMOD");
 				smsBean.setTo(p.getPatient_mobileno());
-				smsBean.setTemplateName("MOD_MESSAGE_TEMPLATE1");
+				smsBean.setTemplateName("MOD_PAT_PRES_TEMPL");
 				smsBean.setVAR1(p.getPatient_name());
 				smsBean.setVAR2(p.getPatient_pharmacy_name());
 				smsBean.setVAR3(d.getDoctor_name());
-				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_10thJan18_19s/phr/patient_login.htm");
+				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_31stJan18_19s/phr/patient_login.htm");
 				
 				String jsonPrescriptionSMSBean=JsonUtil.javaToJson(smsBean);
 				System.out.println(jsonPrescriptionSMSBean);
@@ -299,7 +349,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 		
 		return patientHealthRecordsDAO.selectPharmacyIdByPatientId(patientId);
 	}
-
+/*
 	@Override
 	public Order getOrderDetailsByOrderId(int orderId) {
 		String jsonResp = null;
@@ -318,7 +368,28 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 
 		return order;
 	}
+*/
+	
+	@Override
+	public List<Order> getOrderDetailsByOrderId(int pharmacyId,int orderId) {
+		String jsonResp = null;
+		Resp resp = null;
+		List<Order> list=new ArrayList<>();
 
+		// call client method to delete the book
+		jsonResp = phrmacyServiceClient.getOrderDetailsByOrderId(pharmacyId,orderId);
+
+		// convert jsonResponse to java Object
+		resp = JsonUtil.jsonToJava(jsonResp, Resp.class);
+		
+		if(resp.getStatus()==(byte)1){
+			list=JsonUtil.jsonToJava(resp.getData(), List.class);
+		}
+		
+
+		return list;
+	}
+	
 	@Override
 	public List<Order> getOrderDetailsByPatientIdAndPharmacyId(int pharmacyId, int patientId) {
 		
@@ -377,13 +448,13 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 				
 				
 				PrescriptionSMSBean smsBean=new PrescriptionSMSBean();
-				smsBean.setFrom("MODSMS");
+				smsBean.setFrom("MSGMOD");
 				smsBean.setTo(p.getPatient_mobileno());
-				smsBean.setTemplateName("MOD_ORDER_MSG_TEMPLATE");
+				smsBean.setTemplateName("MOD_PHARMA_ORD_TEMPL");
 				smsBean.setVAR1(p.getPatient_name());
 				smsBean.setVAR2(String.valueOf(orderId));
 				smsBean.setVAR3(p.getPatient_pharmacy_name());
-				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_10thJan18_19s/phr/patient_login.htm");
+				smsBean.setVAR4("http://dev.magicurehealthcare.com:8091/E-FoldeForPatientHealthRecords_31stJan18_19s/phr/patient_login.htm");
 				
 				String jsonPrescriptionSMSBean=JsonUtil.javaToJson(smsBean);
 				System.out.println(jsonPrescriptionSMSBean);
@@ -440,6 +511,13 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordsServ
 		
 		
 		return cnt1;
+	}
+
+	@Override
+	public List<PatientHealthReportResp> getReportsForAdvSearch(int patientId, String name, String speciality, String type,
+			String dstatus, String pstatus) {
+		System.out.println("In Service==>name::"+name+" speciality::"+speciality+" type::"+type+" dstatus::"+dstatus+" pstatus::"+pstatus);
+		return patientHealthRecordsDAO.getReportsForAdvSearch(patientId, name, speciality, type, dstatus, pstatus);
 	}
 
 }

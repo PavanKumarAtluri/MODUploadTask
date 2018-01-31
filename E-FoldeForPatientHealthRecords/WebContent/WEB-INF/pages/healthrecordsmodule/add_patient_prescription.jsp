@@ -10,7 +10,7 @@
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 <head>
 <meta charset="utf-8">
-<title>Upload Your Report</title>
+<title>Suggest Prescription</title>
 <style>
 body {
 	margin: 0px;

@@ -150,7 +150,7 @@ table, th, td {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Welcome</title>
+	<!-- <title>Welcome</title> -->
 <link href="${pageContext.request.contextPath}/asserts/theme1/css/style.css" type="text/css" rel="stylesheet" media="all" />
 	
 <!-- <head>
@@ -296,7 +296,7 @@ table, th, td {
 --%>
 <head>
 <meta charset="utf-8">
-<title>Upload Your Report</title>
+<title>Upload Report</title>
 <style>
 body {
 	margin: 0px;
@@ -436,7 +436,7 @@ select {
 				<tr>
 					<td><f:select path="doctor_id" id="doctor_id" onfocus="myHide();myRemoveSessionMsg();">
 							<option value="">Select</option>
-							<f:options items="${doctorsList}"/>
+							<f:options style="text-transform: capitalize;" items="${doctorsList}"/>
 						</f:select></td>
 					<%-- <td><f:input path="doctor_id" id="doctor_id"
 							onfocus="myHide();myRemoveSessionMsg();" /></td> --%>
@@ -451,7 +451,7 @@ select {
 
 					<td><select name="phr_type" id="phr_type" onfocus="myHide();myRemoveSessionMsg();">
 							<option value="">Select</option>
-							<option value="scan">Scan</option>
+							<option value="SCAN">Scan</option>
 							<option value="PHR">PHR</option>
 							<option value="PMR">PMR</option>
 							<option value="ECG">ECG</option>

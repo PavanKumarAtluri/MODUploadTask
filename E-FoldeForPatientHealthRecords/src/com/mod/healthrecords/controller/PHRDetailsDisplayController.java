@@ -1,5 +1,6 @@
 package com.mod.healthrecords.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.mod.healthrecords.beans.bo.PatientHealthReportResp;
 import com.mod.healthrecords.command.PHRDisplayCommand;
 import com.mod.healthrecords.service.PatientHealthRecordsServiceI;
@@ -105,5 +107,48 @@ public class PHRDetailsDisplayController {
 		return "patient_all_reports_display_page";
 		
 	}
+	
+	@RequestMapping(value = "/doctorNameCheck.htm", method = RequestMethod.GET)
+	@ResponseBody
+	public String getDoctorName(@RequestParam("term") String str) {
+		System.out.println("Data from ajax call " + str);
+		ArrayList<String> list = patientHealthRecordsService.getAllDoctors(str);
+		System.out.println(list);
+		String json = new Gson().toJson(list);
+		System.out.println("DoctorReportController.getpatientName()::json::"+json);
+		return json;
+	}
+	
+	@RequestMapping(value = "/doctorSpecialityCheck.htm", method = RequestMethod.GET)
+	@ResponseBody
+	public String getDoctorSpeciality(@RequestParam("term") String str) {
+		System.out.println("Data from ajax call " + str);
+		ArrayList<String> list = patientHealthRecordsService.getDoctorsSpecialities(str);
+		System.out.println(list);
+		String json = new Gson().toJson(list);
+		System.out.println("DoctorReportController.getpatientName()::json::"+json);
+		return json;
+	}
+	
+	@RequestMapping(value="get_reports_by_adv_search.htm", method=RequestMethod.GET)
+	@ResponseBody
+	public String getReportsForAdvSearch(HttpSession session,@RequestParam("name") String name,@RequestParam("speciality") String speciality,
+			@RequestParam("type") String type,@RequestParam("dstatus") String dstatus,@RequestParam("pstatus") String pstatus) {
+		System.out.println("name::"+name+" speciality::"+speciality+" type::"+type+" dstatus::"+dstatus+" pstatus::"+pstatus);
+		String userId = (String) session.getAttribute("userId");
+		Integer patientId = Integer.valueOf(userId);
+		
+		List<PatientHealthReportResp> list = patientHealthRecordsService.getReportsForAdvSearch(patientId, name, speciality, type, dstatus, pstatus);
+		
+		if(list==null)
+			list=new ArrayList<>();
+		
+		
+		String json = new Gson().toJson(list);
+		System.out.println("PHRDetailsDisplayController.getReportsForAdvSearch().json::"+json);
+		return json;
+		
+	}
+	
 	
 }
